@@ -21,8 +21,8 @@ class SignOutButton extends StatelessWidget {
     Widget signOutButton = TextButton(
       child: Text("Sign Out",
           style: TextStyle(color: AppPalette.instance.primary200)),
-      onPressed: () {
-        this._ctx!.logout();
+      onPressed: () async {
+        await this._ctx!.logout();
         Get.offAll(() => SplashScreen(this._ctx!));
       },
     );

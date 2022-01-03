@@ -31,10 +31,11 @@ class _LoginScreenState extends State<LoginScreen> {
       _returnString = await Auth().loginUserWithEmail(_email!, _password!);
       print("_returnString: $_returnString");
       if (_returnString == "success") {
-        Get.to(() => BasicBottomNavBar(widget._ctx!));
+        return Get.to(() => BasicBottomNavBar(widget._ctx!));
       } else
         throw Exception(_returnString);
     } catch (e) {
+      print("loginHandler: $e");
       // handle error
       Get.snackbar("Mohon maaf", "Email / password tidak sesuai",
           duration: Duration(seconds: 5));

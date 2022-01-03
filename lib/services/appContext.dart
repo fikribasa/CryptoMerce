@@ -11,7 +11,6 @@ import 'package:wartec_app/utils/storage.dart';
 class AppContext extends State<StatefulWidget> {
   late http.Client client;
   late final API api;
-  String? userID;
   UserModel? user;
   GlobalKey<NavigatorState>? navigatorKey;
 
@@ -31,10 +30,9 @@ class AppContext extends State<StatefulWidget> {
     api = API(this);
   }
 
-  logout() async {
-    Auth().signOut();
-    storage.erase();
-    userID = null;
+  Future<void> logout() async {
+    await Auth().signOut();
+    await storage.erase();
     user = null;
   }
 

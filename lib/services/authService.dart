@@ -69,6 +69,7 @@ class Auth {
           email: email.trim(), password: password);
       storage.write("userID", user.user!.uid);
       storage.write("userEmail", user.user!.email);
+      retVal = "success";
     } on PlatformException catch (e) {
       retVal = e.message!;
     } catch (e) {
