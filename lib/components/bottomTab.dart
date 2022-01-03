@@ -93,7 +93,8 @@ class BottomBar extends StatelessWidget {
 }
 
 class BasicBottomNavBar extends StatefulWidget {
-  const BasicBottomNavBar(this.ctx, {Key? key}) : super(key: key);
+  const BasicBottomNavBar(this.ctx, {Key? key, this.index}) : super(key: key);
+  final int? index;
   final AppContext ctx;
   @override
   _BasicBottomNavBarState createState() => _BasicBottomNavBarState();
@@ -105,6 +106,16 @@ class _BasicBottomNavBarState extends State<BasicBottomNavBar> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      if (widget.index != null) {
+        _onItemTapped(widget.index!);
+      }
     });
   }
 

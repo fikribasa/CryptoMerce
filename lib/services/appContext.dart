@@ -3,13 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
+import 'package:wartec_app/models/userInfo.dart';
+import 'package:wartec_app/services/authService.dart';
 import 'package:wartec_app/services/services.dart';
+import 'package:wartec_app/utils/storage.dart';
 
 class AppContext extends State<StatefulWidget> {
   late http.Client client;
   late final API api;
-  // String? userID;
-  // User? user;
+  String? userID;
+  UserModel? user;
   GlobalKey<NavigatorState>? navigatorKey;
 
   RxBool isPatientValid = false.obs;
@@ -28,13 +31,12 @@ class AppContext extends State<StatefulWidget> {
     api = API(this);
   }
 
-  // logout() async {
-  //   PushNotificationsManager().fcmUnSubscribeAll();
-  //   await auth.logout();
-  //   patient = null;
-  //   userID = '';
-  //   isPatientValid.value = false;
-  // }
+  logout() async {
+    Auth().signOut();
+    storage.erase();
+    userID = null;
+    user = null;
+  }
 
   @override
   Widget build(BuildContext context) {

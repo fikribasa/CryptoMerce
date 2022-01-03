@@ -30,6 +30,7 @@ class AccountVerification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: _getAppbar,
@@ -58,9 +59,13 @@ class AccountVerification extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.center,
-              child: FittedBox(
-                child: Image.asset("assets/images/securedData.png"),
-                fit: BoxFit.fitWidth,
+              child: Container(
+                width: _screenWidth,
+                height: _screenWidth,
+                child: FittedBox(
+                  child: Image.asset("assets/images/securedData.png"),
+                  fit: BoxFit.fitWidth,
+                ),
               ),
             ),
             Align(

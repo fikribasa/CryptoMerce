@@ -1,16 +1,33 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:wartec_app/components/bottomTab.dart';
 import 'package:wartec_app/pages/landing.dart';
 import 'package:wartec_app/pages/login.dart';
 import 'package:wartec_app/pages/splash.dart';
 import 'package:wartec_app/services/appContext.dart';
+import 'package:wartec_app/services/prefs.dart';
 import 'package:wartec_app/style.dart';
 
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+Future setPref() async {
+  await dotenv.load(fileName: ".env");
+  await pref.init();
+  if (pref.backendServer?.isEmpty ?? true) {
+    pref.backendServer = dotenv.env['BACKEND_SERVER'];
+  }
+  pref.newsURL = dotenv.env['NEWS_URL'];
+  print(pref.backendServer);
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await setPref();
+  await Firebase.initializeApp();
   await AppPalette.instance.init();
+  await GetStorage.init();
   runApp(App());
 }
 
@@ -55,7 +72,10 @@ class _WartecApp extends State<WartecApp> {
         theme: ThemeData(
           fontFamily: 'Inter',
         ),
-        // home: BasicBottomNavBar(widget._ctx));
-        home: LoginScreen(widget._ctx));
+        // home: BasicBottomNavBar(
+        //   widget._ctx,
+        //   index: 0,
+        // ));
+        home: SplashScreen(widget._ctx));
   }
 }

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:wartec_app/components/primaryButton.dart';
 import 'package:wartec_app/pages/accountVerification.dart';
 import 'package:wartec_app/services/appContext.dart';
+import 'package:wartec_app/services/authService.dart';
 import 'package:wartec_app/style.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -24,6 +25,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String? _confirmationPassword;
   bool _isObscure = true;
   bool _isObscureConfirmation = true;
+
+  void _signUpEmail() async {
+    try {
+      print(_email);
+      print(_password);
+      if (_password!.trim() != _confirmationPassword!.trim()) {
+        return Get.snackbar(
+            "Terjadi Kesalahan", "Password tidak sesuai, mohon periksa kembali",
+            duration: Duration(seconds: 4));
+      }
+      String _returnString = await Auth().signUpWithEmail(_email!, _password!);
+      if (_returnString == "success") {
+        Get.to(() => AccountVerification(widget._ctx));
+      } else {
+        Get.snackbar("Terjadi Kesalahan", "Silakan coba lagi",
+            duration: Duration(seconds: 4));
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width;
@@ -141,24 +164,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SizedBox(height: 20.0),
                       SizedBox(
                           width: _screenWidth,
-                          child: Expanded(
-                              child: PrimaryButton(
-                                  onPressed: () {
-                                    Get.to(
-                                        () => AccountVerification(widget._ctx));
-                                  },
-                                  label: 'Sign Up'))),
+                          child: PrimaryButton(
+                              onPressed: () {
+                                print("ppp");
+                                _signUpEmail();
+                              },
+                              label: 'Sign Up')),
                       SizedBox(height: 12.0),
                       SizedBox(
                           width: _screenWidth,
-                          child: Expanded(
-                              child: TextButton(
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                  child: Text("Log In",
-                                      style: AppPalette
-                                          .instance.textStylePrimary)))),
+                          child: TextButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              child: Text("Log In",
+                                  style:
+                                      AppPalette.instance.textStylePrimary))),
                     ],
                   ),
                 )

@@ -3,13 +3,19 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/primaryButton.dart';
+import 'package:wartec_app/models/tokenList.dart';
+import 'package:wartec_app/pages/buyToken.dart';
+import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/style.dart';
 
 class TokenDetailScreen extends StatelessWidget {
-  const TokenDetailScreen({Key? key}) : super(key: key);
+  final AppContext? _ctx;
+
+  final TokenItem? item;
+  const TokenDetailScreen(this._ctx, this.item, {Key? key}) : super(key: key);
   get _getAppbar {
     return new AppBar(
-      title: Text("ZAC",
+      title: Text(item!.code ?? "",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
       backgroundColor: Colors.white,
       elevation: 0.0,
@@ -85,7 +91,7 @@ class TokenDetailScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "ZAC Price",
+                              "${item!.code} Price",
                               style: TextStyle(
                                   fontSize: 12, fontWeight: FontWeight.bold),
                             ),
@@ -95,11 +101,11 @@ class TokenDetailScreen extends StatelessWidget {
                                   fontSize: 12, color: Colors.black26),
                             ),
                             Text(
-                              "77,199",
+                              "${item!.tokenPriceIDR}",
                               style: TextStyle(
                                   fontSize: 24, fontWeight: FontWeight.bold),
                             ),
-                            Text("5.52%",
+                            Text("${item!.change}%",
                                 style: TextStyle(
                                     fontSize: 12,
                                     color: AppPalette.instance.success400)),
@@ -107,8 +113,9 @@ class TokenDetailScreen extends StatelessWidget {
                         ),
                         Container(
                             child: Image.asset(
-                          "assets/icons/zaq.png",
+                          item!.image!,
                           width: 60,
+                          height: 60,
                         )),
                       ],
                     )),
@@ -143,14 +150,14 @@ class TokenDetailScreen extends StatelessWidget {
                               children: [
                                 Container(
                                     child: Image.asset(
-                                  "assets/icons/zaq.png",
+                                  item!.image!,
                                   width: 40.0,
                                 )),
                                 SizedBox(
                                   width: 6.0,
                                 ),
                                 Text(
-                                  "ZAQ",
+                                  item!.code!,
                                   style: TextStyle(
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold),
@@ -160,7 +167,7 @@ class TokenDetailScreen extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Text("480.79 ZAC",
+                                Text("480.79 ${item!.code}",
                                     style: TextStyle(
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.bold)),
@@ -178,7 +185,7 @@ class TokenDetailScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20.0),
-                Text("About ZAC",
+                Text("About ${item!.code}",
                     style:
                         TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
                 SizedBox(height: 16.0),
@@ -202,12 +209,16 @@ class TokenDetailScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "Rp 77,199",
+                    "Rp ${item!.tokenPriceIDR}",
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Container(
                       width: double.infinity,
-                      child: PrimaryButton(label: "Buy", onPressed: () {})),
+                      child: PrimaryButton(
+                          label: "Buy",
+                          onPressed: () {
+                            Get.to(() => BuyTokenScreen(this._ctx!, item!));
+                          })),
                 ],
               ),
             ),
@@ -217,7 +228,7 @@ class TokenDetailScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "Rp 77,199",
+                    "Rp ${item!.tokenPriceIDR}",
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Container(

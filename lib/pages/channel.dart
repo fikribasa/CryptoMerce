@@ -1,8 +1,9 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:wartec_app/components/bottomTab.dart';
+import 'package:wartec_app/models/headlines.dart';
 import 'package:wartec_app/pages/article.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/style.dart';
@@ -19,6 +20,81 @@ class ChannelScreen extends StatefulWidget {
 
 class _ChannelScreenState extends State<ChannelScreen> {
   final TextEditingController _controller = new TextEditingController();
+  Headlines? _headlines;
+  bool _isLoading = true;
+  @override
+  void initState() {
+    super.initState();
+    getNews();
+  }
+
+  getNews() async {
+    final news = await widget._ctx.api.getNewsHeadlines();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      this.setState(() {
+        _headlines = news;
+        _isLoading = false;
+      });
+    });
+  }
+
+  Widget headlineWidget(double screenWidth, HeadlineItem item) {
+    return InkWell(
+      onTap: () {
+        Get.to(() => ArticleScreen(item));
+      },
+      child: Container(
+        width: screenWidth,
+        margin: const EdgeInsets.only(bottom: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.only(top: 6, bottom: 6),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(item.sourceName ?? "",
+                        style: TextStyle(
+                          color: AppPalette.instance.grey10,
+                          fontSize: 10.0,
+                        )),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Text(
+                      item.title ?? "",
+                      maxLines: 2,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Text(item.date ?? "",
+                        style: TextStyle(
+                            color: AppPalette.instance.grey10, fontSize: 10.0)),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              width: 82,
+              height: 82,
+              margin: const EdgeInsets.only(left: 12.0),
+              child: FancyShimmerImage(
+                imageUrl: item.imageUrl!,
+                shimmerBaseColor: AppPalette.instance.accent5,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width;
@@ -89,52 +165,17 @@ class _ChannelScreenState extends State<ChannelScreen> {
               Text("Recent News",
                   style:
                       TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0)),
-              InkWell(
-                onTap: () {
-                  Get.to(() => ArticleScreen());
-                },
-                child: Container(
-                  height: 100.0,
-                  width: _screenWidth,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("CRYPTO NEWS",
-                                style: TextStyle(
-                                  color: AppPalette.instance.grey10,
-                                  fontSize: 10.0,
-                                )),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Text(
-                              "Cryptocurrencies To Watch This New Year: HUH Token and Safem...",
-                              maxLines: 2,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Text("11 hr ago · 2 min read",
-                                style: TextStyle(
-                                    color: AppPalette.instance.grey10,
-                                    fontSize: 10.0)),
-                          ],
-                        ),
-                      ),
-                      Container(
-                          padding: EdgeInsets.only(left: 12.0),
-                          child: Image.asset("assets/images/news.png")),
-                    ],
-                  ),
-                ),
-              ),
+              !_isLoading && _headlines != null && _headlines!.data != null
+                  ? ListView.builder(
+                      primary: false,
+                      shrinkWrap: true,
+                      itemCount: _headlines!.data!.length,
+                      itemBuilder: (_, int index) {
+                        return headlineWidget(
+                            _screenWidth, _headlines!.data![index]);
+                      },
+                    )
+                  : Text("Loading"),
               Divider(color: Colors.black12, thickness: 1.0)
             ],
           ),

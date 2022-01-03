@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:wartec_app/components/bottomTab.dart';
 import 'package:wartec_app/components/primaryButton.dart';
 import 'package:wartec_app/pages/signup.dart';
 import 'package:wartec_app/services/appContext.dart';
+import 'package:wartec_app/services/authService.dart';
 import 'package:wartec_app/style.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,6 +24,23 @@ class _LoginScreenState extends State<LoginScreen> {
   String? _email;
   String? _password;
   bool _isObscure = true;
+
+  loginHandler() async {
+    String? _returnString;
+    try {
+      _returnString = await Auth().loginUserWithEmail(_email!, _password!);
+      print("_returnString: $_returnString");
+      if (_returnString == "success") {
+        Get.to(() => BasicBottomNavBar(widget._ctx!));
+      } else
+        throw Exception(_returnString);
+    } catch (e) {
+      // handle error
+      Get.snackbar("Mohon maaf", "Email / password tidak sesuai",
+          duration: Duration(seconds: 5));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width;
@@ -50,6 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Form(
                   key: _formKey,
                   child: Column(
+                    mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       TextFormField(
@@ -100,39 +120,37 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: 12.0),
                       SizedBox(
                         width: _screenWidth,
-                        child: Expanded(
-                          child: Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Forgot Password?",
-                                style:
-                                    AppPalette.instance.textStyleSmallPrimary),
-                          ),
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                          child: Text("Forgot Password?",
+                              style: AppPalette.instance.textStyleSmallPrimary),
                         ),
                       ),
                       SizedBox(height: 12.0),
                       SizedBox(
                           width: _screenWidth,
-                          child: Expanded(
-                              child: PrimaryButton(
-                                  onPressed: _email != null && _password != null
-                                      ? () {}
-                                      : null,
-                                  label: 'Log in'))),
+                          child: PrimaryButton(
+                              onPressed: _email != null && _password != null
+                                  ? () {
+                                      loginHandler();
+                                    }
+                                  : null,
+                              label: 'Log in')),
                       SizedBox(height: 12.0),
                       SizedBox(
                           width: _screenWidth,
-                          child: Expanded(
-                              child: TextButton(
-                                  onPressed: () {
-                                    Get.to(() => SignUpScreen(widget._ctx));
-                                  },
-                                  child: Text("Sign Up",
-                                      style: AppPalette
-                                          .instance.textStylePrimary)))),
+                          child: TextButton(
+                              onPressed: () {
+                                Get.to(() => SignUpScreen(widget._ctx));
+                              },
+                              child: Text("Sign Up",
+                                  style:
+                                      AppPalette.instance.textStylePrimary))),
                       SizedBox(height: 12.0),
                       Container(
                         width: _screenWidth,
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
                                 child: Divider(

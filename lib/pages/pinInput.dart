@@ -116,7 +116,7 @@ class _PinInputScreenState extends State<PinInputScreen> {
     });
     print(pin.length);
     if (pin.length == 6) {
-      Get.to(() => BasicBottomNavBar(widget._ctx!));
+      Get.offAll(() => BasicBottomNavBar(widget._ctx!, index: 0));
     }
   }
 

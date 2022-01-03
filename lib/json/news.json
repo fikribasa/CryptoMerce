@@ -1,0 +1,44 @@
+{
+  "data": [
+    {
+      "id": "110",
+      "code": "ZAC",
+      "name": "ZACoin",
+      "image": "assets/icons/zaq.png",
+      "price": "77199",
+      "change": "9.77"
+    },
+    {
+      "id": "111",
+      "code": "BTC",
+      "name": "Bitcoin",
+      "image": "assets/icons/btc.png",
+      "price": "709290630",
+      "change": "-3.02"
+    },
+    {
+      "id": "112",
+      "code": "ETH",
+      "name": "Ethereum",
+      "image": "assets/icons/eth.png",
+      "price": "61246164",
+      "change": "9.77"
+    },
+    {
+      "id": "113",
+      "code": "GT",
+      "name": "Dash",
+      "image": "assets/icons/chart.png",
+      "price": "1979877",
+      "change": "9.77"
+    },
+    {
+      "id": "114",
+      "code": "XMR",
+      "name": "Monero",
+      "image": "assets/icons/xmr.png",
+      "price": "2923354",
+      "change": "-9.77"
+    }
+  ]
+}

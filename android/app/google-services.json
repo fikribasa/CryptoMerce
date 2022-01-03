@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "30405952651",
+    "project_id": "wartecapp",
+    "storage_bucket": "wartecapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30405952651:android:207622054267c508a0808e",
+        "android_client_info": {
+          "package_name": "com.example.wartec_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "30405952651-q8fpv8uua1e45val38rb72kr6gu57tpo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCq8fVTjVe3PwxKOxY83DIQM_uX9WcWWaA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "30405952651-q8fpv8uua1e45val38rb72kr6gu57tpo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

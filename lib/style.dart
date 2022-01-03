@@ -30,6 +30,9 @@ class AppPalette {
 
       primary = hexToColor("#E5E5E5");
       primary200 = hexToColor("#15377A");
+      primary09 = hexToColor("#086F59");
+
+      secondary = hexToColor("#FFF6EB");
 
       white = hexToColor("#ffffff");
       grey05 = hexToColor("#F2F2F2");
@@ -39,6 +42,7 @@ class AppPalette {
       brown = hexToColor("#715304");
       neutral80 = hexToColor("#40454F");
       success400 = hexToColor("#27AE60");
+      downtrend = hexToColor("#D90429");
     } catch (e) {
       print("Error init $e");
     }
@@ -60,8 +64,12 @@ class AppPalette {
 
   late final primary;
   late final primary200;
+  late final primary09;
   late final highlight;
   late final success400;
+  late final downtrend;
+
+  late final secondary;
 
   final grey = _grey;
   final fontSizeNormal = _fontSizeNormal;
@@ -89,6 +97,8 @@ class AppPalette {
       TextStyle(fontSize: _fontSizeAppBar, fontWeight: FontWeight.bold);
   final textStyleTheme = TextStyle(
       fontSize: 40.0, color: Colors.white, fontWeight: FontWeight.bold);
+  final textStyleHeadline =
+      TextStyle(fontWeight: FontWeight.w700, fontSize: 28);
   final textStyleThemePrimary = TextStyle(
       fontSize: 40.0,
       color: hexToColor("#D27F19"),
@@ -102,6 +112,9 @@ class AppPalette {
       fontSize: _fontSizeSmall,
       fontFamily: _fontFamily,
       color: hexToColor("#D27F19"));
+
+  final themeExpansionTile =
+      ThemeData(accentColor: Colors.black, dividerColor: Colors.transparent);
 }
 
 class StyleSelectedBox {

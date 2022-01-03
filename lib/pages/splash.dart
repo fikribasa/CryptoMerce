@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:wartec_app/components/bottomTab.dart';
+import 'package:wartec_app/pages/account.dart';
 import 'package:wartec_app/pages/login.dart';
 import 'package:wartec_app/services/appContext.dart';
+import 'package:wartec_app/services/authService.dart';
 import 'package:wartec_app/style.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -20,12 +23,19 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
     checkLoginState();
   }
 
   void checkLoginState() {
-    Future.delayed(Duration(seconds: 1), () {
-      Get.to(() => LoginScreen(widget._ctx));
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      final userID = Auth().userLoggedIn();
+      print("userID: $userID");
+      if (userID != null && userID.length > 0) {
+        Get.offAll(() => BasicBottomNavBar(widget._ctx!));
+      } else {
+        Get.offAll(() => LoginScreen(widget._ctx));
+      }
     });
   }
 

@@ -1,11 +1,17 @@
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:wartec_app/components/signout.dart';
+import 'package:wartec_app/pages/verifyIdetity.dart';
+import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/style.dart';
+import 'package:wartec_app/utils/storage.dart';
 
 class AccountScreen extends StatelessWidget {
-  const AccountScreen({Key? key}) : super(key: key);
+  final AppContext? _ctx;
+
+  AccountScreen(this._ctx, {Key? key}) : super(key: key);
   get _getAppbar {
     return new AppBar(
       title: Text("My Account",
@@ -79,6 +85,36 @@ class AccountScreen extends StatelessWidget {
     );
   }
 
+  Widget _verifyButton(double _screenWidth) {
+    if (_ctx!.user != null) {
+      return SizedBox(height: 1, width: 1);
+    }
+    return InkWell(
+      onTap: () {
+        Get.to(() => VerifyIdentityScreen(this._ctx!));
+      },
+      child: Container(
+        width: _screenWidth,
+        // alignment: Alignment.centerLeft,
+        padding:
+            const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 4.0),
+        decoration: BoxDecoration(
+            border: Border.all(width: 1.0, color: Colors.black12),
+            borderRadius: BorderRadius.all(Radius.circular(6.0))),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text("Verify your identity to unlock all features"),
+          SizedBox(height: 10.0),
+          Text(
+            "Verify Now",
+            style: TextStyle(
+                color: AppPalette.instance.accent1,
+                fontWeight: FontWeight.w600),
+          )
+        ]),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width;
@@ -92,51 +128,31 @@ class AccountScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                    width: _screenWidth,
+                Center(
+                  child: Container(
+                    width: 80,
+                    height: 80,
                     alignment: Alignment.center,
-                    child: Image.asset("assets/images/profile.png")),
-                SizedBox(height: 20.0),
-                Container(
-                  width: _screenWidth,
-                  // alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.only(
-                      top: 8.0, bottom: 8.0, left: 8.0, right: 4.0),
-                  decoration: BoxDecoration(
-                      border: Border.all(width: 1.0, color: Colors.black12),
-                      borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Verify your identity to unlock all features"),
-                        SizedBox(height: 10.0),
-                        Text(
-                          "Verify Now",
-                          style: TextStyle(
-                              color: AppPalette.instance.accent1,
-                              fontWeight: FontWeight.w600),
-                        )
-                      ]),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(40.0),
+                      child: _ctx!.user != null && _ctx!.user!.imageUrl != null
+                          ? FancyShimmerImage(
+                              imageUrl: "",
+                              shimmerBaseColor: AppPalette.instance.accent5,
+                            )
+                          : Image.asset("assets/images/profile.png"),
+                    ),
+                  ),
                 ),
                 SizedBox(height: 20.0),
-                _getForm("Full Name", "-"),
-                _getForm("KTP Number", "-"),
-                _getForm("Phone Number", "-"),
-                _getForm("Email", "rommyp@gmail.com"),
-                Container(
-                  margin: const EdgeInsets.only(top: 10.0),
-                  width: _screenWidth,
-                  alignment: Alignment.centerRight,
-                  child: TextButton.icon(
-                    label: SvgPicture.asset('assets/icons/out.svg'),
-                    icon: Text("Sign Out",
-                        style:
-                            TextStyle(color: AppPalette.instance.primary200)),
-                    onPressed: () {
-                      showAlertDialog(context);
-                    },
-                  ),
-                )
+                _verifyButton(_screenWidth),
+                SizedBox(height: 20.0),
+                _getForm("Full Name", this._ctx!.user?.fullName ?? "-"),
+                _getForm("KTP Number", this._ctx!.user?.ktpNumber ?? "-"),
+                _getForm("Phone Number", this._ctx!.user?.phoneNumber ?? "-"),
+                _getForm("Email",
+                    this._ctx!.user?.email ?? storage.read("userEmail") ?? "-"),
+                SignOutButton(this._ctx!)
               ],
             ),
           ),
