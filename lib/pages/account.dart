@@ -86,9 +86,9 @@ class AccountScreen extends StatelessWidget {
   }
 
   Widget _verifyButton(double _screenWidth) {
-    if (_ctx!.user != null) {
-      return SizedBox(height: 1, width: 1);
-    }
+    // if (_ctx!.user != null) {
+    //   return SizedBox(height: 1, width: 1);
+    // }
     return InkWell(
       onTap: () {
         Get.to(() => VerifyIdentityScreen(this._ctx!));
@@ -140,7 +140,7 @@ class AccountScreen extends StatelessWidget {
                               imageUrl: "",
                               shimmerBaseColor: AppPalette.instance.accent5,
                             )
-                          : Image.asset("assets/images/profile.png"),
+                          : Image.asset("assets/images/profile.jpg"),
                     ),
                   ),
                 ),

@@ -50,6 +50,8 @@ class Auth {
           dob: dob);
       String _returnString = await DBFuture().createUser(_user);
       if (_returnString == "success") {
+        storage.write("userID", user.uid);
+        storage.write("userEmail", user.email);
         retVal = "success";
       }
     } on PlatformException catch (e) {
@@ -83,8 +85,10 @@ class Auth {
     String retVal = "error";
 
     try {
-      await _auth.createUserWithEmailAndPassword(
+      final user = await _auth.createUserWithEmailAndPassword(
           email: email.trim(), password: password);
+      storage.write("userID", user.user!.uid);
+      storage.write("userEmail", user.user!.email);
       retVal = "success";
     } on PlatformException catch (e) {
       retVal = e.message!;

@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:wartec_app/utils/numberFormatter.dart';
 
 class TokenList {
@@ -31,6 +30,13 @@ class TokenItem {
   String? image;
   double? price;
   double? change;
+  String? headline;
+  String? detail;
+  String? capitalization;
+  String? valuation;
+  String? supply;
+  String? maxSupply;
+  String? volumeDay;
 
   TokenItem(
       {this.id, this.code, this.name, this.image, this.price, this.change});
@@ -42,6 +48,13 @@ class TokenItem {
     image = json['image'];
     price = double.parse(json['price']);
     change = double.parse(json['change']);
+    headline = json['headline'];
+    detail = json['detail'];
+    capitalization = json['capitalization'];
+    valuation = json['valuation'];
+    supply = json['supply'];
+    maxSupply = json['maxSupply'];
+    volumeDay = json['volumeDay'];
   }
 
   Map<String, dynamic> toJson() {

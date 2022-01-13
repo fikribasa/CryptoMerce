@@ -31,11 +31,13 @@ class _SplashScreenState extends State<SplashScreen> {
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       final userID = Auth().userLoggedIn();
       print("userID: $userID");
-      if (userID != null && userID.length > 0) {
-        Get.offAll(() => BasicBottomNavBar(widget._ctx!));
-      } else {
-        Get.offAll(() => LoginScreen(widget._ctx));
-      }
+      Future.delayed(Duration(seconds: 2), () {
+        if (userID != null && userID.length > 0) {
+          Get.offAll(() => BasicBottomNavBar(widget._ctx!));
+        } else {
+          Get.offAll(() => LoginScreen(widget._ctx));
+        }
+      });
     });
   }
 

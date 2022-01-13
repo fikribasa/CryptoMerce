@@ -1,9 +1,6 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/primaryButton.dart';
-import 'package:wartec_app/components/signout.dart';
 import 'package:wartec_app/pages/verifcationDocType.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/style.dart';

@@ -1,19 +1,25 @@
+import 'dart:io';
+
+import 'package:camera/camera.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:wartec_app/components/bottomTab.dart';
 import 'package:wartec_app/components/primaryButton.dart';
-import 'package:wartec_app/pages/pinInput.dart';
+import 'package:wartec_app/pages/accountVerification.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/services/authService.dart';
+import 'package:wartec_app/services/firestoreDB.dart';
 import 'package:wartec_app/style.dart';
 import 'package:wartec_app/utils/storage.dart';
 
 class PersonalInfoInputScreen extends StatefulWidget {
+  final XFile? photoID;
+  final XFile? photoSelfie;
   final AppContext? _ctx;
 
-  PersonalInfoInputScreen(this._ctx, {Key? key}) : super(key: key);
+  PersonalInfoInputScreen(this._ctx, this.photoID, this.photoSelfie, {Key? key})
+      : super(key: key);
 
   @override
   _PersonalInfoInputScreenState createState() =>
@@ -25,6 +31,7 @@ class _PersonalInfoInputScreenState extends State<PersonalInfoInputScreen> {
   String? idNumber;
   String? fullName;
   String? phoneNumber;
+  bool _isLoading = false;
   String suffix = "+62";
   TextEditingController dateCtl = TextEditingController();
   final dateFormatter = DateFormat('DD-MM-yyyy');
@@ -66,16 +73,47 @@ class _PersonalInfoInputScreenState extends State<PersonalInfoInputScreen> {
         phoneNumber == null) {
       Get.snackbar("Terjadi Kesalahan", "Mohon lengkapi isian anda");
       return null;
+    } else if (widget.photoID == null || widget.photoSelfie == null) {
+      Get.snackbar("Mohon maaf", "Mohon lengkapi photo anda");
     } else {
       try {
+        this.setState(() {
+          _isLoading = true;
+        });
+        Get.snackbar("Sedang Dalam Proses", "Mohon ditunggu");
         final reg = await Auth().signUpUser(
             _email, fullName!, idNumber!, suffix + phoneNumber!, dateCtl.text);
+        await uploadImageToFirebase(widget.photoID!.path, "photoID");
+        await uploadImageToFirebase(widget.photoSelfie!.path, "photoSelfie");
         if (reg == "success") {
-          Get.offAll(() => BasicBottomNavBar(widget._ctx!));
+          Get.to(() => AccountVerification(widget._ctx, _email));
         }
       } catch (e) {
         Get.snackbar("Terjadi Kesalahan", "Silakan coba lagi.\n$e");
+        this.setState(() {
+          _isLoading = false;
+        });
       }
+    }
+  }
+
+  Future uploadImageToFirebase(String? filePath, String? type) async {
+    try {
+      final userid = storage.read("userID");
+      String fileName = "$type-$userid"; //  basename(filePath);
+      print(fileName);
+      Reference firebaseStorageRef =
+          FirebaseStorage.instance.ref().child('uploads/$fileName');
+      UploadTask uploadTask = firebaseStorageRef.putFile(File(filePath!));
+      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+      taskSnapshot.ref.getDownloadURL().then(
+            (value) => print("Done: $value"),
+          );
+      final link = await taskSnapshot.ref.getDownloadURL();
+      final _uploaded = await DBFuture().updateUserImage(userid, type!, link);
+    } catch (e) {
+      print("uploadImageToFirebase: $e");
+      Get.snackbar("Terjadi Kesalahan", "$e");
     }
   }
 
@@ -132,19 +170,14 @@ class _PersonalInfoInputScreenState extends State<PersonalInfoInputScreen> {
                 TextFormField(
                   controller: dateCtl,
                   decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
-                    hintStyle: AppPalette.instance.textStyleSmall,
-                    enabledBorder: AppPalette.instance.outlineTextInput,
-                    focusedBorder: AppPalette.instance.outlineTextInput,
-                    border: AppPalette.instance.outlineTextInput,
-                    hintText: "DOB",
-                    suffixIcon: Icon(Icons.date_range_outlined, size: 22),
-                    // suffixIconConstraints: BoxConstraints(
-                    //   minWidth: 2,
-                    //   minHeight: 2,
-                    // ),
-                  ),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
+                      hintStyle: AppPalette.instance.textStyleSmall,
+                      enabledBorder: AppPalette.instance.outlineTextInput,
+                      focusedBorder: AppPalette.instance.outlineTextInput,
+                      border: AppPalette.instance.outlineTextInput,
+                      hintText: "DOB",
+                      suffixIcon: Icon(Icons.date_range_outlined, size: 22)),
                   onTap: () async {
                     FocusScope.of(context).requestFocus(new FocusNode());
                     final date = await showDatePicker(
@@ -152,7 +185,6 @@ class _PersonalInfoInputScreenState extends State<PersonalInfoInputScreen> {
                         initialDate: DateTime.now(),
                         firstDate: DateTime(1900),
                         lastDate: DateTime(2100));
-
                     dateCtl.text = dateFormatter.format(date!);
                   },
                 ),
@@ -193,18 +225,27 @@ class _PersonalInfoInputScreenState extends State<PersonalInfoInputScreen> {
                 Text(
                   "Country / Area cannot be changed later",
                   style: TextStyle(fontSize: 12),
-                )
+                ),
+                SizedBox(height: 80),
               ],
             ),
           ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 60),
-        width: _screenWidth,
-        child: PrimaryButton(label: "Next", onPressed: onRegister),
-      ),
+      floatingActionButton: _isLoading
+          ? Container(
+              padding: const EdgeInsets.all(12),
+              width: 60,
+              height: 60,
+              child:
+                  CircularProgressIndicator(color: AppPalette.instance.accent2),
+            )
+          : Container(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 10),
+              width: _screenWidth,
+              child: PrimaryButton(label: "Next", onPressed: onRegister),
+            ),
     );
   }
 }

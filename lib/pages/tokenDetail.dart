@@ -189,8 +189,94 @@ class TokenDetailScreen extends StatelessWidget {
                     style:
                         TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
                 SizedBox(height: 16.0),
-                Text(
-                    "Zakaria Affinity Coin (ZAC) \nThe Indonesian Cryptocurrency established for Fansystem community, ZAC was developed by Technology Social Nusantara, the largest digital community ecosystem platform."),
+                Text(item!.headline ?? ""),
+                Text(item!.detail ?? ""),
+                Container(
+                    width: _screenWidth,
+                    margin: const EdgeInsets.only(bottom: 10, top: 10),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Text("Visit Official Website"),
+                    )),
+                Text("Market Statistics",
+                    style:
+                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
+                Container(
+                    width: _screenWidth,
+                    margin: const EdgeInsets.only(top: 10),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Market Capitalization",
+                            style: TextStyle(color: AppPalette.instance.grey10),
+                          ),
+                          Text(
+                            item!.capitalization ?? "",
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          )
+                        ])),
+                Container(
+                    width: _screenWidth,
+                    margin: const EdgeInsets.only(top: 10),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Fully Diluted Valuation",
+                            style: TextStyle(color: AppPalette.instance.grey10),
+                          ),
+                          Text(
+                            item!.valuation ?? "",
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          )
+                        ])),
+                Container(
+                    width: _screenWidth,
+                    margin: const EdgeInsets.only(top: 10),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Circulating Supply",
+                            style: TextStyle(color: AppPalette.instance.grey10),
+                          ),
+                          Text(
+                            item!.supply ?? "",
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          )
+                        ])),
+                Container(
+                    width: _screenWidth,
+                    margin: const EdgeInsets.only(top: 10),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Maximum Supply",
+                            style: TextStyle(color: AppPalette.instance.grey10),
+                          ),
+                          Text(
+                            item!.maxSupply ?? "",
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          )
+                        ])),
+                Container(
+                    width: _screenWidth,
+                    margin: const EdgeInsets.only(top: 10),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Global Volume (24 Hours)",
+                            style: TextStyle(color: AppPalette.instance.grey10),
+                          ),
+                          Text(
+                            item!.volumeDay ?? "",
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          )
+                        ])),
+                SizedBox(height: 40),
               ],
             ),
           ),

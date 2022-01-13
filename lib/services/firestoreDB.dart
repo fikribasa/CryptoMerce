@@ -37,4 +37,22 @@ class DBFuture {
       return UserModel.fromJson(userData!);
     }
   }
+
+  Future<String?> updateUserImage(
+      String userId, String field, String link) async {
+    final usersCollection = FirebaseFirestore.instance.collection("users");
+    String retVal = "error";
+
+    try {
+      final _updateVal = {field: link};
+      final userDocument = usersCollection.doc(userId);
+      await userDocument.update(_updateVal);
+      print('sent at ${_updateVal[field]}');
+      retVal = "success";
+    } catch (e) {
+      print(e);
+      retVal = e.toString();
+    }
+    return retVal;
+  }
 }

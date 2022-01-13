@@ -133,7 +133,16 @@ class _LedgerScreenState extends State<LedgerScreen> {
                     Container(child: Image.asset("assets/images/wc2.png")),
                   ],
                 ),
-              )
+              ),
+              Center(
+                child: Container(
+                    margin: const EdgeInsets.only(top: 20, bottom: 40),
+                    width: _screenWidth,
+                    child: Image.asset(
+                      "assets/images/portfolio.png",
+                      fit: BoxFit.fill,
+                    )),
+              ),
             ],
           ),
         )),

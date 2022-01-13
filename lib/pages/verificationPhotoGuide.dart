@@ -1,12 +1,9 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/primaryButton.dart';
-import 'package:wartec_app/components/signout.dart';
-import 'package:wartec_app/pages/personalInfoInput.dart';
-import 'package:wartec_app/pages/varificationCamera.dart';
+import 'package:wartec_app/pages/verificationCamera.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/style.dart';
 
@@ -124,7 +121,7 @@ class _VerificationPhotoGuideScreenState
         child: PrimaryButton(
           label: "Next",
           onPressed: () {
-            Get.off(() => VerificationCameraScreen());
+            Get.back(result: true);
           },
         ),
       ),

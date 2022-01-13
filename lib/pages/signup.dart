@@ -37,7 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       }
       String _returnString = await Auth().signUpWithEmail(_email!, _password!);
       if (_returnString == "success") {
-        Get.to(() => AccountVerification(widget._ctx));
+        Get.to(() => AccountVerification(widget._ctx, _email!));
       } else {
         Get.snackbar("Terjadi Kesalahan", "Silakan coba lagi",
             duration: Duration(seconds: 4));
@@ -166,7 +166,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           width: _screenWidth,
                           child: PrimaryButton(
                               onPressed: () {
-                                print("ppp");
                                 _signUpEmail();
                               },
                               label: 'Sign Up')),

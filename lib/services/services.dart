@@ -55,8 +55,6 @@ class API extends HTTPService {
     try {
       final url = 'api/token-list';
       var response = await get(url, useCache: true);
-      print(response.statusCode);
-      print(response.body);
       final tokenList = TokenList.fromJson(json.decode(response.body));
       return Future.value(tokenList);
     } catch (e) {

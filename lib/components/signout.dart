@@ -31,8 +31,8 @@ class SignOutButton extends StatelessWidget {
       // title: Text("AlertDialog"),
       content: Text("Are you sure you want to sign out?"),
       actions: [
-        signOutButton,
         cancelButton,
+        signOutButton,
       ],
     );
     // show the dialog

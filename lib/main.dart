@@ -1,9 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:wartec_app/components/bottomTab.dart';
 import 'package:wartec_app/pages/landing.dart';
-import 'package:wartec_app/pages/login.dart';
 import 'package:wartec_app/pages/splash.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/services/prefs.dart';
@@ -49,9 +47,6 @@ class WartecApp extends StatefulWidget {
 class _WartecApp extends State<WartecApp> {
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
-
-  @override
-  void initState() {}
 
   // This widget is the root of your application.
   @override

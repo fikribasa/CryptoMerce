@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart';
@@ -120,7 +119,14 @@ final tokenList = """{
       "name": "ZACoin",
       "image": "assets/icons/zaq.png",
       "price": "77199",
-      "change": "9.77"
+      "change": "9.77",
+      "headline":"Zakaria Affinity Coin (ZAC)",
+      "detail":"The Indonesian Cryptocurrency established for Fansystem community, ZAC was developed by Technology Social Nusantara, the largest digital community ecosystem platform.",
+      "capitalization":"Rp 87 Billion",
+      "valuation":"Rp 93 Billion",
+      "supply":"1,126,957 ZAC",
+      "maxSupply":"333,777,999 ZAC",
+      "volumeDay":"Rp 7 Billion"
     },
     {
       "id": "111",
@@ -128,7 +134,14 @@ final tokenList = """{
       "name": "Bitcoin",
       "image": "assets/icons/btc.png",
       "price": "709290630",
-      "change": "-3.02"
+      "change": "-3.02",
+      "headline":"BITCOIN (BTC)",
+      "detail": "Bitcoin is a decentralized digital currency created in January 2009. It follows the ideas set out in a white paper by the mysterious and pseudonymous Satoshi Nakamoto. The identity of the person or persons who created the technology is still a mystery. Bitcoin offers the promise of lower transaction fees than traditional online payment mechanisms do, and unlike government-issued currencies, it is operated by a decentralized authority",
+      "capitalization":"Rp 12,802 Trillion",
+      "valuation":"Rp 14,211 Trillion",
+      "supply":"18,918,737 BTC",
+      "maxSupply":"21,000,000 BTC",
+      "volumeDay":"Rp 492,93 Trillion"
     },
     {
       "id": "112",
@@ -136,7 +149,14 @@ final tokenList = """{
       "name": "Ethereum",
       "image": "assets/icons/eth.png",
       "price": "61246164",
-      "change": "9.77"
+      "change": "9.77",
+      "headline":"Zakaria Affinity Coin (ZAC)",
+      "detail":"The Indonesian Cryptocurrency established for Fansystem community, ZAC was developed by Technology Social Nusantara, the largest digital community ecosystem platform.",
+      "capitalization":"Rp 12,802 Trillion",
+      "valuation":"Rp 14,211 Trillion",
+      "supply":"18,918,737 BTC",
+      "maxSupply":"21,000,000 BTC",
+      "volumeDay":"Rp 492,93 Trillion"
     },
     {
       "id": "113",
@@ -144,7 +164,14 @@ final tokenList = """{
       "name": "Dash",
       "image": "assets/icons/dash.png",
       "price": "1979877",
-      "change": "9.77"
+      "change": "9.77",
+      "headline":"Zakaria Affinity Coin (ZAC)",
+      "detail":"The Indonesian Cryptocurrency established for Fansystem community, ZAC was developed by Technology Social Nusantara, the largest digital community ecosystem platform.",
+      "capitalization":"Rp 12,802 Trillion",
+      "valuation":"Rp 14,211 Trillion",
+      "supply":"18,918,737 BTC",
+      "maxSupply":"21,000,000 BTC",
+      "volumeDay":"Rp 492,93 Trillion"
     },
     {
       "id": "114",
@@ -152,7 +179,56 @@ final tokenList = """{
       "name": "Monero",
       "image": "assets/icons/xmr.png",
       "price": "2923354",
-      "change": "-9.77"
+      "change": "-9.77",
+      "headline":"Zakaria Affinity Coin (ZAC)",
+      "detail":"The Indonesian Cryptocurrency established for Fansystem community, ZAC was developed by Technology Social Nusantara, the largest digital community ecosystem platform.",
+      "capitalization":"Rp 12,802 Trillion",
+      "valuation":"Rp 14,211 Trillion",
+      "supply":"18,918,737 BTC",
+      "maxSupply":"21,000,000 BTC",
+      "volumeDay":"Rp 492,93 Trillion"
+    },{
+      "id": "115",
+      "code": "EOS",
+      "name": "EOS",
+      "image": "assets/icons/eos.png",
+      "price": "2923354",
+      "change": "-9.77",
+      "headline":"EOSIO (EOS)",
+      "detail":"The Indonesian Cryptocurrency established for Fansystem community, ZAC was developed by Technology Social Nusantara, the largest digital community ecosystem platform.",
+      "capitalization":"Rp 12,802 Trillion",
+      "valuation":"Rp 14,211 Trillion",
+      "supply":"18,918,737 BTC",
+      "maxSupply":"21,000,000 BTC",
+      "volumeDay":"Rp 492,93 Trillion"
+    },{
+      "id": "116",
+      "code": "IOTA",
+      "name": "IOTA",
+      "image": "assets/icons/iota.png",
+      "price": "2923354",
+      "change": "-9.77",
+      "headline":"IOTA",
+      "detail":"The Indonesian Cryptocurrency established for Fansystem community, ZAC was developed by Technology Social Nusantara, the largest digital community ecosystem platform.",
+      "capitalization":"Rp 12,802 Trillion",
+      "valuation":"Rp 14,211 Trillion",
+      "supply":"18,918,737 BTC",
+      "maxSupply":"21,000,000 BTC",
+      "volumeDay":"Rp 492,93 Trillion"
+    },{
+      "id": "117",
+      "code": "XRP",
+      "name": "XRP",
+      "image": "assets/icons/xrp.png",
+      "price": "2923354",
+      "change": "-9.77",
+      "headline":"Ripple",
+      "detail":"The Indonesian Cryptocurrency established for Fansystem community, ZAC was developed by Technology Social Nusantara, the largest digital community ecosystem platform.",
+      "capitalization":"Rp 12,802 Trillion",
+      "valuation":"Rp 14,211 Trillion",
+      "supply":"18,918,737 BTC",
+      "maxSupply":"21,000,000 BTC",
+      "volumeDay":"Rp 492,93 Trillion"
     }
   ]
 }

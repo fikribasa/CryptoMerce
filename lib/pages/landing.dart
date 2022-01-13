@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:wartec_app/components/CoinCard.dart';
+import 'package:wartec_app/components/bottomTab.dart';
+import 'package:wartec_app/components/rightSlider.dart';
 import 'package:wartec_app/models/tokenList.dart';
 import 'package:wartec_app/pages/account.dart';
 import 'package:wartec_app/pages/tokenDetail.dart';
@@ -48,24 +51,29 @@ class _LandingPageState extends State<LandingPage> {
     });
   }
 
+  String greeting() {
+    var hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Morning';
+    }
+    if (hour < 17) {
+      return 'Afternoon';
+    }
+    return 'Evening';
+  }
+
   Widget _renderProfileImage() {
-    return InkWell(
-      onTap: () {
-        Get.to(() => AccountScreen(widget._ctx));
-      },
-      child: Container(
-        width: 30.0,
-        height: 30.0,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(15.0),
-          child:
-              widget._ctx!.user != null && widget._ctx!.user!.imageUrl != null
-                  ? FancyShimmerImage(
-                      imageUrl: "",
-                      shimmerBaseColor: AppPalette.instance.accent5,
-                    )
-                  : Image.asset("assets/images/profile.png"),
-        ),
+    return Container(
+      width: 30.0,
+      height: 30.0,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15.0),
+        child: widget._ctx!.user != null && widget._ctx!.user!.imageUrl != null
+            ? FancyShimmerImage(
+                imageUrl: "",
+                shimmerBaseColor: AppPalette.instance.accent5,
+              )
+            : Image.asset("assets/images/profile.jpg"),
       ),
     );
   }
@@ -106,7 +114,11 @@ class _LandingPageState extends State<LandingPage> {
                 ],
               ),
             ),
-            Expanded(flex: 2, child: Image.asset("assets/images/chart.png")),
+            Expanded(
+                flex: 2,
+                child: item.change! >= 0
+                    ? Image.asset("assets/images/chart.png")
+                    : Image.asset("assets/images/chart-down.png")),
             Expanded(
               flex: 4,
               child: Column(
@@ -165,7 +177,7 @@ class _LandingPageState extends State<LandingPage> {
                   shrinkWrap: true,
                   itemCount: _tokenList!.item!.length,
                   itemBuilder: (_, int index) {
-                    return coinCard(_tokenList!.item![index]);
+                    return CoinCard(widget._ctx, _tokenList!.item![index]);
                   },
                 )
               : Center(
@@ -282,7 +294,8 @@ class _LandingPageState extends State<LandingPage> {
                                           'assets/icons/bell.svg')),
                                 ),
                                 SizedBox(width: 10.0),
-                                _renderProfileImage()
+                                RightSliderWidget(widget._ctx!,
+                                    icon: _renderProfileImage())
                               ],
                             ),
                           )
@@ -293,7 +306,7 @@ class _LandingPageState extends State<LandingPage> {
                     RichText(
                         text: TextSpan(children: [
                       TextSpan(
-                        text: "Good Afternoon,",
+                        text: "Good ${greeting()},",
                         style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.w600,
@@ -319,12 +332,39 @@ class _LandingPageState extends State<LandingPage> {
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
                         children: [
-                          Container(
-                              child: Image.asset("assets/images/wc2.png")),
-                          Container(
-                              child: Image.asset("assets/images/wc11.png")),
-                          Container(
-                              child: Image.asset("assets/images/wc21.png")),
+                          InkWell(
+                            onTap: () {
+                              Get.to(() => TokenDetailScreen(
+                                  widget._ctx, _tokenList!.item![0]));
+                            },
+                            child: Container(
+                                child: Image.asset("assets/images/wc2.png")),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Get.to(() => TokenDetailScreen(
+                                  widget._ctx, _tokenList!.item![1]));
+                            },
+                            child: Container(
+                                child: Image.asset("assets/images/wc1.png")),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              //to topup screen
+                            },
+                            child: Container(
+                                child: Image.asset("assets/images/wc21.png")),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              BasicBottomNavBar(
+                                widget._ctx!,
+                                index: 3,
+                              );
+                            },
+                            child: Container(
+                                child: Image.asset("assets/images/wc11.png")),
+                          ),
                         ],
                       ),
                     ),

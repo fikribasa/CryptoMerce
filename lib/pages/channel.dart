@@ -62,9 +62,7 @@ class _ChannelScreenState extends State<ChannelScreen> {
                           color: AppPalette.instance.grey10,
                           fontSize: 10.0,
                         )),
-                    SizedBox(
-                      height: 10.0,
-                    ),
+                    SizedBox(height: 4.0),
                     Text(
                       item.title ?? "",
                       maxLines: 2,
@@ -87,6 +85,58 @@ class _ChannelScreenState extends State<ChannelScreen> {
               child: FancyShimmerImage(
                 imageUrl: item.imageUrl!,
                 shimmerBaseColor: AppPalette.instance.accent5,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget horizontalHeadline(double screenWidth, HeadlineItem item) {
+    return InkWell(
+      onTap: () {
+        Get.to(() => ArticleScreen(item));
+      },
+      child: Container(
+        width: 200,
+        height: 220,
+        // margin: const EdgeInsets.only(bottom: 16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: 180,
+              height: 140,
+              // margin: const EdgeInsets.all(8.0),
+              child: FancyShimmerImage(
+                imageUrl: item.imageUrl!,
+                shimmerBaseColor: AppPalette.instance.accent5,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.only(top: 4, left: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(item.sourceName ?? "",
+                        style: TextStyle(
+                          color: AppPalette.instance.grey10,
+                          fontSize: 10.0,
+                        )),
+                    SizedBox(height: 4.0),
+                    Text(
+                      item.title ?? "",
+                      maxLines: 2,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -161,6 +211,24 @@ class _ChannelScreenState extends State<ChannelScreen> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
               ),
               SizedBox(height: 20.0),
+              !_isLoading && _headlines != null && _headlines!.data != null
+                  ? Container(
+                      width: _screenWidth,
+                      height: 210,
+                      child: ListView.builder(
+                        primary: false,
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: _headlines!.data!.length > 5
+                            ? 5
+                            : _headlines!.data!.length,
+                        itemBuilder: (_, int index) {
+                          return horizontalHeadline(
+                              _screenWidth, _headlines!.data![index]);
+                        },
+                      ),
+                    )
+                  : Text("Loading"),
               SizedBox(height: 20.0),
               Text("Recent News",
                   style:
