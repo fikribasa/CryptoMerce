@@ -50,143 +50,167 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width;
-    return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/images/bg.jpg"), fit: BoxFit.fill)),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SafeArea(
-            child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: 40.0),
-                Text("Wartec",
-                    style: AppPalette.instance.textStyleThemePrimary),
-                Text(
-                  "Warung Technology Ecosystem & Cryptocurrency",
-                  style: TextStyle(
-                      color: AppPalette.instance.grey10, fontSize: 12.0),
-                ),
-                SizedBox(height: 20.0),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      TextFormField(
-                        autocorrect: false,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 2.0, horizontal: 8.0),
-                            hintStyle: AppPalette.instance.textStyleSmall,
-                            enabledBorder: AppPalette.instance.outlineTextInput,
-                            focusedBorder: AppPalette.instance.outlineTextInput,
-                            border: AppPalette.instance.outlineTextInput,
-                            hintText: 'Email Address'),
-                        keyboardType: TextInputType.emailAddress,
-                        onChanged: (value) {
-                          setState(() {
-                            _email = value;
-                          });
-                        },
-                      ),
-                      SizedBox(height: 20.0),
-                      TextFormField(
-                        obscureText: _isObscure,
-                        autocorrect: false,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 2.0, horizontal: 8.0),
-                            hintStyle: AppPalette.instance.textStyleSmall,
-                            enabledBorder: AppPalette.instance.outlineTextInput,
-                            focusedBorder: AppPalette.instance.outlineTextInput,
-                            border: AppPalette.instance.outlineTextInput,
-                            hintText: 'Password',
-                            suffixIcon: IconButton(
-                                icon: Icon(_isObscure
-                                    ? Icons.visibility
-                                    : Icons.visibility_off),
-                                onPressed: () {
-                                  setState(() {
-                                    _isObscure = !_isObscure;
-                                  });
-                                })),
-                        keyboardType: TextInputType.visiblePassword,
-                        onChanged: (value) {
-                          setState(() {
-                            _password = value;
-                          });
-                        },
-                      ),
-                      SizedBox(height: 4.0),
-                      Text(
-                        "Must contain at least 8 characters, with capital letter(s), small letter(s), and number(s) in it.",
-                        style: TextStyle(fontSize: 12.0),
-                      ),
-                      SizedBox(height: 16.0),
-                      TextFormField(
-                        obscureText: _isObscureConfirmation,
-                        autocorrect: false,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 2.0, horizontal: 8.0),
-                            hintStyle: AppPalette.instance.textStyleSmall,
-                            enabledBorder: AppPalette.instance.outlineTextInput,
-                            focusedBorder: AppPalette.instance.outlineTextInput,
-                            border: AppPalette.instance.outlineTextInput,
-                            hintText: 'Confirm Password',
-                            suffixIcon: IconButton(
-                                icon: Icon(_isObscureConfirmation
-                                    ? Icons.visibility
-                                    : Icons.visibility_off),
-                                onPressed: () {
-                                  setState(() {
-                                    _isObscureConfirmation =
-                                        !_isObscureConfirmation;
-                                  });
-                                })),
-                        keyboardType: TextInputType.visiblePassword,
-                        onChanged: (value) {
-                          setState(() {
-                            _confirmationPassword = value;
-                          });
-                        },
-                      ),
-                      SizedBox(height: 12.0),
-                      Text("By signing up, you agree to our",
-                          style: TextStyle(fontSize: 12.0)),
-                      Text("Terms & Conditions",
-                          style: AppPalette.instance.textStyleSmallPrimary),
-                      SizedBox(height: 20.0),
-                      SizedBox(
-                          width: _screenWidth,
-                          child: PrimaryButton(
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+          child: Stack(children: [
+        Align(
+          child: Image.asset(
+            "assets/images/header.png",
+            width: _screenWidth,
+          ),
+          alignment: Alignment.topCenter,
+        ),
+        Align(
+          child: Image.asset(
+            "assets/images/footer.png",
+            width: _screenWidth,
+          ),
+          alignment: Alignment.bottomCenter,
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/icons/logotype-wartec.png",
+                    width: 160,
+                  ),
+                  Text(
+                    "Warung Technology Ecosystem & Cryptocurrency",
+                    style: TextStyle(
+                        color: AppPalette.instance.grey10, fontSize: 12.0),
+                  ),
+                  SizedBox(height: 20.0),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        TextFormField(
+                          autocorrect: false,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 2.0, horizontal: 8.0),
+                              hintStyle: AppPalette.instance.textStyleSmall,
+                              enabledBorder:
+                                  AppPalette.instance.outlineTextInput,
+                              focusedBorder:
+                                  AppPalette.instance.outlineTextInput,
+                              border: AppPalette.instance.outlineTextInput,
+                              hintText: 'Email Address'),
+                          keyboardType: TextInputType.emailAddress,
+                          onChanged: (value) {
+                            setState(() {
+                              _email = value;
+                            });
+                          },
+                        ),
+                        SizedBox(height: 20.0),
+                        TextFormField(
+                          obscureText: _isObscure,
+                          autocorrect: false,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 2.0, horizontal: 8.0),
+                              hintStyle: AppPalette.instance.textStyleSmall,
+                              enabledBorder:
+                                  AppPalette.instance.outlineTextInput,
+                              focusedBorder:
+                                  AppPalette.instance.outlineTextInput,
+                              border: AppPalette.instance.outlineTextInput,
+                              hintText: 'Password',
+                              suffixIcon: IconButton(
+                                  icon: Icon(_isObscure
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isObscure = !_isObscure;
+                                    });
+                                  })),
+                          keyboardType: TextInputType.visiblePassword,
+                          onChanged: (value) {
+                            setState(() {
+                              _password = value;
+                            });
+                          },
+                        ),
+                        SizedBox(height: 4.0),
+                        Text(
+                          "Must contain at least 8 characters, with capital letter(s), small letter(s), and number(s) in it.",
+                          style: TextStyle(fontSize: 12.0),
+                        ),
+                        SizedBox(height: 16.0),
+                        TextFormField(
+                          obscureText: _isObscureConfirmation,
+                          autocorrect: false,
+                          decoration: InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 2.0, horizontal: 8.0),
+                              hintStyle: AppPalette.instance.textStyleSmall,
+                              enabledBorder:
+                                  AppPalette.instance.outlineTextInput,
+                              focusedBorder:
+                                  AppPalette.instance.outlineTextInput,
+                              border: AppPalette.instance.outlineTextInput,
+                              hintText: 'Confirm Password',
+                              suffixIcon: IconButton(
+                                  icon: Icon(_isObscureConfirmation
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isObscureConfirmation =
+                                          !_isObscureConfirmation;
+                                    });
+                                  })),
+                          keyboardType: TextInputType.visiblePassword,
+                          onChanged: (value) {
+                            setState(() {
+                              _confirmationPassword = value;
+                            });
+                          },
+                        ),
+                        SizedBox(height: 12.0),
+                        Text("By signing up, you agree to our",
+                            style: TextStyle(fontSize: 12.0)),
+                        SizedBox(height: 6.0),
+                        Text("Terms & Conditions",
+                            style: AppPalette.instance.textStyleSmallPrimary),
+                        SizedBox(height: 20.0),
+                        SizedBox(
+                          width: 140,
+                          child: PrimaryButtonSmall(
                               onPressed: () {
                                 _signUpEmail();
                               },
-                              label: 'Sign Up')),
-                      SizedBox(height: 12.0),
-                      SizedBox(
-                          width: _screenWidth,
-                          child: TextButton(
-                              onPressed: () {
-                                Get.back();
-                              },
-                              child: Text("Log In",
-                                  style:
-                                      AppPalette.instance.textStylePrimary))),
-                    ],
-                  ),
-                )
-              ],
+                              label: 'Sign Up      '),
+                        ),
+                        SizedBox(height: 12.0),
+                        SizedBox(
+                            width: _screenWidth,
+                            child: TextButton(
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                child: Text("Log In",
+                                    style:
+                                        AppPalette.instance.textStylePrimary))),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
-        )),
-      ),
+        ),
+      ])),
     );
   }
 }

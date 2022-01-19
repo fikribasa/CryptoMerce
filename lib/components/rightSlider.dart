@@ -42,8 +42,10 @@ class _RightSliderWidgetState extends State<RightSliderWidget> {
           style: TextStyle(color: Colors.white, fontSize: 11.0),
         ),
         decoration: BoxDecoration(
-            color: AppPalette.instance.brown,
-            border: Border.all(color: Colors.black26),
+            color: AppPalette.instance.accent5,
+            border: Border.all(
+              color: AppPalette.instance.accent5,
+            ),
             borderRadius: BorderRadius.circular(4.0)),
       ),
     );
@@ -60,11 +62,13 @@ class _RightSliderWidgetState extends State<RightSliderWidget> {
         padding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 20.0),
         child: Text(
           curr,
-          style: TextStyle(color: AppPalette.instance.brown, fontSize: 11.0),
+          style: TextStyle(color: AppPalette.instance.accent5, fontSize: 11.0),
         ),
         decoration: BoxDecoration(
             color: Colors.white,
-            border: Border.all(color: Colors.black26),
+            border: Border.all(
+              color: AppPalette.instance.accent5,
+            ),
             borderRadius: BorderRadius.circular(
               4.0,
             )),
@@ -88,19 +92,20 @@ class _RightSliderWidgetState extends State<RightSliderWidget> {
       child: Container(
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.only(bottom: 10.0),
-        decoration: BoxDecoration(
-            border: Border.all(width: 1.0, color: Colors.black12),
-            borderRadius: BorderRadius.all(Radius.circular(6.0))),
+        // decoration: BoxDecoration(
+        //     border: Border.all(width: 1.0, color: Colors.black12),
+        //     borderRadius: BorderRadius.all(Radius.circular(6.0))),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            SvgPicture.asset('assets/icons/star-grey.svg'),
+            SizedBox(width: 12),
             Text(
               title,
               style: TextStyle(
                   color: AppPalette.instance.grey10,
                   fontWeight: FontWeight.w700),
             ),
-            Icon(Icons.arrow_right)
           ],
         ),
       ),

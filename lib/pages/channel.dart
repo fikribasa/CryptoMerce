@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:wartec_app/components/profileWidget.dart';
+import 'package:wartec_app/components/rightSlider.dart';
 import 'package:wartec_app/models/headlines.dart';
 import 'package:wartec_app/pages/article.dart';
 import 'package:wartec_app/services/appContext.dart';
@@ -145,6 +147,36 @@ class _ChannelScreenState extends State<ChannelScreen> {
     );
   }
 
+  Widget _renderHeader(double _screenWidth) {
+    return Container(
+      width: _screenWidth,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          RightSliderWidget(widget._ctx, icon: ProfileWidget(widget._ctx)),
+          Container(
+            width: _screenWidth * 0.75,
+            decoration: BoxDecoration(
+              color: AppPalette.instance.grey05,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: TextField(
+              controller: _controller,
+              style: new TextStyle(
+                color: Colors.black,
+              ),
+              decoration: new InputDecoration(
+                  border: InputBorder.none,
+                  prefixIcon: new Icon(Icons.search, color: Colors.black38),
+                  hintText: "Search Topic",
+                  hintStyle: new TextStyle(color: Colors.black38)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width;
@@ -158,53 +190,7 @@ class _ChannelScreenState extends State<ChannelScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 8),
-              Text("Channel", style: AppPalette.instance.textStyleAppBar),
-              Container(
-                  margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                  decoration: BoxDecoration(
-                      color: AppPalette.instance.accent5,
-                      borderRadius: BorderRadius.circular(12.0)),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 40.0, vertical: 4.0),
-                  child: Text("News",
-                      style: TextStyle(
-                          fontSize: 12.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold))),
-              Container(
-                width: _screenWidth,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: _screenWidth * 0.75,
-                      decoration: BoxDecoration(
-                        color: AppPalette.instance.grey05,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: TextField(
-                        controller: _controller,
-                        style: new TextStyle(
-                          color: Colors.black,
-                        ),
-                        decoration: new InputDecoration(
-                            border: InputBorder.none,
-                            prefixIcon:
-                                new Icon(Icons.search, color: Colors.black38),
-                            hintText: "Search",
-                            hintStyle: new TextStyle(color: Colors.black38)),
-                      ),
-                    ),
-                    Container(
-                        decoration: BoxDecoration(
-                            color: AppPalette.instance.grey05,
-                            borderRadius: BorderRadius.circular(6)),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 12.0, vertical: 12.0),
-                        child: SvgPicture.asset("assets/icons/sort.svg"))
-                  ],
-                ),
-              ),
+              _renderHeader(_screenWidth),
               SizedBox(height: 20.0),
               Text(
                 "Top News",

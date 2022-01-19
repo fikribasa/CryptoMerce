@@ -30,6 +30,8 @@ class _VerificationUploadScreenState extends State<VerificationUploadScreen> {
 
   get _getAppbar {
     return new AppBar(
+      title: Text("Upload ${widget.documentType}",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
       backgroundColor: Colors.white,
       elevation: 0.0,
       leading: new InkWell(
@@ -50,7 +52,7 @@ class _VerificationUploadScreenState extends State<VerificationUploadScreen> {
     return Container(
         width: _screenWidth,
         padding: EdgeInsets.only(top: 40, bottom: 40),
-        color: AppPalette.instance.secondary,
+        color: AppPalette.instance.primary,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -71,7 +73,7 @@ class _VerificationUploadScreenState extends State<VerificationUploadScreen> {
                     child: Text(
                       "Reupload",
                       style: TextStyle(
-                          color: AppPalette.instance.accent1,
+                          color: AppPalette.instance.accent5,
                           fontWeight: FontWeight.bold),
                     ),
                   )),
@@ -85,7 +87,6 @@ class _VerificationUploadScreenState extends State<VerificationUploadScreen> {
     final _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: _getAppbar,
-      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
         child: SafeArea(
@@ -93,12 +94,10 @@ class _VerificationUploadScreenState extends State<VerificationUploadScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Upload ${widget.documentType}",
-                    style: AppPalette.instance.textStyleHeadline),
-                SizedBox(height: 40),
+                SizedBox(height: 20),
                 DottedBorder(
-                  color: AppPalette.instance.accent2,
-                  strokeWidth: 2,
+                  color: AppPalette.instance.neutral05,
+                  strokeWidth: 1,
                   child: photoID != null
                       ? imagePreview(_screenWidth, photoID)
                       : InkWell(
@@ -119,7 +118,7 @@ class _VerificationUploadScreenState extends State<VerificationUploadScreen> {
                           child: Container(
                             width: _screenWidth,
                             padding: EdgeInsets.only(top: 40, bottom: 40),
-                            color: AppPalette.instance.secondary,
+                            color: AppPalette.instance.primary,
                             child: Column(
                               children: [
                                 Container(
@@ -136,8 +135,8 @@ class _VerificationUploadScreenState extends State<VerificationUploadScreen> {
                 ),
                 SizedBox(height: 20),
                 DottedBorder(
-                  color: AppPalette.instance.accent2,
-                  strokeWidth: 2,
+                  color: AppPalette.instance.neutral05,
+                  strokeWidth: 1,
                   child: photoSelfie != null
                       ? imagePreview(_screenWidth, photoSelfie)
                       : InkWell(
@@ -158,7 +157,7 @@ class _VerificationUploadScreenState extends State<VerificationUploadScreen> {
                           child: Container(
                             width: _screenWidth,
                             padding: EdgeInsets.only(top: 30, bottom: 30),
-                            color: AppPalette.instance.secondary,
+                            color: AppPalette.instance.primary,
                             child: Column(
                               children: [
                                 photoSelfie != null

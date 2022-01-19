@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wartec_app/components/CoinCard.dart';
 import 'package:wartec_app/components/basicLoading.dart';
+import 'package:wartec_app/components/profileWidget.dart';
 import 'package:wartec_app/components/rightSlider.dart';
 import 'package:wartec_app/models/tokenList.dart';
 import 'package:wartec_app/services/appContext.dart';
@@ -36,6 +37,143 @@ class _MarketScreenState extends State<MarketScreen> {
     });
   }
 
+  Widget _renderHeader(double _screenWidth) {
+    return Container(
+      width: _screenWidth,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          RightSliderWidget(widget._ctx, icon: ProfileWidget(widget._ctx)),
+          Container(
+            width: _screenWidth * 0.6,
+            decoration: BoxDecoration(
+              color: AppPalette.instance.grey05,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: TextField(
+              controller: _controller,
+              style: new TextStyle(
+                color: Colors.black,
+              ),
+              decoration: new InputDecoration(
+                  border: InputBorder.none,
+                  prefixIcon: new Icon(Icons.search, color: Colors.black38),
+                  hintText: "Search Crypto",
+                  hintStyle: new TextStyle(color: Colors.black38)),
+            ),
+          ),
+          InkWell(
+            child: Container(
+                decoration: BoxDecoration(
+                    color: AppPalette.instance.grey05,
+                    borderRadius: BorderRadius.circular(6)),
+                padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+                child: SvgPicture.asset("assets/icons/sort.svg")),
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12.0)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 20),
+                        Text("Sort",
+                            style: TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.w700)),
+                        SizedBox(height: 10),
+                        LabeledRadio(
+                          label: 'Recomended',
+                          value: true,
+                          groupValue: _isRadioSelected,
+                          onChanged: (bool newValue) {
+                            setState(() {
+                              _isRadioSelected = newValue;
+                            });
+                          },
+                        ),
+                        LabeledRadio(
+                          label: 'Newest First',
+                          value: true,
+                          groupValue: _isRadioSelected,
+                          onChanged: (bool newValue) {
+                            setState(() {
+                              _isRadioSelected = newValue;
+                            });
+                          },
+                        ),
+                        LabeledRadio(
+                          label: 'Lowest Price',
+                          value: true,
+                          groupValue: _isRadioSelected,
+                          onChanged: (bool newValue) {
+                            setState(() {
+                              _isRadioSelected = newValue;
+                            });
+                          },
+                        ),
+                        LabeledRadio(
+                          label: 'Highest Price',
+                          value: true,
+                          groupValue: _isRadioSelected,
+                          onChanged: (bool newValue) {
+                            setState(() {
+                              _isRadioSelected = newValue;
+                            });
+                          },
+                        ),
+                        SizedBox(height: 20),
+                        Text("Show",
+                            style: TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.w700)),
+                        SizedBox(height: 10),
+                        LabeledCheck(
+                          label: 'Losers',
+                          value: _loser,
+                          groupValue: _loser,
+                          onChanged: (bool newValue) {
+                            setState(() {
+                              _loser = newValue;
+                            });
+                          },
+                        ),
+                        LabeledCheck(
+                          label: 'Gainers',
+                          value: _loser,
+                          groupValue: _loser,
+                          onChanged: (bool newValue) {
+                            setState(() {
+                              _loser = newValue;
+                            });
+                          },
+                        ),
+                        LabeledCheck(
+                          label: 'Watchlist',
+                          value: _loser,
+                          groupValue: _loser,
+                          onChanged: (bool newValue) {
+                            setState(() {
+                              _loser = newValue;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width;
@@ -48,152 +186,12 @@ class _MarketScreenState extends State<MarketScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                  width: _screenWidth,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Market",
-                          style: AppPalette.instance.textStyleAppBar),
-                      RightSliderWidget(widget._ctx)
-                    ],
-                  )),
-              SizedBox(height: 20.0),
+              _renderHeader(_screenWidth),
               Container(
                 width: _screenWidth,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: _screenWidth * 0.75,
-                      decoration: BoxDecoration(
-                        color: AppPalette.instance.grey05,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: TextField(
-                        controller: _controller,
-                        style: new TextStyle(
-                          color: Colors.black,
-                        ),
-                        decoration: new InputDecoration(
-                            border: InputBorder.none,
-                            prefixIcon:
-                                new Icon(Icons.search, color: Colors.black38),
-                            hintText: "Search",
-                            hintStyle: new TextStyle(color: Colors.black38)),
-                      ),
-                    ),
-                    InkWell(
-                      child: Container(
-                          decoration: BoxDecoration(
-                              color: AppPalette.instance.grey05,
-                              borderRadius: BorderRadius.circular(6)),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 12.0, vertical: 12.0),
-                          child: SvgPicture.asset("assets/icons/sort.svg")),
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (context) {
-                            return Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 8),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(12.0)),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(height: 20),
-                                  Text("Sort",
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700)),
-                                  SizedBox(height: 10),
-                                  LabeledRadio(
-                                    label: 'Recomended',
-                                    value: true,
-                                    groupValue: _isRadioSelected,
-                                    onChanged: (bool newValue) {
-                                      setState(() {
-                                        _isRadioSelected = newValue;
-                                      });
-                                    },
-                                  ),
-                                  LabeledRadio(
-                                    label: 'Newest First',
-                                    value: true,
-                                    groupValue: _isRadioSelected,
-                                    onChanged: (bool newValue) {
-                                      setState(() {
-                                        _isRadioSelected = newValue;
-                                      });
-                                    },
-                                  ),
-                                  LabeledRadio(
-                                    label: 'Lowest Price',
-                                    value: true,
-                                    groupValue: _isRadioSelected,
-                                    onChanged: (bool newValue) {
-                                      setState(() {
-                                        _isRadioSelected = newValue;
-                                      });
-                                    },
-                                  ),
-                                  LabeledRadio(
-                                    label: 'Highest Price',
-                                    value: true,
-                                    groupValue: _isRadioSelected,
-                                    onChanged: (bool newValue) {
-                                      setState(() {
-                                        _isRadioSelected = newValue;
-                                      });
-                                    },
-                                  ),
-                                  SizedBox(height: 20),
-                                  Text("Show",
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w700)),
-                                  SizedBox(height: 10),
-                                  LabeledCheck(
-                                    label: 'Losers',
-                                    value: _loser,
-                                    groupValue: _loser,
-                                    onChanged: (bool newValue) {
-                                      setState(() {
-                                        _loser = newValue;
-                                      });
-                                    },
-                                  ),
-                                  LabeledCheck(
-                                    label: 'Gainers',
-                                    value: _loser,
-                                    groupValue: _loser,
-                                    onChanged: (bool newValue) {
-                                      setState(() {
-                                        _loser = newValue;
-                                      });
-                                    },
-                                  ),
-                                  LabeledCheck(
-                                    label: 'Watchlist',
-                                    value: _loser,
-                                    groupValue: _loser,
-                                    onChanged: (bool newValue) {
-                                      setState(() {
-                                        _loser = newValue;
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    )
-                  ],
+                  children: [],
                 ),
               ),
               SizedBox(height: 20.0),

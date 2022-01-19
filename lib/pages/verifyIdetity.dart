@@ -11,6 +11,8 @@ class VerifyIdentityScreen extends StatelessWidget {
   VerifyIdentityScreen(this._ctx, {Key? key}) : super(key: key);
   get _getAppbar {
     return new AppBar(
+      title: Text("Identity Verification Needed",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
       backgroundColor: Colors.white,
       elevation: 0.0,
       leading: new InkWell(
@@ -33,9 +35,8 @@ class VerifyIdentityScreen extends StatelessWidget {
     final _screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: _getAppbar,
-      backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
+        padding: const EdgeInsets.fromLTRB(16.0, 16, 16.0, 16.0),
         child: SafeArea(
           child: SingleChildScrollView(
             child: Container(
@@ -46,11 +47,10 @@ class VerifyIdentityScreen extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      Text("Identity Verification Needed",
-                          style: AppPalette.instance.textStyleHeadline),
-                      SizedBox(height: 6),
                       Text(
-                          "Verification required for your transactions and asset security."),
+                        "Verification required for your transactions and asset security.",
+                        textAlign: TextAlign.center,
+                      ),
                     ],
                   ),
                   Column(
@@ -63,10 +63,10 @@ class VerifyIdentityScreen extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 10, bottom: 10),
+                        margin: const EdgeInsets.only(top: 20, bottom: 10),
                         padding: EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                            color: AppPalette.instance.grey05,
+                            color: Colors.white,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(8.0))),
                         child: Text(

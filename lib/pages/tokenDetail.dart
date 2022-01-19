@@ -74,7 +74,6 @@ class TokenDetailScreen extends StatelessWidget {
     final _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: _getAppbar,
-      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SafeArea(
@@ -83,42 +82,44 @@ class TokenDetailScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    width: _screenWidth,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "${item!.code} Price",
+                  width: _screenWidth,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                          child: Image.asset(
+                        item!.image!,
+                        width: 60,
+                        height: 60,
+                      )),
+                      SizedBox(height: 10),
+                      Text(
+                        "IDR ${item!.tokenPriceIDR}",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w400),
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "${item!.code} Price  ",
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: AppPalette.instance.natural04),
+                          ),
+                          SvgPicture.asset('assets/icons/up.svg'),
+                          Text("  ${item!.change}%",
                               style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "IDR",
-                              style: TextStyle(
-                                  fontSize: 12, color: Colors.black26),
-                            ),
-                            Text(
-                              "${item!.tokenPriceIDR}",
-                              style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.bold),
-                            ),
-                            Text("${item!.change}%",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: AppPalette.instance.success400)),
-                          ],
-                        ),
-                        Container(
-                            child: Image.asset(
-                          item!.image!,
-                          width: 60,
-                          height: 60,
-                        )),
-                      ],
-                    )),
+                                  fontSize: 12,
+                                  color: AppPalette.instance.success400)),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
                 SizedBox(height: 20.0),
                 Container(child: Image.asset("assets/images/price-graph.png")),
                 Container(
@@ -134,148 +135,181 @@ class TokenDetailScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20.0),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Your Asset",
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                        SizedBox(height: 10.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                    child: Image.asset(
-                                  item!.image!,
-                                  width: 40.0,
-                                )),
-                                SizedBox(
-                                  width: 6.0,
-                                ),
-                                Text(
-                                  item!.code!,
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 12.0),
+                  margin: const EdgeInsets.only(bottom: 6.0),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.0)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Your Asset",
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      SizedBox(height: 10.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                  child: Image.asset(
+                                item!.image!,
+                                width: 40.0,
+                              )),
+                              SizedBox(
+                                width: 6.0,
+                              ),
+                              Text(
+                                item!.code!,
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text("480.79 ${item!.code}",
                                   style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text("480.79 ${item!.code}",
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold)),
-                                Text(
-                                  "IDR 37,117,000",
-                                  style: TextStyle(
-                                      fontSize: 12.0, color: Colors.black38),
-                                )
-                              ],
-                            )
-                          ],
-                        )
-                      ],
-                    ),
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.bold)),
+                              Text(
+                                "IDR 37,117,000",
+                                style: TextStyle(
+                                    fontSize: 12.0, color: Colors.black38),
+                              )
+                            ],
+                          )
+                        ],
+                      )
+                    ],
                   ),
                 ),
                 SizedBox(height: 20.0),
-                Text("About ${item!.code}",
-                    style:
-                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
-                SizedBox(height: 16.0),
-                Text(item!.headline ?? ""),
-                Text(item!.detail ?? ""),
                 Container(
-                    width: _screenWidth,
-                    margin: const EdgeInsets.only(bottom: 10, top: 10),
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text("Visit Official Website"),
-                    )),
-                Text("Market Statistics",
-                    style:
-                        TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 12.0),
+                  margin: const EdgeInsets.only(bottom: 6.0),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.0)),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("About ${item!.code}",
+                            style: TextStyle(
+                                fontSize: 16.0, fontWeight: FontWeight.bold)),
+                        SizedBox(height: 16.0),
+                        Text(item!.headline ?? ""),
+                        Text(item!.detail ?? ""),
+                        SizedBox(height: 10),
+                        PrimaryOutline(
+                          label: "Visit Official Website",
+                          onPressed: () {},
+                        ),
+                        SizedBox(height: 10),
+                      ]),
+                ),
+                SizedBox(height: 20),
                 Container(
-                    width: _screenWidth,
-                    margin: const EdgeInsets.only(top: 10),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Market Capitalization",
-                            style: TextStyle(color: AppPalette.instance.grey10),
-                          ),
-                          Text(
-                            item!.capitalization ?? "",
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          )
-                        ])),
-                Container(
-                    width: _screenWidth,
-                    margin: const EdgeInsets.only(top: 10),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Fully Diluted Valuation",
-                            style: TextStyle(color: AppPalette.instance.grey10),
-                          ),
-                          Text(
-                            item!.valuation ?? "",
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          )
-                        ])),
-                Container(
-                    width: _screenWidth,
-                    margin: const EdgeInsets.only(top: 10),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Circulating Supply",
-                            style: TextStyle(color: AppPalette.instance.grey10),
-                          ),
-                          Text(
-                            item!.supply ?? "",
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          )
-                        ])),
-                Container(
-                    width: _screenWidth,
-                    margin: const EdgeInsets.only(top: 10),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Maximum Supply",
-                            style: TextStyle(color: AppPalette.instance.grey10),
-                          ),
-                          Text(
-                            item!.maxSupply ?? "",
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          )
-                        ])),
-                Container(
-                    width: _screenWidth,
-                    margin: const EdgeInsets.only(top: 10),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Global Volume (24 Hours)",
-                            style: TextStyle(color: AppPalette.instance.grey10),
-                          ),
-                          Text(
-                            item!.volumeDay ?? "",
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          )
-                        ])),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 12.0),
+                  margin: const EdgeInsets.only(bottom: 6.0),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.0)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Market Statistics",
+                          style: TextStyle(
+                              fontSize: 16.0, fontWeight: FontWeight.bold)),
+                      Container(
+                          width: _screenWidth,
+                          margin: const EdgeInsets.only(top: 10),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Market Capitalization",
+                                  style: TextStyle(
+                                      color: AppPalette.instance.grey10),
+                                ),
+                                Text(
+                                  item!.capitalization ?? "",
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                )
+                              ])),
+                      Container(
+                          width: _screenWidth,
+                          margin: const EdgeInsets.only(top: 10),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Fully Diluted Valuation",
+                                  style: TextStyle(
+                                      color: AppPalette.instance.grey10),
+                                ),
+                                Text(
+                                  item!.valuation ?? "",
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                )
+                              ])),
+                      Container(
+                          width: _screenWidth,
+                          margin: const EdgeInsets.only(top: 10),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Circulating Supply",
+                                  style: TextStyle(
+                                      color: AppPalette.instance.grey10),
+                                ),
+                                Text(
+                                  item!.supply ?? "",
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                )
+                              ])),
+                      Container(
+                          width: _screenWidth,
+                          margin: const EdgeInsets.only(top: 10),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Maximum Supply",
+                                  style: TextStyle(
+                                      color: AppPalette.instance.grey10),
+                                ),
+                                Text(
+                                  item!.maxSupply ?? "",
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                )
+                              ])),
+                      Container(
+                          width: _screenWidth,
+                          margin: const EdgeInsets.only(top: 10),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Global Volume (24 Hours)",
+                                  style: TextStyle(
+                                      color: AppPalette.instance.grey10),
+                                ),
+                                Text(
+                                  item!.volumeDay ?? "",
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                )
+                              ])),
+                    ],
+                  ),
+                ),
                 SizedBox(height: 40),
               ],
             ),

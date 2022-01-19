@@ -38,6 +38,8 @@ class _PersonalInfoInputScreenState extends State<PersonalInfoInputScreen> {
 
   get _getAppbar {
     return new AppBar(
+      title: Text("Personal Info",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
       backgroundColor: Colors.white,
       elevation: 0.0,
       leading: new InkWell(
@@ -130,9 +132,7 @@ class _PersonalInfoInputScreenState extends State<PersonalInfoInputScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Personal Info",
-                    style: AppPalette.instance.textStyleHeadline),
-                SizedBox(height: 40),
+                SizedBox(height: 20),
                 TextFormField(
                   autocorrect: false,
                   initialValue: _email,

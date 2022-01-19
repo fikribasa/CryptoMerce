@@ -98,4 +98,38 @@ class Auth {
 
     return retVal;
   }
+
+  Future<String> changePassword(String oldPassword, String newPassword) async {
+    String retVal = "error";
+    try {
+      final user = await _auth.currentUser;
+      String? email = user!.email;
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email!,
+        password: oldPassword,
+      );
+
+      user.updatePassword(newPassword).then((_) {
+        print("Successfully changed password");
+        storage.write("userID", user.uid);
+        storage.write("userEmail", user.email);
+
+        retVal = "success";
+        return retVal;
+      }).catchError((error) {
+        print("Password can't be changed" + error.toString());
+        retVal = error.toString();
+        //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
+      });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+      retVal = e.code;
+    }
+    return retVal;
+  }
 }

@@ -65,8 +65,8 @@ class _WartecApp extends State<WartecApp> {
           }
         },
         theme: ThemeData(
-          fontFamily: 'Inter',
-        ),
+            fontFamily: 'Inter',
+            scaffoldBackgroundColor: AppPalette.instance.natural10),
         // home: BasicBottomNavBar(
         //   widget._ctx,
         //   index: 0,

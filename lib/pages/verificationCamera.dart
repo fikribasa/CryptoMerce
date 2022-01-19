@@ -107,7 +107,7 @@ class _State extends State<VerificationCameraScreen>
                           child: Text(
                             "Retake Photo",
                             style: TextStyle(
-                                color: AppPalette.instance.accent1,
+                                color: AppPalette.instance.accent5,
                                 fontWeight: FontWeight.bold),
                           ),
                         )),

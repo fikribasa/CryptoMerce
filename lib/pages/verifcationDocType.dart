@@ -28,6 +28,8 @@ class _VerificationDocTypeScreenState extends State<VerificationDocTypeScreen> {
 
   get _getAppbar {
     return new AppBar(
+      title: Text("Choose an ID type",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
       backgroundColor: Colors.white,
       elevation: 0.0,
       leading: new InkWell(
@@ -68,10 +70,10 @@ class _VerificationDocTypeScreenState extends State<VerificationDocTypeScreen> {
             margin: const EdgeInsets.only(bottom: 12),
             decoration: BoxDecoration(
                 color: _value == documentType
-                    ? AppPalette.instance.secondary
+                    ? AppPalette.instance.primary
                     : Colors.white,
                 border:
-                    Border.all(width: 0, color: AppPalette.instance.accent2),
+                    Border.all(width: 0, color: AppPalette.instance.accent5),
                 borderRadius: BorderRadius.all(Radius.circular(8.0))),
             padding: const EdgeInsets.fromLTRB(12, 6, 12, 6),
             child: Row(
@@ -82,7 +84,7 @@ class _VerificationDocTypeScreenState extends State<VerificationDocTypeScreen> {
                   style: TextStyle(fontWeight: FontWeight.w700),
                 ),
                 Radio(
-                    activeColor: Colors.blue,
+                    activeColor: AppPalette.instance.accent5,
                     value: _value,
                     groupValue: this.documentType,
                     onChanged: this.handlePayMethodChange),
@@ -99,9 +101,8 @@ class _VerificationDocTypeScreenState extends State<VerificationDocTypeScreen> {
     final _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: _getAppbar,
-      backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
+        padding: const EdgeInsets.fromLTRB(16.0, 16, 16.0, 16.0),
         child: SingleChildScrollView(
           child: SafeArea(
             child: Column(
@@ -111,10 +112,10 @@ class _VerificationDocTypeScreenState extends State<VerificationDocTypeScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Choose an ID type",
-                        style: AppPalette.instance.textStyleHeadline),
                     Text(
-                        "Select one of the these documents to verify your identity."),
+                      "Select one of the these documents to verify your identity.",
+                      textAlign: TextAlign.center,
+                    ),
                     SizedBox(height: 40),
                     radioBuilder(documentTexts[0], 1),
                     radioBuilder(documentTexts[1], 2),

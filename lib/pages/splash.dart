@@ -44,14 +44,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppPalette.instance.accent1,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Stack(
           children: [
             Align(
-              child: Text(
-                "WARTEC",
-                style: AppPalette.instance.textStyleTheme,
+              child: Image.asset(
+                "assets/icons/logomark-wartec.jpg",
+                width: 240,
               ),
               alignment: Alignment.center,
             ),
@@ -62,13 +62,13 @@ class _SplashScreenState extends State<SplashScreen> {
                 children: [
                   Text(
                     "Powered By",
-                    style: TextStyle(color: AppPalette.instance.white),
+                    style: TextStyle(color: Colors.black),
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 10.0),
                   Text(
                     "PT. Teknologi Sosial Nusantara",
                     style: TextStyle(
-                        color: AppPalette.instance.white,
+                        color: AppPalette.instance.accent5,
                         fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 40.0)

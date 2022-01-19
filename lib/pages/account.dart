@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/signout.dart';
+import 'package:wartec_app/pages/changePassword.dart';
 import 'package:wartec_app/pages/verifyIdetity.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/style.dart';
@@ -99,7 +100,7 @@ class AccountScreen extends StatelessWidget {
         padding:
             const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0, right: 4.0),
         decoration: BoxDecoration(
-            border: Border.all(width: 1.0, color: Colors.black12),
+            border: Border.all(width: 0.5, color: AppPalette.instance.accent5),
             borderRadius: BorderRadius.all(Radius.circular(6.0))),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text("Verify your identity to unlock all features"),
@@ -107,10 +108,37 @@ class AccountScreen extends StatelessWidget {
           Text(
             "Verify Now",
             style: TextStyle(
-                color: AppPalette.instance.accent1,
+                color: AppPalette.instance.accent5,
                 fontWeight: FontWeight.w600),
           )
         ]),
+      ),
+    );
+  }
+
+  Widget ActionBox(String title) {
+    return InkWell(
+      onTap: () {
+        Get.to(() => ChangePasswordScreen(this._ctx));
+      },
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.only(bottom: 10.0),
+        decoration: BoxDecoration(
+            border: Border.all(width: 1.0, color: Colors.black12),
+            borderRadius: BorderRadius.all(Radius.circular(6.0))),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                  color: AppPalette.instance.grey10,
+                  fontWeight: FontWeight.w700),
+            ),
+            Icon(Icons.arrow_right)
+          ],
+        ),
       ),
     );
   }
@@ -152,6 +180,11 @@ class AccountScreen extends StatelessWidget {
                 _getForm("Phone Number", this._ctx!.user?.phoneNumber ?? "-"),
                 _getForm("Email",
                     this._ctx!.user?.email ?? storage.read("userEmail") ?? "-"),
+                SizedBox(height: 20.0),
+                Text("Security", style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(height: 10.0),
+                ActionBox("Change Password"),
+                ActionBox("Change PIN"),
                 SignOutButton(this._ctx!)
               ],
             ),
