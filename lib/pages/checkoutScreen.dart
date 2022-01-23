@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/primaryButton.dart';
 import 'package:wartec_app/models/tokenList.dart';
@@ -11,9 +12,13 @@ import 'package:wartec_app/utils/numberFormatter.dart';
 
 class CheckoutScreen extends StatefulWidget {
   String? totalAmount;
+  String? paymentMethod;
+  String? image;
   final AppContext? _ctx;
 
-  CheckoutScreen(this._ctx, {Key? key, this.totalAmount}) : super(key: key);
+  CheckoutScreen(this._ctx,
+      {Key? key, this.totalAmount, this.paymentMethod, this.image})
+      : super(key: key);
 
   @override
   _CheckoutScreenState createState() => _CheckoutScreenState();
@@ -22,14 +27,15 @@ class CheckoutScreen extends StatefulWidget {
 class _CheckoutScreenState extends State<CheckoutScreen> {
   final timerStyle = TextStyle(
       color: AppPalette.instance.downtrend,
-      fontSize: 16,
-      fontWeight: FontWeight.w600);
+      fontSize: 18,
+      fontWeight: FontWeight.w200);
   get _getAppbar {
     return new AppBar(
       title: Text("Check Out",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)),
       backgroundColor: Colors.white,
-      elevation: 0.0,
+      elevation: 1.0,
       leading: new InkWell(
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(
@@ -65,11 +71,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Widget _divider() {
     return Column(
       children: [
-        SizedBox(width: 6),
+        SizedBox(width: 16),
         Text(":"),
-        SizedBox(height: 6),
+        SizedBox(height: 12),
         Text(""),
-        SizedBox(width: 6),
+        SizedBox(width: 16),
       ],
     );
   }
@@ -113,7 +119,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     final _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: _getAppbar,
-      backgroundColor: Colors.white,
       body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: SafeArea(
@@ -124,37 +129,45 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   width: _screenWidth,
                   decoration: BoxDecoration(
-                      color: hexToColor("#f5f3ef"),
-                      border: Border.all(width: 1.0, color: Colors.black12),
-                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(8.0))),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(height: 20),
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text("Payment Method",
-                              style: TextStyle(fontSize: 12)),
-                          SizedBox(height: 8),
-                          Image.asset('assets/icons/gopay.png', height: 24),
                           SizedBox(height: 16),
+                          Container(
+                              width: _screenWidth,
+                              child: Image.asset(
+                                  'assets/icons/logomark-wartec.png',
+                                  height: 40)),
+                          Text("Payment Method",
+                              style: TextStyle(fontSize: 18)),
+                          SizedBox(height: 12),
+                          SvgPicture.asset(widget.image!, height: 30),
+                          SizedBox(height: 4),
+                          Text(
+                            widget.paymentMethod ?? "",
+                            style: TextStyle(fontWeight: FontWeight.w500),
+                          ),
                         ],
                       ),
                       SizedBox(height: 20),
                       Container(
                           width: _screenWidth,
-                          child: Text("Total Amount",
+                          child: Text("Transfer Amount",
                               style: TextStyle(fontSize: 14),
                               textAlign: TextAlign.center)),
-                      SizedBox(height: 12),
+                      SizedBox(height: 8),
                       Container(
                         width: _screenWidth,
                         child: Text("Rp ${widget.totalAmount ?? 0}",
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: hexToColor("#086F59")),
+                                color: AppPalette.instance.accent5),
                             textAlign: TextAlign.center),
                       ),
                       SizedBox(height: 20),
@@ -165,6 +178,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           child: Text("Transaction Limit",
                               style: TextStyle(fontSize: 14),
                               textAlign: TextAlign.center)),
+                      SizedBox(height: 10),
+                      Text(
+                        "09:56, 19 Jan 2022",
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
                       SizedBox(height: 10),
                       Container(
                         width: _screenWidth,

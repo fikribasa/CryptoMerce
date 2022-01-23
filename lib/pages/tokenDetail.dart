@@ -16,9 +16,10 @@ class TokenDetailScreen extends StatelessWidget {
   get _getAppbar {
     return new AppBar(
       title: Text(item!.code ?? "",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)),
       backgroundColor: Colors.white,
-      elevation: 0.0,
+      elevation: 1.0,
       leading: new InkWell(
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(
@@ -45,7 +46,7 @@ class TokenDetailScreen extends StatelessWidget {
 
   Widget timeframeSelected(String title) {
     return Container(
-        margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
+        margin: EdgeInsets.only(top: 16.0),
         decoration: BoxDecoration(
             color: AppPalette.instance.accent5,
             borderRadius: BorderRadius.circular(12.0)),
@@ -59,7 +60,7 @@ class TokenDetailScreen extends StatelessWidget {
 
   Widget timeframeNotSelected(String title) {
     return Container(
-        margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
+        margin: EdgeInsets.only(top: 16.0),
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.0)),
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
         child: Text(title,
@@ -75,13 +76,15 @@ class TokenDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: _getAppbar,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
         child: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
+                  padding: const EdgeInsets.only(bottom: 20, top: 16),
+                  color: Colors.white,
                   width: _screenWidth,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -120,8 +123,9 @@ class TokenDetailScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 20.0),
-                Container(child: Image.asset("assets/images/price-graph.png")),
+                Container(
+                    color: Colors.white,
+                    child: Image.asset("assets/images/price-graph.png")),
                 Container(
                   child: Row(
                     children: [
@@ -176,6 +180,7 @@ class TokenDetailScreen extends StatelessWidget {
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold)),
+                              SizedBox(height: 4),
                               Text(
                                 "IDR 37,117,000",
                                 style: TextStyle(
@@ -188,7 +193,7 @@ class TokenDetailScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 20.0),
+                SizedBox(height: 16.0),
                 Container(
                   padding: const EdgeInsets.symmetric(
                       vertical: 12.0, horizontal: 12.0),
@@ -317,9 +322,10 @@ class TokenDetailScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.fromLTRB(16, 10, 16, 0),
+        padding: EdgeInsets.fromLTRB(16, 24, 16, 0),
+        color: Colors.white,
         width: _screenWidth,
-        height: 80,
+        height: 100,
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -352,8 +358,9 @@ class TokenDetailScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   Container(
+                      padding: const EdgeInsets.only(top: 8),
                       width: double.infinity,
-                      child: PrimaryButton(label: "Sell", onPressed: null)),
+                      child: PrimaryOutline(label: "Sell", onPressed: null)),
                 ],
               ),
             ),

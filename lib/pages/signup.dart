@@ -1,9 +1,11 @@
+import 'package:email_auth/email_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/primaryButton.dart';
 import 'package:wartec_app/pages/accountVerification.dart';
+import 'package:wartec_app/pages/otpInput.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/services/authService.dart';
 import 'package:wartec_app/style.dart';
@@ -25,6 +27,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String? _confirmationPassword;
   bool _isObscure = true;
   bool _isObscureConfirmation = true;
+  EmailAuth? emailAuth;
 
   void _signUpEmail() async {
     try {
@@ -37,7 +40,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       }
       String _returnString = await Auth().signUpWithEmail(_email!, _password!);
       if (_returnString == "success") {
-        Get.to(() => AccountVerification(widget._ctx, _email!));
+        // Get.to(() => AccountVerification(widget._ctx, _email!));
+
       } else {
         Get.snackbar("Terjadi Kesalahan", "Silakan coba lagi",
             duration: Duration(seconds: 4));
@@ -45,6 +49,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future sendEmail() async {
+    emailAuth = new EmailAuth(sessionName: "Wartec");
+    var res = await emailAuth!.sendOtp(recipientMail: _email!, otpLength: 4);
+    if (res) {
+      Get.to(() => OTPInputScreen(widget._ctx, _email, emailAuth!));
+    }
+    ;
   }
 
   @override

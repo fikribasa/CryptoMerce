@@ -79,6 +79,7 @@ class AppPalette {
   late final Color downtrend;
 
   late final Color secondary;
+  final Color alert40 = hexToColor("#EB5757");
 
   final grey = _grey;
   final fontSizeNormal = _fontSizeNormal;
@@ -123,7 +124,7 @@ class AppPalette {
       color: hexToColor("#1FB393"));
 
   final themeExpansionTile =
-      ThemeData(accentColor: Colors.black, dividerColor: Colors.transparent);
+      ThemeData(accentColor: Colors.black, dividerColor: Colors.white);
 }
 
 class StyleSelectedBox {

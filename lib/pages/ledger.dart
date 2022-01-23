@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:wartec_app/components/CoinCard.dart';
 import 'package:wartec_app/components/assetWidget.dart';
 import 'package:wartec_app/components/basicLoading.dart';
 import 'package:wartec_app/components/profileWidget.dart';
 import 'package:wartec_app/components/rightSlider.dart';
 import 'package:wartec_app/models/tokenList.dart';
+import 'package:wartec_app/pages/assetIDR.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/style.dart';
 
@@ -244,7 +246,11 @@ class _LedgerScreenState extends State<LedgerScreen> {
                               index: 0),
                           AssetCoin(widget._ctx, _tokenList!.item![1],
                               index: 1),
-                          AssetFiat(widget._ctx, index: 0),
+                          InkWell(
+                              onTap: () {
+                                Get.to(() => AssetIDRScreen(widget._ctx));
+                              },
+                              child: AssetFiat(widget._ctx, index: 0)),
                           AssetFiat(widget._ctx, index: 1),
                         ],
                       ),

@@ -25,8 +25,11 @@ class _VerificationPhotoGuideScreenState
     extends State<VerificationPhotoGuideScreen> {
   get _getAppbar {
     return new AppBar(
+      title: Text("${widget.documentType} Photo Guide",
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)),
       backgroundColor: Colors.white,
-      elevation: 0.0,
+      elevation: 1.0,
       leading: new InkWell(
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(
@@ -47,7 +50,6 @@ class _VerificationPhotoGuideScreenState
     final _imageHeight = _screenWidth * 0.5 * 3 / 4;
     return Scaffold(
       appBar: _getAppbar,
-      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
         child: SafeArea(
@@ -55,8 +57,6 @@ class _VerificationPhotoGuideScreenState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("${widget.documentType} Photo Guide",
-                    style: AppPalette.instance.textStyleHeadline),
                 SizedBox(height: 40),
                 Container(
                   width: _screenWidth,
@@ -105,10 +105,19 @@ class _VerificationPhotoGuideScreenState
                   ),
                 ),
                 SizedBox(height: 20),
-                BulletText("${widget.documentType} must fit in the frame."),
-                BulletText(
-                    "Personal information on your ${widget.documentType} must be clearly visible (not blurry, cropped, or reflecting light)."),
-                BulletText("${widget.documentType} must be valid."),
+                Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        BulletText(
+                            "${widget.documentType} must fit in the frame."),
+                        BulletText(
+                            "Personal information on your ${widget.documentType} must be clearly visible (not blurry, cropped, or reflecting light)."),
+                        BulletText("${widget.documentType} must be valid."),
+                      ],
+                    )),
               ],
             ),
           ),
@@ -119,7 +128,7 @@ class _VerificationPhotoGuideScreenState
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 60),
         width: _screenWidth,
         child: PrimaryButton(
-          label: "Next",
+          label: "Take a Photo",
           onPressed: () {
             Get.back(result: true);
           },

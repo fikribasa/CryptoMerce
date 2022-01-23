@@ -74,7 +74,7 @@ class CoinCard extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 10.0,
                           color: item!.change! >= 0
-                              ? Colors.green
+                              ? AppPalette.instance.success400
                               : hexToColor("#BF2121")))
                 ],
               ),

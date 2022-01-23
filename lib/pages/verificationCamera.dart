@@ -29,7 +29,7 @@ class _State extends State<VerificationCameraScreen>
   get _getAppbar {
     return new AppBar(
       backgroundColor: Colors.transparent,
-      elevation: 0.0,
+      elevation: 1.0,
       leading: new InkWell(
         child: new Icon(
           Icons.close,
@@ -96,22 +96,13 @@ class _State extends State<VerificationCameraScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: OutlinedButton(
-                        onPressed: () {
-                          setState(() {
-                            isPreView = false;
-                          });
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 4.0),
-                          child: Text(
-                            "Retake Photo",
-                            style: TextStyle(
-                                color: AppPalette.instance.accent5,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )),
-                  ),
+                      child: PrimaryOutline(
+                          onPressed: () {
+                            setState(() {
+                              isPreView = false;
+                            });
+                          },
+                          label: "Retake")),
                   SizedBox(width: 20),
                   Expanded(
                     child: PrimaryButton(

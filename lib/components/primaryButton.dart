@@ -52,8 +52,9 @@ class PrimaryButtonSmall extends StatelessWidget {
 class PrimaryOutline extends StatelessWidget {
   final Function()? onPressed;
   final String label;
+  final TextStyle? textStyle;
 
-  PrimaryOutline({this.onPressed, required this.label});
+  PrimaryOutline({required this.label, this.onPressed, this.textStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +62,7 @@ class PrimaryOutline extends StatelessWidget {
       onTap: onPressed,
       child: Container(
           width: double.maxFinite,
-          padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+          padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8),
           decoration: BoxDecoration(
               color: Colors.white,
               border:
@@ -69,9 +70,10 @@ class PrimaryOutline extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(20.0))),
           child: Text(
             label,
-            style: TextStyle(
-                color: AppPalette.instance.accent5,
-                fontWeight: FontWeight.bold),
+            style: textStyle ??
+                TextStyle(
+                    color: AppPalette.instance.accent5,
+                    fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           )),
     );

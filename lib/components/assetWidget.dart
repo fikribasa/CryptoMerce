@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/models/tokenList.dart';
 import 'package:wartec_app/pages/tokenDetail.dart';
@@ -27,7 +28,7 @@ class AssetCoin extends StatelessWidget {
           Align(
             child: Image.asset(
               index == 0
-                  ? "assets/images/bgy-ellow.png"
+                  ? "assets/images/bg-yellow.png"
                   : "assets/images/bg-orange.png",
               width: 160,
             ),
@@ -71,17 +72,11 @@ class AssetCoin extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text(
-                            "Receive",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 10),
-                          ),
+                          SvgPicture.asset('assets/icons/deposit-simple.svg'),
                           Text("|",
                               style: TextStyle(
                                   fontWeight: FontWeight.w600, fontSize: 10)),
-                          Text("Send",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 10)),
+                          SvgPicture.asset('assets/icons/withdraw-simple.svg'),
                         ],
                       )
                     ],
@@ -158,25 +153,15 @@ class AssetFiat extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text(
-                          "Deposit",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 10),
-                        ),
+                        SvgPicture.asset('assets/icons/deposit-simple.svg'),
                         Text("|",
                             style: TextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 10)),
-                        Text(
-                          "Withdraw",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 10),
-                        ),
+                        SvgPicture.asset('assets/icons/withdraw-simple.svg'),
                         Text("|",
                             style: TextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 10)),
-                        Text("Send",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 10)),
+                        SvgPicture.asset('assets/icons/withdraw-fiat.svg'),
                       ],
                     )
                   ],

@@ -31,9 +31,10 @@ class _VerificationUploadScreenState extends State<VerificationUploadScreen> {
   get _getAppbar {
     return new AppBar(
       title: Text("Upload ${widget.documentType}",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)),
       backgroundColor: Colors.white,
-      elevation: 0.0,
+      elevation: 1.0,
       leading: new InkWell(
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(
@@ -117,7 +118,7 @@ class _VerificationUploadScreenState extends State<VerificationUploadScreen> {
                           },
                           child: Container(
                             width: _screenWidth,
-                            padding: EdgeInsets.only(top: 40, bottom: 40),
+                            padding: EdgeInsets.only(top: 30, bottom: 30),
                             color: AppPalette.instance.primary,
                             child: Column(
                               children: [

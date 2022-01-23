@@ -36,12 +36,14 @@ class _OTPInputScreenState extends State<OTPInputScreen> {
   int unReadNotificationsCount = 0;
 
   verifyOTP() {
+    print(pin);
     var res = widget.emailAuth!
         .validateOtp(recipientMail: widget.email!, userOtp: pin);
     if (res) {
       Get.snackbar("Verification Success", "You will be redirected to Home");
       Get.offAll(() => BasicBottomNavBar(widget._ctx!));
     } else {
+      print("at verifyOTP > $res");
       Get.snackbar("Verification Failed", "Please check your input");
     }
   }
@@ -54,17 +56,26 @@ class _OTPInputScreenState extends State<OTPInputScreen> {
         decoration: BoxDecoration(
             border: Border(
                 bottom: BorderSide(
-          color: Colors.black,
+          color: AppPalette.instance.neutral05,
           width: 2.0,
         ))),
         alignment: Alignment.center,
-        child: Text(
-          "${digit ?? ""}",
-          style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: AppPalette.instance.accent1),
-        ));
+        child: digit != null
+            ? Container(
+                width: 20,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: AppPalette.instance.accent5, // border color
+                  shape: BoxShape.circle,
+                )
+                // Text(
+                //   "${digit ?? ""}",
+                //   style: TextStyle(
+                //       fontSize: 28,
+                //       fontWeight: FontWeight.bold,
+                //       color: AppPalette.instance.accent5),
+                )
+            : Container());
   }
 
   // Returns "Pin keyboard input Button"
@@ -115,33 +126,33 @@ class _OTPInputScreenState extends State<OTPInputScreen> {
   // Current digit
   void _setCurrentDigit(int i) {
     _currentDigit = i;
+    if (_firstDigit == null) {
+      _firstDigit = _currentDigit;
+    } else if (_secondDigit == null) {
+      _secondDigit = _currentDigit;
+    } else if (_thirdDigit == null) {
+      _thirdDigit = _currentDigit;
+    } else if (_fourthDigit == null) {
+      _fourthDigit = _currentDigit;
+    } else if (_fifthDigit == null) {
+      _fifthDigit = _currentDigit;
+    } else if (_sixthDigit == null) {
+      _sixthDigit = _currentDigit;
+    }
     setState(() {
-      if (_firstDigit == null) {
-        _firstDigit = _currentDigit;
-      } else if (_secondDigit == null) {
-        _secondDigit = _currentDigit;
-      } else if (_thirdDigit == null) {
-        _thirdDigit = _currentDigit;
-      } else if (_fourthDigit == null) {
-        _fourthDigit = _currentDigit;
-      } else if (_fifthDigit == null) {
-        _fifthDigit = _currentDigit;
-      } else if (_sixthDigit == null) {
-        _sixthDigit = _currentDigit;
+      pin = _firstDigit.toString() +
+          _secondDigit.toString() +
+          _thirdDigit.toString() +
+          _fourthDigit.toString() +
+          _fifthDigit.toString() +
+          _sixthDigit.toString();
 
-        pin = _firstDigit.toString() +
-            _secondDigit.toString() +
-            _thirdDigit.toString() +
-            _fourthDigit.toString() +
-            _fifthDigit.toString() +
-            _sixthDigit.toString();
-
-        // Verify your pin by here. API call
-      }
+      // Verify your pin by here. API call
     });
     print(pin.length);
     if (pin.length == 6) {
       verifyOTP();
+      print("terpanggil");
     }
   }
 
@@ -158,8 +169,11 @@ class _OTPInputScreenState extends State<OTPInputScreen> {
   // Returns "Appbar"
   get _getAppbar {
     return new AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0.0,
+      elevation: 1.0,
+      title: Text("OTP Verification",
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)),
+      backgroundColor: Colors.white,
       leading: new InkWell(
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(
@@ -175,15 +189,17 @@ class _OTPInputScreenState extends State<OTPInputScreen> {
   }
 
   get _title {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("Input OTP",
-            style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold)),
-        SizedBox(height: 20.0),
-        Text("Plase input a 6-digit PIN to proceed",
-            style: TextStyle(fontSize: 14.0)),
-      ],
+    return Container(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text("Please input the one-time password (OTP) that we’ve sent to",
+              textAlign: TextAlign.center, style: TextStyle(fontSize: 14.0)),
+          SizedBox(height: 10),
+          Text(widget.email ?? " ", style: TextStyle(fontSize: 16.0)),
+        ],
+      ),
     );
   }
 

@@ -55,7 +55,7 @@ class SignOutButton extends StatelessWidget {
       child: TextButton.icon(
         label: SvgPicture.asset('assets/icons/out.svg'),
         icon: Text("Sign Out",
-            style: TextStyle(color: AppPalette.instance.primary200)),
+            style: TextStyle(color: AppPalette.instance.alert40)),
         onPressed: () {
           showAlertDialog(context);
         },

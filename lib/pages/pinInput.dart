@@ -134,7 +134,7 @@ class _PinInputScreenState extends State<PinInputScreen> {
   get _getAppbar {
     return new AppBar(
       backgroundColor: Colors.transparent,
-      elevation: 0.0,
+      elevation: 1.0,
       leading: new InkWell(
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(

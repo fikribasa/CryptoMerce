@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:email_auth/email_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:wartec_app/components/primaryButton.dart';
 import 'package:wartec_app/pages/accountVerification.dart';
+import 'package:wartec_app/pages/otpInput.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/services/authService.dart';
 import 'package:wartec_app/services/firestoreDB.dart';
@@ -35,13 +37,15 @@ class _PersonalInfoInputScreenState extends State<PersonalInfoInputScreen> {
   String suffix = "+62";
   TextEditingController dateCtl = TextEditingController();
   final dateFormatter = DateFormat('DD-MM-yyyy');
+  EmailAuth? emailAuth;
 
   get _getAppbar {
     return new AppBar(
       title: Text("Personal Info",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)),
       backgroundColor: Colors.white,
-      elevation: 0.0,
+      elevation: 1.0,
       leading: new InkWell(
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(
@@ -88,7 +92,8 @@ class _PersonalInfoInputScreenState extends State<PersonalInfoInputScreen> {
         await uploadImageToFirebase(widget.photoID!.path, "photoID");
         await uploadImageToFirebase(widget.photoSelfie!.path, "photoSelfie");
         if (reg == "success") {
-          Get.to(() => AccountVerification(widget._ctx, _email));
+          // Get.to(() => AccountVerification(widget._ctx, _email));
+          await sendEmail();
         }
       } catch (e) {
         Get.snackbar("Terjadi Kesalahan", "Silakan coba lagi.\n$e");
@@ -97,6 +102,19 @@ class _PersonalInfoInputScreenState extends State<PersonalInfoInputScreen> {
         });
       }
     }
+  }
+
+  Future sendEmail() async {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+      emailAuth = new EmailAuth(sessionName: "Wartec");
+      var res = await emailAuth!.sendOtp(recipientMail: _email, otpLength: 4);
+      if (res) {
+        this.setState(() {
+          _isLoading = false;
+        });
+        Get.to(() => OTPInputScreen(widget._ctx, _email, emailAuth!));
+      }
+    });
   }
 
   Future uploadImageToFirebase(String? filePath, String? type) async {
@@ -198,7 +216,8 @@ class _PersonalInfoInputScreenState extends State<PersonalInfoInputScreen> {
                           decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8)),
-                              border: Border.all(color: hexToColor("#A4AAB6"))),
+                              border: Border.all(
+                                  color: AppPalette.instance.natural04)),
                           padding: const EdgeInsets.symmetric(
                               vertical: 12.0, horizontal: 8.0),
                           child: Text(

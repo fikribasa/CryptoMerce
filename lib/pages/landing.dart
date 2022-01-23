@@ -9,6 +9,7 @@ import 'package:wartec_app/components/bottomTab.dart';
 import 'package:wartec_app/components/rightSlider.dart';
 import 'package:wartec_app/models/tokenList.dart';
 import 'package:wartec_app/pages/account.dart';
+import 'package:wartec_app/pages/assetIDR.dart';
 import 'package:wartec_app/pages/tokenDetail.dart';
 import 'package:wartec_app/pages/watchlist.dart';
 import 'package:wartec_app/services/appContext.dart';
@@ -173,7 +174,7 @@ class _LandingPageState extends State<LandingPage> {
           RightSliderWidget(widget._ctx!, icon: _renderProfileImage()),
           Container(
               child:
-                  Image.asset("assets/icons/logomark-wartec.jpg", width: 40.0)),
+                  Image.asset("assets/icons/logomark-wartec.png", width: 40.0)),
           Container(
             width: 40.0,
             height: 40,
@@ -234,7 +235,11 @@ class _LandingPageState extends State<LandingPage> {
                               index: 0),
                           AssetCoin(widget._ctx, _tokenList!.item![1],
                               index: 1),
-                          AssetFiat(widget._ctx, index: 0),
+                          InkWell(
+                              onTap: () {
+                                Get.to(() => AssetIDRScreen(widget._ctx));
+                              },
+                              child: AssetFiat(widget._ctx, index: 0)),
                           AssetFiat(widget._ctx, index: 1),
                         ],
                       ),

@@ -56,6 +56,7 @@ class _LoadingVerificationScreenState extends State<LoadingVerificationScreen>
     return Scaffold(
       body: SafeArea(
           child: Container(
+        padding: const EdgeInsets.all(16),
         color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,6 +88,7 @@ class _LoadingVerificationScreenState extends State<LoadingVerificationScreen>
         ? Scaffold(
             body: SafeArea(
                 child: Container(
+              padding: const EdgeInsets.all(16),
               color: Colors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

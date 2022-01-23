@@ -12,9 +12,10 @@ class VerifyIdentityScreen extends StatelessWidget {
   get _getAppbar {
     return new AppBar(
       title: Text("Identity Verification Needed",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)),
       backgroundColor: Colors.white,
-      elevation: 0.0,
+      elevation: 1.0,
       leading: new InkWell(
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(
@@ -70,7 +71,9 @@ class VerifyIdentityScreen extends StatelessWidget {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(8.0))),
                         child: Text(
-                            "Please prepare your KTP / SIM / Passport and good lighting condition "),
+                          "Please prepare your KTP / SIM / Passport and good lighting condition ",
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ],
                   ),
