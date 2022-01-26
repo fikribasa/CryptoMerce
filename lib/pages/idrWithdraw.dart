@@ -21,7 +21,7 @@ class IDRWithdrawScreen extends StatefulWidget {
 }
 
 class _IDRWithdrawScreenState extends State<IDRWithdrawScreen> {
-  final _controller = TextEditingController(text: "0");
+  final _controller = TextEditingController();
   // define type of payment methode
   int payMethod = 1;
   List<String> paymentTexts = [
@@ -231,10 +231,14 @@ class _IDRWithdrawScreenState extends State<IDRWithdrawScreen> {
                 child: PrimaryButton(
                     label: "Continue",
                     onPressed: () {
-                      Get.to(() => IDRWithdrawConfirmationScreen(widget._ctx,
-                          balance: int.tryParse(_controller.text),
-                          image: imageAsset[payMethod - 1],
-                          paymentMethod: paymentTexts[payMethod - 1]));
+                      _controller != null && _controller.text.length > 0
+                          ? Get.to(() => IDRWithdrawConfirmationScreen(
+                              widget._ctx,
+                              balance: int.tryParse(_controller.text),
+                              image: imageAsset[payMethod - 1],
+                              paymentMethod: paymentTexts[payMethod - 1]))
+                          : Get.snackbar("Terjadi kesalahan",
+                              "Mohon isi nominal withdraw terlebih dulu");
                     }),
               ),
             ],

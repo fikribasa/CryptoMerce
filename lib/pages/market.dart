@@ -40,6 +40,8 @@ class _MarketScreenState extends State<MarketScreen> {
   Widget _renderHeader(double _screenWidth) {
     return Container(
       width: _screenWidth,
+      color: Colors.white,
+      padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -62,113 +64,114 @@ class _MarketScreenState extends State<MarketScreen> {
                   hintStyle: new TextStyle(color: Colors.black38)),
             ),
           ),
-          InkWell(
-            child: Container(
-                decoration: BoxDecoration(
-                    color: AppPalette.instance.grey05,
-                    borderRadius: BorderRadius.circular(6)),
-                padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
-                child: SvgPicture.asset("assets/icons/sort.svg")),
-            onTap: () {
-              showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12.0)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 20),
-                        Text("Sort",
-                            style: TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.w700)),
-                        SizedBox(height: 10),
-                        LabeledRadio(
-                          label: 'Recomended',
-                          value: true,
-                          groupValue: _isRadioSelected,
-                          onChanged: (bool newValue) {
-                            setState(() {
-                              _isRadioSelected = newValue;
-                            });
-                          },
-                        ),
-                        LabeledRadio(
-                          label: 'Newest First',
-                          value: true,
-                          groupValue: _isRadioSelected,
-                          onChanged: (bool newValue) {
-                            setState(() {
-                              _isRadioSelected = newValue;
-                            });
-                          },
-                        ),
-                        LabeledRadio(
-                          label: 'Lowest Price',
-                          value: true,
-                          groupValue: _isRadioSelected,
-                          onChanged: (bool newValue) {
-                            setState(() {
-                              _isRadioSelected = newValue;
-                            });
-                          },
-                        ),
-                        LabeledRadio(
-                          label: 'Highest Price',
-                          value: true,
-                          groupValue: _isRadioSelected,
-                          onChanged: (bool newValue) {
-                            setState(() {
-                              _isRadioSelected = newValue;
-                            });
-                          },
-                        ),
-                        SizedBox(height: 20),
-                        Text("Show",
-                            style: TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.w700)),
-                        SizedBox(height: 10),
-                        LabeledCheck(
-                          label: 'Losers',
-                          value: _loser,
-                          groupValue: _loser,
-                          onChanged: (bool newValue) {
-                            setState(() {
-                              _loser = newValue;
-                            });
-                          },
-                        ),
-                        LabeledCheck(
-                          label: 'Gainers',
-                          value: _loser,
-                          groupValue: _loser,
-                          onChanged: (bool newValue) {
-                            setState(() {
-                              _loser = newValue;
-                            });
-                          },
-                        ),
-                        LabeledCheck(
-                          label: 'Watchlist',
-                          value: _loser,
-                          groupValue: _loser,
-                          onChanged: (bool newValue) {
-                            setState(() {
-                              _loser = newValue;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            },
-          )
+          // InkWell(
+          //   child: Container(
+          //       decoration: BoxDecoration(
+          //           color: AppPalette.instance.grey05,
+          //           borderRadius: BorderRadius.circular(6)),
+          //       padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+          //       child: SvgPicture.asset("assets/icons/sort.svg")),
+          //   onTap: () {
+          //     showModalBottomSheet(
+          //       context: context,
+          //       builder: (context) {
+          //         return Container(
+          //           padding:
+          //               const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          //           decoration: BoxDecoration(
+          //               color: Colors.white,
+          //               borderRadius: BorderRadius.circular(12.0)),
+          //           child: Column(
+          //             crossAxisAlignment: CrossAxisAlignment.start,
+          //             children: [
+          //               SizedBox(height: 20),
+          //               Text("Sort",
+          //                   style: TextStyle(
+          //                       fontSize: 12, fontWeight: FontWeight.w700)),
+          //               SizedBox(height: 10),
+          //               LabeledRadio(
+          //                 label: 'Recomended',
+          //                 value: true,
+          //                 groupValue: _isRadioSelected,
+          //                 onChanged: (bool newValue) {
+          //                   setState(() {
+          //                     _isRadioSelected = newValue;
+          //                   });
+          //                 },
+          //               ),
+          //               LabeledRadio(
+          //                 label: 'Newest First',
+          //                 value: true,
+          //                 groupValue: _isRadioSelected,
+          //                 onChanged: (bool newValue) {
+          //                   setState(() {
+          //                     _isRadioSelected = newValue;
+          //                   });
+          //                 },
+          //               ),
+          //               LabeledRadio(
+          //                 label: 'Lowest Price',
+          //                 value: true,
+          //                 groupValue: _isRadioSelected,
+          //                 onChanged: (bool newValue) {
+          //                   setState(() {
+          //                     _isRadioSelected = newValue;
+          //                   });
+          //                 },
+          //               ),
+          //               LabeledRadio(
+          //                 label: 'Highest Price',
+          //                 value: true,
+          //                 groupValue: _isRadioSelected,
+          //                 onChanged: (bool newValue) {
+          //                   setState(() {
+          //                     _isRadioSelected = newValue;
+          //                   });
+          //                 },
+          //               ),
+          //               SizedBox(height: 20),
+          //               Text("Show",
+          //                   style: TextStyle(
+          //                       fontSize: 12, fontWeight: FontWeight.w700)),
+          //               SizedBox(height: 10),
+          //               LabeledCheck(
+          //                 label: 'Losers',
+          //                 value: _loser,
+          //                 groupValue: _loser,
+          //                 onChanged: (bool newValue) {
+          //                   setState(() {
+          //                     _loser = newValue;
+          //                   });
+          //                 },
+          //               ),
+          //               LabeledCheck(
+          //                 label: 'Gainers',
+          //                 value: _loser,
+          //                 groupValue: _loser,
+          //                 onChanged: (bool newValue) {
+          //                   setState(() {
+          //                     _loser = newValue;
+          //                   });
+          //                 },
+          //               ),
+          //               LabeledCheck(
+          //                 label: 'Watchlist',
+          //                 value: _loser,
+          //                 groupValue: _loser,
+          //                 onChanged: (bool newValue) {
+          //                   setState(() {
+          //                     _loser = newValue;
+          //                   });
+          //                 },
+          //               ),
+          //             ],
+          //           ),
+          //         );
+          //       },
+          //     );
+          //   },
+          // )
+          SvgPicture.asset("assets/icons/icon.svg"),
         ],
       ),
     );
@@ -178,7 +181,6 @@ class _MarketScreenState extends State<MarketScreen> {
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SafeArea(
@@ -194,6 +196,7 @@ class _MarketScreenState extends State<MarketScreen> {
                   children: [],
                 ),
               ),
+              SizedBox(height: 10.0),
               SizedBox(height: 20.0),
               _isLoading
                   ? BasicLoading()

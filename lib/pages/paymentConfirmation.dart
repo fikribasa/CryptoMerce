@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:wartec_app/components/primaryButton.dart';
 import 'package:wartec_app/models/tokenList.dart';
 import 'package:wartec_app/pages/checkoutScreen.dart';
+import 'package:wartec_app/pages/pinInputChecker.dart';
 import 'package:wartec_app/pages/transaction.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/style.dart';
@@ -158,7 +159,8 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen> {
             child: PrimaryButton(
               label: "CONFIRM",
               onPressed: () {
-                Get.to(() => TransactionScreen());
+                Get.off(() => PinInputCheckerScreen(
+                    widget._ctx, "confirmation", TransactionScreen()));
               },
             ),
           ),
@@ -316,10 +318,13 @@ class _PaymentConfirmationScreenState extends State<PaymentConfirmationScreen> {
             child: PrimaryButton(
               label: "CONFIRM",
               onPressed: () {
-                Get.to(() => CheckoutScreen(widget._ctx!,
-                    totalAmount: _totalAmount,
-                    paymentMethod: widget.paymentMethod,
-                    image: widget.image));
+                Get.off(() => PinInputCheckerScreen(
+                    widget._ctx,
+                    "confirmation",
+                    CheckoutScreen(widget._ctx!,
+                        totalAmount: _totalAmount,
+                        paymentMethod: widget.paymentMethod,
+                        image: widget.image)));
               },
             ),
           ),

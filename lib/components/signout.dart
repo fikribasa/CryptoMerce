@@ -12,15 +12,15 @@ class SignOutButton extends StatelessWidget {
   showAlertDialog(BuildContext context) {
     // set up the buttons
     Widget cancelButton = TextButton(
-      child: Text("Cancel",
-          style: TextStyle(color: AppPalette.instance.primary200)),
+      child:
+          Text("Cancel", style: TextStyle(color: AppPalette.instance.alert40)),
       onPressed: () {
         Navigator.of(context).pop();
       },
     );
     Widget signOutButton = TextButton(
       child: Text("Sign Out",
-          style: TextStyle(color: AppPalette.instance.primary200)),
+          style: TextStyle(color: AppPalette.instance.alert40)),
       onPressed: () async {
         await this._ctx!.logout();
         Get.offAll(() => SplashScreen(this._ctx!));

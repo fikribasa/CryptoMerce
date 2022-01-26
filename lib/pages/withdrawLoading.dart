@@ -44,6 +44,12 @@ class _WithdrawLoadingScreenState extends State<WithdrawLoadingScreen>
     animation!.forward();
   }
 
+  @override
+  void dispose() {
+    animation?.dispose();
+    super.dispose();
+  }
+
   checkConfirmation() {
     Future.delayed(Duration(seconds: 4), () {
       this.setState(() {

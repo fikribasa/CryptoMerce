@@ -1,30 +1,31 @@
-import 'package:email_auth/email_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/bottomTab.dart';
-import 'package:wartec_app/pages/account.dart';
-import 'package:wartec_app/pages/landing.dart';
-import 'package:wartec_app/pages/pinInput.dart';
+import 'package:wartec_app/pages/pinInputChecker.dart';
 import 'package:wartec_app/services/appContext.dart';
+import 'package:wartec_app/services/firestoreDB.dart';
 import 'package:wartec_app/style.dart';
+import 'package:wartec_app/utils/storage.dart';
 
-class OTPInputScreen extends StatefulWidget {
-  final String? email;
+class PinInputConfirmationScreen extends StatefulWidget {
   final AppContext? _ctx;
-  final EmailAuth? emailAuth;
+  final String? type;
   final Widget? afterSuccess;
+  final String? newPin;
 
-  OTPInputScreen(this._ctx, this.email, this.emailAuth, this.afterSuccess,
+  PinInputConfirmationScreen(
+      this._ctx, this.type, this.newPin, this.afterSuccess,
       {Key? key})
       : super(key: key);
 
   @override
-  _OTPInputScreenState createState() => _OTPInputScreenState();
+  _PinInputConfirmationScreenState createState() =>
+      _PinInputConfirmationScreenState();
 }
 
-class _OTPInputScreenState extends State<OTPInputScreen> {
+class _PinInputConfirmationScreenState
+    extends State<PinInputConfirmationScreen> {
   Size? _screenSize;
   int? _currentDigit;
   int? _firstDigit;
@@ -36,16 +37,20 @@ class _OTPInputScreenState extends State<OTPInputScreen> {
 
   String pin = "";
 
-  verifyOTP() {
-    print(pin);
-    var res = widget.emailAuth!
-        .validateOtp(recipientMail: widget.email!, userOtp: pin);
-    if (res) {
-      Get.snackbar("Verification Success", "Thank you");
-      Get.off(() => widget.afterSuccess!);
-    } else {
-      print("at verifyOTP > $res");
-      Get.snackbar("Verification Failed", "Please check your input");
+  Future setPinToFirebase() async {
+    try {
+      if (widget.newPin != pin) {
+        return Get.snackbar("Mohon maaf",
+            "pin yang anda masukkan tidak sesuai, silakan coba lagi");
+      }
+      final userid = storage.read("userID");
+      final status = await DBFuture().updateUser(userid, "pin", pin);
+      if (status == "success") {
+        Get.off(() => widget.afterSuccess!);
+      }
+    } catch (e) {
+      print("setPinToFirebase: $e");
+      Get.snackbar("Terjadi Kesalahan", "$e");
     }
   }
 
@@ -152,8 +157,7 @@ class _OTPInputScreenState extends State<OTPInputScreen> {
     });
     print(pin.length);
     if (pin.length == 6) {
-      verifyOTP();
-      print("terpanggil");
+      setPinToFirebase();
     }
   }
 
@@ -170,11 +174,11 @@ class _OTPInputScreenState extends State<OTPInputScreen> {
   // Returns "Appbar"
   get _getAppbar {
     return new AppBar(
-      elevation: 1.0,
-      title: Text("OTP Verification",
+      backgroundColor: Colors.white,
+      title: Text(widget.type == "new" ? "Confirm Your PIN" : "Change PIN",
           style: TextStyle(
               color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)),
-      backgroundColor: Colors.white,
+      elevation: 1.0,
       leading: new InkWell(
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(
@@ -190,17 +194,13 @@ class _OTPInputScreenState extends State<OTPInputScreen> {
   }
 
   get _title {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text("Please input the one-time password (OTP) that we’ve sent to",
-              textAlign: TextAlign.center, style: TextStyle(fontSize: 14.0)),
-          SizedBox(height: 10),
-          Text(widget.email ?? " ", style: TextStyle(fontSize: 16.0)),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 20.0),
+        Text("Enter your PIN one more time to confirm",
+            style: TextStyle(fontSize: 14.0)),
+      ],
     );
   }
 
@@ -324,6 +324,7 @@ class _OTPInputScreenState extends State<OTPInputScreen> {
                             _firstDigit = null;
                           }
                         });
+                        // next page
                       }),
                 ],
               ),

@@ -150,6 +150,8 @@ class _ChannelScreenState extends State<ChannelScreen> {
   Widget _renderHeader(double _screenWidth) {
     return Container(
       width: _screenWidth,
+      color: Colors.white,
+      padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -181,7 +183,6 @@ class _ChannelScreenState extends State<ChannelScreen> {
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SafeArea(
@@ -191,6 +192,40 @@ class _ChannelScreenState extends State<ChannelScreen> {
             children: [
               SizedBox(height: 8),
               _renderHeader(_screenWidth),
+              SizedBox(height: 10.0),
+              Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(
+                      color: AppPalette.instance.accent5,
+                      width: 2.0,
+                    ))),
+                    child: Text("News"),
+                  ),
+                  SizedBox(width: 8),
+                  Container(
+                    // decoration: BoxDecoration(
+                    //     border: Border(
+                    //         bottom: BorderSide(
+                    //   color: AppPalette.instance.accent5,
+                    //   width: 2.0,
+                    // ))),
+                    child: Text("Learn"),
+                  ),
+                  SizedBox(width: 8),
+                  Container(
+                    // decoration: BoxDecoration(
+                    //     border: Border(
+                    //         bottom: BorderSide(
+                    //   color: AppPalette.instance.accent5,
+                    //   width: 2.0,
+                    // ))),
+                    child: Text("Videos"),
+                  ),
+                ],
+              ),
               SizedBox(height: 20.0),
               Text(
                 "Top News",

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:wartec_app/components/primaryButton.dart';
 import 'package:wartec_app/models/tokenList.dart';
 import 'package:wartec_app/pages/checkoutScreen.dart';
+import 'package:wartec_app/pages/pinInputChecker.dart';
 import 'package:wartec_app/pages/transaction.dart';
 import 'package:wartec_app/pages/withdrawLoading.dart';
 import 'package:wartec_app/services/appContext.dart';
@@ -151,7 +152,8 @@ class _IDRWithdrawConfirmationScreenState
             child: PrimaryButton(
               label: "CONFIRM",
               onPressed: () {
-                Get.to(() => WithdrawLoadingScreen(widget._ctx));
+                Get.off(() => PinInputCheckerScreen(widget._ctx, "confirmation",
+                    WithdrawLoadingScreen(widget._ctx)));
               },
             ),
           ),

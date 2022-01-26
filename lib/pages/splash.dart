@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:wartec_app/components/bottomTab.dart';
 import 'package:wartec_app/pages/account.dart';
 import 'package:wartec_app/pages/login.dart';
+import 'package:wartec_app/pages/pinInputChecker.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/services/authService.dart';
 import 'package:wartec_app/style.dart';
@@ -33,8 +34,9 @@ class _SplashScreenState extends State<SplashScreen> {
       print("userID: $userID");
       Future.delayed(Duration(seconds: 2), () {
         if (userID != null && userID.length > 0) {
-          Get.offAll(() => BasicBottomNavBar(widget._ctx!));
-        } else {
+          //   Get.offAll(() => PinInputCheckerScreen(
+          //       widget._ctx!, "login", BasicBottomNavBar(widget._ctx!)));
+          // } else {
           Get.offAll(() => LoginScreen(widget._ctx));
         }
       });

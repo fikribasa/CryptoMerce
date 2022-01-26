@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:wartec_app/components/bottomTab.dart';
 import 'package:wartec_app/components/signout.dart';
 import 'package:wartec_app/pages/account.dart';
+import 'package:wartec_app/pages/bankAccounts.dart';
 import 'package:wartec_app/pages/ledger.dart';
 import 'package:wartec_app/pages/watchlist.dart';
 import 'package:wartec_app/services/appContext.dart';
@@ -101,11 +102,13 @@ class _RightSliderWidgetState extends State<RightSliderWidget> {
           Get.to(() => AccountScreen(widget._ctx));
         } else if (title == "My Wallet") {
           Get.offAll(() => BasicBottomNavBar(widget._ctx, index: 3));
+        } else if (title == "My Bank Accounts") {
+          Get.offAll(() => BankAccountsScreen(widget._ctx));
         }
       },
       child: Container(
         padding: const EdgeInsets.all(10),
-        margin: const EdgeInsets.only(bottom: 10.0),
+        // margin: const EdgeInsets.only(bottom: 4.0),
         // decoration: BoxDecoration(
         //     border: Border.all(width: 1.0, color: Colors.black12),
         //     borderRadius: BorderRadius.all(Radius.circular(6.0))),
@@ -194,7 +197,7 @@ class _RightSliderWidgetState extends State<RightSliderWidget> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                SizedBox(height: 20),
+                                SizedBox(height: 40),
                                 InkWell(
                                   onTap: () {
                                     Get.to(() => AccountScreen(widget._ctx));

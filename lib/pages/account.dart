@@ -1,8 +1,11 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wartec_app/components/bottomTab.dart';
 import 'package:wartec_app/components/signout.dart';
 import 'package:wartec_app/pages/changePassword.dart';
+import 'package:wartec_app/pages/pinInput.dart';
+import 'package:wartec_app/pages/pinInputChecker.dart';
 import 'package:wartec_app/pages/verifyIdetity.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/style.dart';
@@ -129,13 +132,22 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget ActionBox(String title) {
     return InkWell(
       onTap: () {
-        Get.to(() => ChangePasswordScreen(this.widget._ctx));
+        if (title.contains("Password")) {
+          Get.to(() => ChangePasswordScreen(this.widget._ctx));
+        } else {
+          Get.to(() => PinInputCheckerScreen(
+              this.widget._ctx,
+              "change",
+              PinInputScreen(this.widget._ctx, "change",
+                  BasicBottomNavBar(widget._ctx!))));
+        }
       },
       child: Container(
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.only(bottom: 10.0),
         decoration: BoxDecoration(
-            border: Border.all(width: 1.0, color: Colors.black12),
+            color: Colors.white,
+            // border: Border.all(width: 1.0, color: Colors.black12),
             borderRadius: BorderRadius.all(Radius.circular(6.0))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -208,10 +220,10 @@ class _AccountScreenState extends State<AccountScreen> {
                   ),
                 ),
                 SizedBox(height: 20.0),
-                // Text("Security", style: TextStyle(fontWeight: FontWeight.bold)),
-                // SizedBox(height: 10.0),
-                // ActionBox("Change Password"),
-                // ActionBox("Change PIN"),
+                Text("Security", style: TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(height: 10.0),
+                ActionBox("Change Password"),
+                ActionBox("Change PIN"),
                 // SignOutButton(this.widget._ctx!)
               ],
             ),

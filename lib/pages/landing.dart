@@ -43,6 +43,7 @@ class _LandingPageState extends State<LandingPage> {
       if (widget._ctx!.user == null) {
         // final user = await widget._ctx!.api.getUserInfo();
         final user = await DBFuture().getUser(storage.read("userID"));
+
         widget._ctx!.user = user;
       }
       final _tl = await widget._ctx!.api.getTokenList();

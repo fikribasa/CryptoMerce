@@ -112,7 +112,8 @@ class _PersonalInfoInputScreenState extends State<PersonalInfoInputScreen> {
         this.setState(() {
           _isLoading = false;
         });
-        Get.to(() => OTPInputScreen(widget._ctx, _email, emailAuth!));
+        Get.to(() => OTPInputScreen(widget._ctx, _email, emailAuth!,
+            AccountVerification(widget._ctx, _email)));
       }
     });
   }
@@ -130,7 +131,7 @@ class _PersonalInfoInputScreenState extends State<PersonalInfoInputScreen> {
             (value) => print("Done: $value"),
           );
       final link = await taskSnapshot.ref.getDownloadURL();
-      final _uploaded = await DBFuture().updateUserImage(userid, type!, link);
+      final _uploaded = await DBFuture().updateUser(userid, type!, link);
     } catch (e) {
       print("uploadImageToFirebase: $e");
       Get.snackbar("Terjadi Kesalahan", "$e");

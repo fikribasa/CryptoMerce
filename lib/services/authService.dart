@@ -36,8 +36,13 @@ class Auth {
     return retVal;
   }
 
-  Future<String> signUpUser(String email, String fullName, String ktpNumber,
-      String phoneNumber, String dob) async {
+  Future<String> signUpUser(
+    String email,
+    String fullName,
+    String ktpNumber,
+    String phoneNumber,
+    String dob,
+  ) async {
     String retVal = "error";
     try {
       final user = _auth.currentUser;
@@ -48,18 +53,15 @@ class Auth {
           ktpNumber: ktpNumber,
           phoneNumber: phoneNumber,
           dob: dob);
-      String _returnString = await DBFuture().createUser(_user);
-      if (_returnString == "success") {
-        storage.write("userID", user.uid);
-        storage.write("userEmail", user.email);
-        retVal = "success";
-      }
+      retVal = await DBFuture().createUser(_user);
+
+      storage.write("userID", user.uid);
+      storage.write("userEmail", user.email);
     } on PlatformException catch (e) {
       retVal = e.message!;
     } catch (e) {
       print(e);
     }
-
     return retVal;
   }
 

@@ -1,30 +1,27 @@
-import 'package:email_auth/email_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:wartec_app/components/bottomTab.dart';
-import 'package:wartec_app/pages/account.dart';
-import 'package:wartec_app/pages/landing.dart';
-import 'package:wartec_app/pages/pinInput.dart';
+import 'package:wartec_app/pages/transaction.dart';
 import 'package:wartec_app/services/appContext.dart';
+import 'package:wartec_app/services/firestoreDB.dart';
 import 'package:wartec_app/style.dart';
+import 'package:wartec_app/utils/storage.dart';
 
-class OTPInputScreen extends StatefulWidget {
-  final String? email;
+class PinInputCheckerScreen extends StatefulWidget {
   final AppContext? _ctx;
-  final EmailAuth? emailAuth;
+  final String? type;
   final Widget? afterSuccess;
 
-  OTPInputScreen(this._ctx, this.email, this.emailAuth, this.afterSuccess,
+  PinInputCheckerScreen(AppContext? ctx, this.type, this.afterSuccess,
       {Key? key})
-      : super(key: key);
+      : _ctx = ctx,
+        super(key: key);
 
   @override
-  _OTPInputScreenState createState() => _OTPInputScreenState();
+  _PinInputCheckerScreenState createState() => _PinInputCheckerScreenState();
 }
 
-class _OTPInputScreenState extends State<OTPInputScreen> {
+class _PinInputCheckerScreenState extends State<PinInputCheckerScreen> {
   Size? _screenSize;
   int? _currentDigit;
   int? _firstDigit;
@@ -36,16 +33,32 @@ class _OTPInputScreenState extends State<OTPInputScreen> {
 
   String pin = "";
 
-  verifyOTP() {
-    print(pin);
-    var res = widget.emailAuth!
-        .validateOtp(recipientMail: widget.email!, userOtp: pin);
-    if (res) {
-      Get.snackbar("Verification Success", "Thank you");
-      Get.off(() => widget.afterSuccess!);
-    } else {
-      print("at verifyOTP > $res");
-      Get.snackbar("Verification Failed", "Please check your input");
+  @override
+  void initState() {
+    super.initState();
+    // WidgetsBinding.instance!.addPostFrameCallback((_) {
+    //   userPin = storage.read("userPin");
+    // });
+  }
+
+  Future checkPinToFirebase() async {
+    try {
+      final userid = storage.read("userID");
+      final user = await DBFuture().getUser(userid);
+      if (user?.pin != null) {
+        if (user?.pin == pin) {
+          Get.snackbar("Sukses", "PIN telah sesuai, terima kasih");
+          return Get.to(() => widget.afterSuccess!);
+        } else {
+          return Get.snackbar(
+              "Terjadi Kesalahan", "PIN tidak sesuai, mohon periksa lagi");
+        }
+      }
+      return Get.snackbar(
+          "Terjadi Kesalahan", "PIN tidak ditemukan, mohon periksa lagi");
+    } catch (e) {
+      print("checkPinToFirebase: $e");
+      // Get.snackbar("Terjadi Kesalahan", "$e");
     }
   }
 
@@ -127,33 +140,33 @@ class _OTPInputScreenState extends State<OTPInputScreen> {
   // Current digit
   void _setCurrentDigit(int i) {
     _currentDigit = i;
-    if (_firstDigit == null) {
-      _firstDigit = _currentDigit;
-    } else if (_secondDigit == null) {
-      _secondDigit = _currentDigit;
-    } else if (_thirdDigit == null) {
-      _thirdDigit = _currentDigit;
-    } else if (_fourthDigit == null) {
-      _fourthDigit = _currentDigit;
-    } else if (_fifthDigit == null) {
-      _fifthDigit = _currentDigit;
-    } else if (_sixthDigit == null) {
-      _sixthDigit = _currentDigit;
-    }
     setState(() {
-      pin = _firstDigit.toString() +
-          _secondDigit.toString() +
-          _thirdDigit.toString() +
-          _fourthDigit.toString() +
-          _fifthDigit.toString() +
-          _sixthDigit.toString();
+      if (_firstDigit == null) {
+        _firstDigit = _currentDigit;
+      } else if (_secondDigit == null) {
+        _secondDigit = _currentDigit;
+      } else if (_thirdDigit == null) {
+        _thirdDigit = _currentDigit;
+      } else if (_fourthDigit == null) {
+        _fourthDigit = _currentDigit;
+      } else if (_fifthDigit == null) {
+        _fifthDigit = _currentDigit;
+      } else if (_sixthDigit == null) {
+        _sixthDigit = _currentDigit;
 
-      // Verify your pin by here. API call
+        pin = _firstDigit.toString() +
+            _secondDigit.toString() +
+            _thirdDigit.toString() +
+            _fourthDigit.toString() +
+            _fifthDigit.toString() +
+            _sixthDigit.toString();
+
+        // Verify your pin by here. API call
+      }
     });
     print(pin.length);
     if (pin.length == 6) {
-      verifyOTP();
-      print("terpanggil");
+      checkPinToFirebase();
     }
   }
 
@@ -170,11 +183,16 @@ class _OTPInputScreenState extends State<OTPInputScreen> {
   // Returns "Appbar"
   get _getAppbar {
     return new AppBar(
-      elevation: 1.0,
-      title: Text("OTP Verification",
+      title: Text(
+          widget.type == "new"
+              ? "Confirm Your PIN"
+              : widget.type == "change"
+                  ? "Change PIN"
+                  : "Enter Wartec PIN to Continue",
           style: TextStyle(
               color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)),
       backgroundColor: Colors.white,
+      elevation: 1.0,
       leading: new InkWell(
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(
@@ -190,17 +208,29 @@ class _OTPInputScreenState extends State<OTPInputScreen> {
   }
 
   get _title {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text("Please input the one-time password (OTP) that we’ve sent to",
-              textAlign: TextAlign.center, style: TextStyle(fontSize: 14.0)),
-          SizedBox(height: 10),
-          Text(widget.email ?? " ", style: TextStyle(fontSize: 16.0)),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          padding: const EdgeInsets.only(top: 20),
+          child: Text(
+              widget.type == "new"
+                  ? "Enter your PIN one more time to confirm"
+                  : widget.type == "change"
+                      ? "Enter your current 6-digit PIN to change your PIN"
+                      : "Please enter your 6 digit PIN.",
+              style: TextStyle(fontSize: 14.0)),
+        ),
+        widget.type != "new"
+            ? Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: Text("Forgot your PIN?",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 14.0, color: AppPalette.instance.neutral05)),
+              )
+            : SizedBox(height: 1),
+      ],
     );
   }
 
@@ -324,6 +354,7 @@ class _OTPInputScreenState extends State<OTPInputScreen> {
                             _firstDigit = null;
                           }
                         });
+                        // next page
                       }),
                 ],
               ),

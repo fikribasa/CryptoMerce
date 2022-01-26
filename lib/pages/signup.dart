@@ -1,11 +1,10 @@
 import 'package:email_auth/email_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:wartec_app/components/bottomTab.dart';
 import 'package:wartec_app/components/primaryButton.dart';
-import 'package:wartec_app/pages/accountVerification.dart';
 import 'package:wartec_app/pages/otpInput.dart';
+import 'package:wartec_app/pages/pinInput.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/services/authService.dart';
 import 'package:wartec_app/style.dart';
@@ -28,26 +27,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _isObscure = true;
   bool _isObscureConfirmation = true;
   EmailAuth? emailAuth;
-
+  ScrollController _scrollController = new ScrollController();
+  bool isLoading = false;
   void _signUpEmail() async {
     try {
-      print(_email);
-      print(_password);
       if (_password!.trim() != _confirmationPassword!.trim()) {
         return Get.snackbar(
             "Terjadi Kesalahan", "Password tidak sesuai, mohon periksa kembali",
             duration: Duration(seconds: 4));
       }
+      this.setState(() {
+        isLoading = true;
+      });
       String _returnString = await Auth().signUpWithEmail(_email!, _password!);
       if (_returnString == "success") {
-        // Get.to(() => AccountVerification(widget._ctx, _email!));
-
+        sendEmail();
       } else {
-        Get.snackbar("Terjadi Kesalahan", "Silakan coba lagi",
-            duration: Duration(seconds: 4));
+        if (_returnString.contains("email-already-in-use")) {
+          Get.snackbar("Terjadi Kesalahan",
+              "Email ini telah digunakan, mohon gunakan email lainnya",
+              duration: Duration(seconds: 4));
+        } else {
+          Get.snackbar("Terjadi Kesalahan", "Silakan coba lagi",
+              duration: Duration(seconds: 4));
+        }
       }
+      this.setState(() {
+        isLoading = false;
+      });
     } catch (e) {
       print(e);
+      this.setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -55,7 +67,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
     emailAuth = new EmailAuth(sessionName: "Wartec");
     var res = await emailAuth!.sendOtp(recipientMail: _email!, otpLength: 4);
     if (res) {
-      Get.to(() => OTPInputScreen(widget._ctx, _email, emailAuth!));
+      this.setState(() {
+        isLoading = false;
+      });
+      Get.to(() => OTPInputScreen(
+          widget._ctx,
+          _email,
+          emailAuth!,
+          PinInputScreen(
+              widget._ctx!, "new", BasicBottomNavBar(widget._ctx!))));
     }
     ;
   }
@@ -87,6 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: SingleChildScrollView(
+              controller: _scrollController,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -126,6 +147,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         SizedBox(height: 20.0),
                         TextFormField(
+                          onTap: () {
+                            _scrollController.jumpTo(
+                                _scrollController.position.maxScrollExtent);
+                          },
                           obscureText: _isObscure,
                           autocorrect: false,
                           decoration: InputDecoration(
@@ -161,6 +186,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         SizedBox(height: 16.0),
                         TextFormField(
+                          onTap: () {
+                            _scrollController.jumpTo(
+                                _scrollController.position.maxScrollExtent);
+                          },
                           obscureText: _isObscureConfirmation,
                           autocorrect: false,
                           decoration: InputDecoration(
@@ -200,9 +229,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(
                           width: 140,
                           child: PrimaryButtonSmall(
-                              onPressed: () {
-                                _signUpEmail();
-                              },
+                              onPressed: !isLoading
+                                  ? () {
+                                      _signUpEmail();
+                                    }
+                                  : null,
                               label: 'Sign Up      '),
                         ),
                         SizedBox(height: 12.0),

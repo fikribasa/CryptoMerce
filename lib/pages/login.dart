@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/bottomTab.dart';
 import 'package:wartec_app/components/primaryButton.dart';
+import 'package:wartec_app/pages/pinInput.dart';
+import 'package:wartec_app/pages/pinInputChecker.dart';
 import 'package:wartec_app/pages/signup.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/services/authService.dart';
@@ -31,7 +33,8 @@ class _LoginScreenState extends State<LoginScreen> {
       _returnString = await Auth().loginUserWithEmail(_email!, _password!);
       print("_returnString: $_returnString");
       if (_returnString == "success") {
-        return Get.to(() => BasicBottomNavBar(widget._ctx!));
+        Get.offAll(() => PinInputCheckerScreen(
+            widget._ctx!, "login", BasicBottomNavBar(widget._ctx!)));
       } else
         throw Exception(_returnString);
     } catch (e) {
