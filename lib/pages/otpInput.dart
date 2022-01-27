@@ -37,7 +37,6 @@ class _OTPInputScreenState extends State<OTPInputScreen> {
   String pin = "";
 
   verifyOTP() {
-    print(pin);
     var res = widget.emailAuth!
         .validateOtp(recipientMail: widget.email!, userOtp: pin);
     if (res) {

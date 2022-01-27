@@ -10,6 +10,7 @@ import 'package:wartec_app/pages/signup.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/services/authService.dart';
 import 'package:wartec_app/style.dart';
+import 'package:wartec_app/utils/storage.dart';
 
 class LoginScreen extends StatefulWidget {
   final AppContext? _ctx;
@@ -33,8 +34,14 @@ class _LoginScreenState extends State<LoginScreen> {
       _returnString = await Auth().loginUserWithEmail(_email!, _password!);
       print("_returnString: $_returnString");
       if (_returnString == "success") {
-        Get.offAll(() => PinInputCheckerScreen(
-            widget._ctx!, "login", BasicBottomNavBar(widget._ctx!)));
+        final pin = storage.read("pin");
+        if (pin != null && pin.lengt > 0) {
+          Get.offAll(() => PinInputCheckerScreen(
+              widget._ctx!, "login", BasicBottomNavBar(widget._ctx!)));
+        } else {
+          Get.to(() => PinInputScreen(
+              widget._ctx!, "new", BasicBottomNavBar(widget._ctx!)));
+        }
       } else
         throw Exception(_returnString);
     } catch (e) {
