@@ -30,11 +30,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     try {
       print(_email);
       print(_password);
-      if (_password!.trim() != _confirmationPassword!.trim()) {
-        return Get.snackbar(
-            "Terjadi Kesalahan", "Password tidak sesuai, mohon periksa kembali",
-            duration: Duration(seconds: 4));
-      }
+      // if (_password!.trim() != _confirmationPassword!.trim()) {
+      //   return Get.snackbar(
+      //       "Terjadi Kesalahan", "Password tidak sesuai, mohon periksa kembali",
+      //       duration: Duration(seconds: 4));
+      // }
       String _returnString = await Auth().signUpWithEmail(_email!, _password!);
       if (_returnString == "success") {
         Get.to(() => AccountVerification(widget._ctx));
