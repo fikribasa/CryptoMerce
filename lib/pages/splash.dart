@@ -7,7 +7,9 @@ import 'package:wartec_app/pages/login.dart';
 import 'package:wartec_app/pages/pinInputChecker.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/services/authService.dart';
+import 'package:wartec_app/services/firestoreDB.dart';
 import 'package:wartec_app/style.dart';
+import 'package:wartec_app/utils/storage.dart';
 
 class SplashScreen extends StatefulWidget {
   final AppContext? _ctx;
@@ -29,17 +31,18 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void checkLoginState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
       final userID = Auth().userLoggedIn();
       print("userID: $userID");
-      Future.delayed(Duration(seconds: 2), () {
-        if (userID != null && userID.length > 0) {
-          //   Get.offAll(() => PinInputCheckerScreen(
-          //       widget._ctx!, "login", BasicBottomNavBar(widget._ctx!)));
-          // } else {
-          Get.offAll(() => LoginScreen(widget._ctx));
+      if (userID != null && userID.length > 0) {
+        final user = await DBFuture().getUser(userID);
+        if (user != null && user.pin != null && user.pin!.length > 0) {
+          storage.write("pin", user.pin);
+          return Get.offAll(() => PinInputCheckerScreen(
+              widget._ctx!, "login", BasicBottomNavBar(widget._ctx!)));
         }
-      });
+      }
+      return Get.offAll(() => LoginScreen(widget._ctx));
     });
   }
 
