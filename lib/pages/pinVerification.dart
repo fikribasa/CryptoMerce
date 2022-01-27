@@ -21,7 +21,7 @@ class _PinVerificationState extends State<PinVerification> {
           style: TextStyle(
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18)),
       backgroundColor: Colors.white,
-      elevation: 0.0,
+      elevation: 1.0,
       leading: new InkWell(
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(

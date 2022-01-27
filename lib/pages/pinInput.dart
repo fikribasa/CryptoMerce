@@ -1,17 +1,21 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/bottomTab.dart';
-import 'package:wartec_app/pages/account.dart';
-import 'package:wartec_app/pages/landing.dart';
+import 'package:wartec_app/pages/pinInputChecker.dart';
+import 'package:wartec_app/pages/pinInputConfirmation.dart';
 import 'package:wartec_app/services/appContext.dart';
+import 'package:wartec_app/services/firestoreDB.dart';
+import 'package:wartec_app/style.dart';
+import 'package:wartec_app/utils/storage.dart';
 
 class PinInputScreen extends StatefulWidget {
   final AppContext? _ctx;
-  PinInputScreen(AppContext? ctx, {Key? key})
-      : _ctx = ctx,
-        super(key: key);
+  final String? type;
+  final Widget? afterSuccess;
+
+  PinInputScreen(this._ctx, this.type, this.afterSuccess, {Key? key})
+      : super(key: key);
 
   @override
   _PinInputScreenState createState() => _PinInputScreenState();
@@ -28,18 +32,35 @@ class _PinInputScreenState extends State<PinInputScreen> {
   int? _sixthDigit;
 
   String pin = "";
-  bool didReadNotifications = false;
-  int unReadNotificationsCount = 0;
 
   // Returns "Pin custom text field"
   Widget _pinTextField(int? digit) {
     return new Container(
         width: 30.0,
         height: 40.0,
+        decoration: BoxDecoration(
+            border: Border(
+                bottom: BorderSide(
+          color: AppPalette.instance.neutral05,
+          width: 2.0,
+        ))),
         alignment: Alignment.center,
         child: digit != null
-            ? SvgPicture.asset("assets/icons/elipse-bl.svg")
-            : SvgPicture.asset("assets/icons/elipse.svg"));
+            ? Container(
+                width: 20,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: AppPalette.instance.accent5, // border color
+                  shape: BoxShape.circle,
+                )
+                // Text(
+                //   "${digit ?? ""}",
+                //   style: TextStyle(
+                //       fontSize: 28,
+                //       fontWeight: FontWeight.bold,
+                //       color: AppPalette.instance.accent5),
+                )
+            : Container());
   }
 
   // Returns "Pin keyboard input Button"
@@ -90,33 +111,32 @@ class _PinInputScreenState extends State<PinInputScreen> {
   // Current digit
   void _setCurrentDigit(int i) {
     _currentDigit = i;
+    if (_firstDigit == null) {
+      _firstDigit = _currentDigit;
+    } else if (_secondDigit == null) {
+      _secondDigit = _currentDigit;
+    } else if (_thirdDigit == null) {
+      _thirdDigit = _currentDigit;
+    } else if (_fourthDigit == null) {
+      _fourthDigit = _currentDigit;
+    } else if (_fifthDigit == null) {
+      _fifthDigit = _currentDigit;
+    } else if (_sixthDigit == null) {
+      _sixthDigit = _currentDigit;
+    }
     setState(() {
-      if (_firstDigit == null) {
-        _firstDigit = _currentDigit;
-      } else if (_secondDigit == null) {
-        _secondDigit = _currentDigit;
-      } else if (_thirdDigit == null) {
-        _thirdDigit = _currentDigit;
-      } else if (_fourthDigit == null) {
-        _fourthDigit = _currentDigit;
-      } else if (_fifthDigit == null) {
-        _fifthDigit = _currentDigit;
-      } else if (_sixthDigit == null) {
-        _sixthDigit = _currentDigit;
+      pin = _firstDigit.toString() +
+          _secondDigit.toString() +
+          _thirdDigit.toString() +
+          _fourthDigit.toString() +
+          _fifthDigit.toString() +
+          _sixthDigit.toString();
 
-        pin = _firstDigit.toString() +
-            _secondDigit.toString() +
-            _thirdDigit.toString() +
-            _fourthDigit.toString() +
-            _fifthDigit.toString() +
-            _sixthDigit.toString();
-
-        // Verify your pin by here. API call
-      }
+      // Verify your pin by here. API call
     });
-    print(pin.length);
     if (pin.length == 6) {
-      Get.offAll(() => BasicBottomNavBar(widget._ctx!, index: 0));
+      Get.to(() => PinInputConfirmationScreen(
+          widget._ctx, widget.type, pin, widget.afterSuccess!));
     }
   }
 
@@ -133,8 +153,11 @@ class _PinInputScreenState extends State<PinInputScreen> {
   // Returns "Appbar"
   get _getAppbar {
     return new AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0.0,
+      backgroundColor: Colors.white,
+      title: Text(widget.type == "new" ? "Create Your PIN" : "Change PIN",
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)),
+      elevation: 1.0,
       leading: new InkWell(
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(
@@ -153,8 +176,6 @@ class _PinInputScreenState extends State<PinInputScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Create Your PIN",
-            style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold)),
         SizedBox(height: 20.0),
         Text("Input a 6-digit PIN to enhance your security",
             style: TextStyle(fontSize: 14.0)),

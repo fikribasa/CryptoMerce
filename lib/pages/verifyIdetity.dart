@@ -1,9 +1,6 @@
-import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/primaryButton.dart';
-import 'package:wartec_app/components/signout.dart';
 import 'package:wartec_app/pages/verifcationDocType.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/style.dart';
@@ -14,8 +11,11 @@ class VerifyIdentityScreen extends StatelessWidget {
   VerifyIdentityScreen(this._ctx, {Key? key}) : super(key: key);
   get _getAppbar {
     return new AppBar(
+      title: Text("Identity Verification Needed",
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)),
       backgroundColor: Colors.white,
-      elevation: 0.0,
+      elevation: 1.0,
       leading: new InkWell(
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(
@@ -36,9 +36,8 @@ class VerifyIdentityScreen extends StatelessWidget {
     final _screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: _getAppbar,
-      backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 16.0),
+        padding: const EdgeInsets.fromLTRB(16.0, 16, 16.0, 16.0),
         child: SafeArea(
           child: SingleChildScrollView(
             child: Container(
@@ -49,11 +48,10 @@ class VerifyIdentityScreen extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      Text("Identity Verification Needed",
-                          style: AppPalette.instance.textStyleHeadline),
-                      SizedBox(height: 6),
                       Text(
-                          "Verification required for your transactions and asset security."),
+                        "Verification required for your transactions and asset security.",
+                        textAlign: TextAlign.center,
+                      ),
                     ],
                   ),
                   Column(
@@ -66,14 +64,16 @@ class VerifyIdentityScreen extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 10, bottom: 10),
+                        margin: const EdgeInsets.only(top: 20, bottom: 10),
                         padding: EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                            color: AppPalette.instance.grey05,
+                            color: Colors.white,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(8.0))),
                         child: Text(
-                            "Please prepare your KTP / SIM / Passport and good lighting condition "),
+                          "Please prepare your KTP / SIM / Passport and good lighting condition ",
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ],
                   ),

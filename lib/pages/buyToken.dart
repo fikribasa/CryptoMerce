@@ -1,8 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/customTextField.dart';
@@ -39,9 +35,10 @@ class _BuyTokenScreenState extends State<BuyTokenScreen> {
   get _getAppbar {
     return new AppBar(
       title: Text("Buy ${widget.item!.code}",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)),
       backgroundColor: Colors.white,
-      elevation: 0.0,
+      elevation: 1.0,
       leading: new InkWell(
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(
@@ -54,7 +51,7 @@ class _BuyTokenScreenState extends State<BuyTokenScreen> {
       ),
       centerTitle: true,
       actions: [
-        SvgPicture.asset('assets/icons/star-fill.svg'),
+        SvgPicture.asset('assets/icons/star.svg'),
         SizedBox(width: 10),
         SvgPicture.asset("assets/icons/icon.svg"),
         SizedBox(width: 16)
@@ -67,7 +64,6 @@ class _BuyTokenScreenState extends State<BuyTokenScreen> {
     final _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: _getAppbar,
-      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 90),
         child: SafeArea(
@@ -75,105 +71,93 @@ class _BuyTokenScreenState extends State<BuyTokenScreen> {
             child: Column(
               children: [
                 Container(
-                    child: Image.asset(
-                  widget.item!.image!,
-                  width: 60,
-                )),
-                SizedBox(height: 10),
-                Text("Estimated Buy Price"),
-                SizedBox(height: 10),
-                Text(
-                  "${widget.item!.tokenPriceIDR}",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "1 ${widget.item!.code}",
-                  style: TextStyle(fontSize: 14, color: Colors.black45),
-                ),
-                SizedBox(height: 10),
-                Divider(color: Colors.black12, thickness: 1.0),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(flex: 1, child: Text("")),
-                    Expanded(
-                      flex: 6,
-                      child: Column(
-                        children: [
-                          Text("Your Rupiah Balance"),
-                          SizedBox(height: 6),
-                          Text("Rp 9,000,000",
-                              style: TextStyle(
-                                  color: hexToColor("#4541B9"),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold)),
-                        ],
+                  width: _screenWidth,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.0)),
+                  padding: const EdgeInsets.only(top: 12, bottom: 12),
+                  child: Column(
+                    children: [
+                      Container(
+                          child: Image.asset(
+                        widget.item!.image!,
+                        width: 60,
+                      )),
+                      SizedBox(height: 10),
+                      Text("Estimated Buy Price"),
+                      SizedBox(height: 6),
+                      Text(
+                        "${widget.item!.tokenPriceIDR}",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
                       ),
-                    ),
-                    Expanded(flex: 1, child: Text("Use \$")),
-                  ],
+                      SizedBox(height: 2),
+                      Text(
+                        "1 ${widget.item!.code}",
+                        style: TextStyle(fontSize: 14, color: Colors.black45),
+                      ),
+                    ],
+                  ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 Container(
-                    color: Colors.black12,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8.0)),
                     padding: const EdgeInsets.symmetric(
                         vertical: 16, horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Column(
                       children: [
-                        Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                  width: 100,
-                                  child: CustomTextField(
-                                    controller: _controller,
-                                    onChange: numberCount,
-                                  )),
-                              Text(
-                                "RP",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 18,
-                                    color: Colors.black54),
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          child: SvgPicture.asset('assets/icons/swap.svg'),
-                        ),
-                        Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              SizedBox(height: 12),
-                              Container(
-                                  alignment: Alignment.centerRight,
-                                  width: 100,
-                                  child: Text(_controller2.text,
-                                      maxLines: 1,
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                    Text(
+                                      "TOTAL",
                                       style: TextStyle(
-                                          color: AppPalette.instance.primary09,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w700))),
-                              SizedBox(height: 12),
-                              Text(
-                                widget.item!.code ?? "",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 18,
-                                    color: Colors.black54),
-                              )
-                            ],
-                          ),
-                        )
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black54),
+                                    ),
+                                    Container(
+                                        width: 100,
+                                        child: CustomTextField(
+                                          controller: _controller,
+                                          onChange: numberCount,
+                                        )),
+                                  ])),
+                              CurrencyDropDownWidget()
+                            ]),
+                        Divider(color: Colors.black12, thickness: 1.0),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                    Text(
+                                      "BUY",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.black54),
+                                    ),
+                                    Container(
+                                        width: 100,
+                                        child: CustomTextField(
+                                          controller: _controller2,
+                                          onChange: numberCount,
+                                        )),
+                                  ])),
+                              CoinDropDownWidget()
+                            ]),
                       ],
                     )),
+                SizedBox(height: 80)
               ],
             ),
           ),
@@ -182,13 +166,142 @@ class _BuyTokenScreenState extends State<BuyTokenScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
           color: Colors.white,
-          width: _screenWidth * 0.7,
-          child: PrimaryButton(
-              label: "Buy",
-              onPressed: () {
-                Get.to(() => PaymentMethodScreen(widget._ctx!,
-                    item: widget.item!, balance: _controller.text));
-              })),
+          width: _screenWidth,
+          padding: const EdgeInsets.fromLTRB(12, 16, 12, 0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Your Rupiah Balance"),
+                  SizedBox(height: 6),
+                  Text("Rp 9,000,000",
+                      style: TextStyle(
+                          color: AppPalette.instance.accent5,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold)),
+                ],
+              ),
+              SizedBox(
+                width: _screenWidth,
+                child: PrimaryButton(
+                    label: "Buy",
+                    onPressed: () {
+                      Get.to(() => PaymentMethodScreen(widget._ctx!,
+                          item: widget.item!, balance: _controller.text));
+                    }),
+              ),
+            ],
+          )),
+    );
+  }
+}
+
+class CurrencyDropDownWidget extends StatefulWidget {
+  const CurrencyDropDownWidget({Key? key}) : super(key: key);
+
+  @override
+  State<CurrencyDropDownWidget> createState() => _CurrencyDropDownWidgetState();
+}
+
+class _CurrencyDropDownWidgetState extends State<CurrencyDropDownWidget> {
+  String dropdownValue = 'Rp';
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+              width: 1.0,
+              style: BorderStyle.solid,
+              color: AppPalette.instance.accent5),
+          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+        ),
+      ),
+      child: Padding(
+        padding:
+            const EdgeInsets.only(left: 16.0, right: 16.0, top: 4, bottom: 4),
+        child: DropdownButton<String>(
+          isDense: true,
+          value: dropdownValue,
+          underline: Container(height: 0),
+          icon: Icon(
+            Icons.expand_more,
+            color: AppPalette.instance.accent5,
+          ),
+          elevation: 16,
+          style: TextStyle(
+              color: AppPalette.instance.accent5, fontWeight: FontWeight.w400),
+          onChanged: (String? newValue) {
+            setState(() {
+              dropdownValue = newValue!;
+            });
+          },
+          items: <String>['Rp', 'USD']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ),
+    );
+  }
+}
+
+class CoinDropDownWidget extends StatefulWidget {
+  const CoinDropDownWidget({Key? key}) : super(key: key);
+
+  @override
+  State<CoinDropDownWidget> createState() => _CoinDropDownWidgetState();
+}
+
+class _CoinDropDownWidgetState extends State<CoinDropDownWidget> {
+  String dropdownValue = 'ZAC';
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+              width: 1.0,
+              style: BorderStyle.solid,
+              color: AppPalette.instance.accent5),
+          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+        ),
+      ),
+      child: Padding(
+        padding:
+            const EdgeInsets.only(left: 16.0, right: 16.0, top: 4, bottom: 4),
+        child: DropdownButton<String>(
+          isDense: true,
+          value: dropdownValue,
+          underline: Container(height: 0),
+          icon: Icon(
+            Icons.expand_more,
+            color: AppPalette.instance.accent5,
+          ),
+          elevation: 16,
+          style: TextStyle(
+              color: AppPalette.instance.accent5, fontWeight: FontWeight.w400),
+          onChanged: (String? newValue) {
+            setState(() {
+              dropdownValue = newValue!;
+            });
+          },
+          items: <String>['ZAC', 'USD']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+        ),
+      ),
     );
   }
 }

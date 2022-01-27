@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/primaryButton.dart';
 import 'package:wartec_app/pages/virtualAccountAmount.dart';
@@ -25,9 +26,9 @@ class _VirtualAccountScreeenStae extends State<VirtualAccountScreen> {
     'Bank Nasional Indonesia (BNI)',
   ];
   List<String> imageAsset = [
-    'assets/icons/bca.png',
-    'assets/icons/hsbc.png',
-    'assets/icons/bni.png',
+    'assets/icons/bca.svg',
+    'assets/icons/hsbc.svg',
+    'assets/icons/bni.svg',
   ];
   handlePayMethodChange(dynamic value) {
     return setState(() {
@@ -38,9 +39,10 @@ class _VirtualAccountScreeenStae extends State<VirtualAccountScreen> {
   get _getAppbar {
     return new AppBar(
       title: Text("Virtual Account",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)),
       backgroundColor: Colors.white,
-      elevation: 0.0,
+      elevation: 1.0,
       leading: new InkWell(
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(
@@ -70,26 +72,27 @@ class _VirtualAccountScreeenStae extends State<VirtualAccountScreen> {
         children: [
           Container(
             padding: const EdgeInsets.all(6),
+            margin: const EdgeInsets.only(bottom: 6),
+            color: Colors.white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Image.asset(imageAsset[_value - 1]),
+                    SvgPicture.asset(imageAsset[_value - 1]),
                     SizedBox(width: 12),
                     Text(_title),
                   ],
                 ),
                 Radio(
-                    activeColor: Colors.blue,
+                    activeColor: AppPalette.instance.accent5,
                     value: _value,
                     groupValue: this.payMethod,
                     onChanged: this.handlePayMethodChange),
               ],
             ),
           ),
-          Divider(color: Colors.black12, thickness: 1.0)
         ],
       ),
     );
@@ -101,7 +104,6 @@ class _VirtualAccountScreeenStae extends State<VirtualAccountScreen> {
 
     return Scaffold(
       appBar: _getAppbar,
-      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SafeArea(
@@ -109,11 +111,10 @@ class _VirtualAccountScreeenStae extends State<VirtualAccountScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20),
               Text("Deposit via Virtual Account",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
               SizedBox(height: 20),
-              Text("Available Bank",
+              Text("Select Bank",
                   style: TextStyle(fontSize: 12, color: Colors.black45)),
               radioBuilder(paymentTexts[0], 1),
               radioBuilder(paymentTexts[1], 2),
@@ -125,11 +126,12 @@ class _VirtualAccountScreeenStae extends State<VirtualAccountScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
-        width: _screenWidth * 0.5,
+        width: _screenWidth - 32,
         child: PrimaryButton(
           label: "ADD AMOUNT",
           onPressed: () {
-            Get.to(() => VirtualAccountAmountScreen(widget._ctx!));
+            Get.to(() => VirtualAccountAmountScreen(widget._ctx!,
+                paymentTexts[payMethod - 1], imageAsset[payMethod - 1]));
           },
         ),
       ),

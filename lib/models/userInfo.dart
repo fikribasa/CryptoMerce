@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class UserModel {
   String? id;
   String? fullName;
@@ -8,6 +6,7 @@ class UserModel {
   String? ktpNumber;
   String? phoneNumber;
   String? dob;
+  String? pin;
 
   UserModel(
       {this.id,
@@ -16,7 +15,8 @@ class UserModel {
       this.email,
       this.ktpNumber,
       this.phoneNumber,
-      this.dob});
+      this.dob,
+      this.pin});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -26,6 +26,7 @@ class UserModel {
     ktpNumber = json['ktp_number'];
     phoneNumber = json['phone_number'];
     dob = json['dob'];
+    pin = json['pin'];
   }
 
   Map<String, dynamic> toJson() {
@@ -37,6 +38,7 @@ class UserModel {
     data['ktp_number'] = this.ktpNumber;
     data['phone_number'] = this.phoneNumber;
     data['dob'] = this.dob;
+    data['pin'] = this.pin;
     return data;
   }
 }

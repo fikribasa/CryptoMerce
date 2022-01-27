@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart';
@@ -120,7 +119,14 @@ final tokenList = """{
       "name": "ZACoin",
       "image": "assets/icons/zaq.png",
       "price": "77199",
-      "change": "9.77"
+      "change": "9.77",
+      "headline":"Zakaria Affinity Coin (ZAC)",
+      "detail":"The Indonesian Cryptocurrency established for Fansystem community, ZAC was developed by Technology Social Nusantara, the largest digital community ecosystem platform.",
+      "capitalization":"Rp 87 Billion",
+      "valuation":"Rp 93 Billion",
+      "supply":"1,126,957 ZAC",
+      "maxSupply":"333,777,999 ZAC",
+      "volumeDay":"Rp 7 Billion"
     },
     {
       "id": "111",
@@ -128,7 +134,14 @@ final tokenList = """{
       "name": "Bitcoin",
       "image": "assets/icons/btc.png",
       "price": "709290630",
-      "change": "-3.02"
+      "change": "-3.02",
+      "headline":"BITCOIN (BTC)",
+      "detail": "Bitcoin is a decentralized cryptocurrency originally described in a 2008 whitepaper by a person, or group of people, using the alias Satoshi Nakamoto. It was launched soon after, in January 2009.\\n\\nSome concepts for a similar type of a decentralized electronic currency precede BTC, but Bitcoin holds the distinction of being the first-ever cryptocurrency to come into actual use.",
+      "capitalization":"Rp 12,802 Trillion",
+      "valuation":"Rp 14,211 Trillion",
+      "supply":"18,918,737 BTC",
+      "maxSupply":"21,000,000 BTC",
+      "volumeDay":"Rp 492,93 Trillion"
     },
     {
       "id": "112",
@@ -136,7 +149,14 @@ final tokenList = """{
       "name": "Ethereum",
       "image": "assets/icons/eth.png",
       "price": "61246164",
-      "change": "9.77"
+      "change": "9.77",
+      "headline":"Ethereum (ETH)",
+      "detail":"Ethereum is a decentralized open-source blockchain system that features its own cryptocurrency, Ether. ETH works as a platform for numerous other cryptocurrencies, as well as for the execution of decentralized smart contracts.\\n\\nEthereum’s own purported goal is to become a global platform for decentralized applications, allowing users from all over the world to write and run software that is resistant to censorship, downtime and fraud.",
+      "capitalization":"Rp 12,802 Trillion",
+      "valuation":"Rp 14,211 Trillion",
+      "supply":"18,918,737 BTC",
+      "maxSupply":"21,000,000 BTC",
+      "volumeDay":"Rp 492,93 Trillion"
     },
     {
       "id": "113",
@@ -144,7 +164,14 @@ final tokenList = """{
       "name": "Dash",
       "image": "assets/icons/dash.png",
       "price": "1979877",
-      "change": "9.77"
+      "change": "9.77",
+      "headline":"Digital Cash (Dash)",
+      "detail":"The Indonesian Cryptocurrency established for Fansystem community, ZAC was developed by Technology Social Nusantara, the largest digital community ecosystem platform.",
+      "capitalization":"Rp 12,802 Trillion",
+      "valuation":"Rp 14,211 Trillion",
+      "supply":"18,918,737 BTC",
+      "maxSupply":"21,000,000 BTC",
+      "volumeDay":"Rp 492,93 Trillion"
     },
     {
       "id": "114",
@@ -152,7 +179,56 @@ final tokenList = """{
       "name": "Monero",
       "image": "assets/icons/xmr.png",
       "price": "2923354",
-      "change": "-9.77"
+      "change": "-9.77",
+      "headline":"Monero (XMR)",
+      "detail":"The Indonesian Cryptocurrency established for Fansystem community, ZAC was developed by Technology Social Nusantara, the largest digital community ecosystem platform.",
+      "capitalization":"Rp 12,802 Trillion",
+      "valuation":"Rp 14,211 Trillion",
+      "supply":"18,918,737 BTC",
+      "maxSupply":"21,000,000 BTC",
+      "volumeDay":"Rp 492,93 Trillion"
+    },{
+      "id": "115",
+      "code": "EOS",
+      "name": "EOS",
+      "image": "assets/icons/eos.png",
+      "price": "2923354",
+      "change": "-9.77",
+      "headline":"EOSIO (EOS)",
+      "detail":"The Indonesian Cryptocurrency established for Fansystem community, ZAC was developed by Technology Social Nusantara, the largest digital community ecosystem platform.",
+      "capitalization":"Rp 12,802 Trillion",
+      "valuation":"Rp 14,211 Trillion",
+      "supply":"18,918,737 BTC",
+      "maxSupply":"21,000,000 BTC",
+      "volumeDay":"Rp 492,93 Trillion"
+    },{
+      "id": "116",
+      "code": "IOTA",
+      "name": "IOTA",
+      "image": "assets/icons/iota.png",
+      "price": "2923354",
+      "change": "-9.77",
+      "headline":"IOTA",
+      "detail":"The Indonesian Cryptocurrency established for Fansystem community, ZAC was developed by Technology Social Nusantara, the largest digital community ecosystem platform.",
+      "capitalization":"Rp 12,802 Trillion",
+      "valuation":"Rp 14,211 Trillion",
+      "supply":"18,918,737 BTC",
+      "maxSupply":"21,000,000 BTC",
+      "volumeDay":"Rp 492,93 Trillion"
+    },{
+      "id": "117",
+      "code": "XRP",
+      "name": "XRP",
+      "image": "assets/icons/xrp.png",
+      "price": "2923354",
+      "change": "-9.77",
+      "headline":"Ripple",
+      "detail":"To begin with, it’s important to understand the difference between XRP, Ripple and RippleNet. XRP is the currency that runs on a digital payment platform called RippleNet, which is on top of a distributed ledger database called XRP Ledger. While RippleNet is run by a company called Ripple, the XRP Ledger is open-source and is not based on blockchain, but rather the previously mentioned distributed ledger database.",
+      "capitalization":"Rp 12,802 Trillion",
+      "valuation":"Rp 14,211 Trillion",
+      "supply":"18,918,737 BTC",
+      "maxSupply":"21,000,000 BTC",
+      "volumeDay":"Rp 492,93 Trillion"
     }
   ]
 }

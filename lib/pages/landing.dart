@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:wartec_app/components/CoinCard.dart';
+import 'package:wartec_app/components/assetWidget.dart';
+import 'package:wartec_app/components/bottomTab.dart';
+import 'package:wartec_app/components/rightSlider.dart';
 import 'package:wartec_app/models/tokenList.dart';
 import 'package:wartec_app/pages/account.dart';
+import 'package:wartec_app/pages/assetIDR.dart';
 import 'package:wartec_app/pages/tokenDetail.dart';
 import 'package:wartec_app/pages/watchlist.dart';
 import 'package:wartec_app/services/appContext.dart';
@@ -38,6 +43,7 @@ class _LandingPageState extends State<LandingPage> {
       if (widget._ctx!.user == null) {
         // final user = await widget._ctx!.api.getUserInfo();
         final user = await DBFuture().getUser(storage.read("userID"));
+
         widget._ctx!.user = user;
       }
       final _tl = await widget._ctx!.api.getTokenList();
@@ -48,89 +54,29 @@ class _LandingPageState extends State<LandingPage> {
     });
   }
 
-  Widget _renderProfileImage() {
-    return InkWell(
-      onTap: () {
-        Get.to(() => AccountScreen(widget._ctx));
-      },
-      child: Container(
-        width: 30.0,
-        height: 30.0,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(15.0),
-          child:
-              widget._ctx!.user != null && widget._ctx!.user!.imageUrl != null
-                  ? FancyShimmerImage(
-                      imageUrl: "",
-                      shimmerBaseColor: AppPalette.instance.accent5,
-                    )
-                  : Image.asset("assets/images/profile.png"),
-        ),
-      ),
-    );
+  String greeting() {
+    var hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Morning';
+    }
+    if (hour < 17) {
+      return 'Afternoon';
+    }
+    return 'Evening';
   }
 
-  Widget coinCard(TokenItem? item) {
-    return InkWell(
-      onTap: () {
-        Get.to(() => TokenDetailScreen(widget._ctx, item));
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-        margin: const EdgeInsets.only(bottom: 6.0),
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(8.0)),
-        child: Row(
-          children: [
-            Expanded(
-                flex: 1,
-                child: Image.asset(
-                  item!.image!,
-                  width: 32,
-                  height: 32,
-                )),
-            SizedBox(width: 6.0),
-            Expanded(
-              flex: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(item.code!, style: TextStyle(fontSize: 16.0)),
-                  SizedBox(height: 6.0),
-                  Text(
-                    item.name ?? "",
-                    style: TextStyle(
-                        color: AppPalette.instance.grey10, fontSize: 12),
-                    maxLines: 1,
-                  )
-                ],
-              ),
-            ),
-            Expanded(flex: 2, child: Image.asset("assets/images/chart.png")),
-            Expanded(
-              flex: 4,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    "Rp " + item.tokenPriceIDR,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                  ),
-                  SizedBox(height: 6.0),
-                  Text(
-                      item.change! >= 0
-                          ? "+${item.change}\%"
-                          : "${item.change}\%",
-                      style: TextStyle(
-                          fontSize: 10.0,
-                          color: item.change! >= 0
-                              ? Colors.green
-                              : hexToColor("#BF2121")))
-                ],
-              ),
-            )
-          ],
-        ),
+  Widget _renderProfileImage() {
+    return Container(
+      width: 30.0,
+      height: 30.0,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15.0),
+        child: widget._ctx!.user != null && widget._ctx!.user!.imageUrl != null
+            ? FancyShimmerImage(
+                imageUrl: "",
+                shimmerBaseColor: AppPalette.instance.accent5,
+              )
+            : Image.asset("assets/images/profile.jpg"),
       ),
     );
   }
@@ -165,7 +111,7 @@ class _LandingPageState extends State<LandingPage> {
                   shrinkWrap: true,
                   itemCount: _tokenList!.item!.length,
                   itemBuilder: (_, int index) {
-                    return coinCard(_tokenList!.item![index]);
+                    return CoinCard(widget._ctx, _tokenList!.item![index]);
                   },
                 )
               : Center(
@@ -201,9 +147,9 @@ class _LandingPageState extends State<LandingPage> {
               ? ListView.builder(
                   primary: false,
                   shrinkWrap: true,
-                  itemCount: _tokenList!.item!.length,
+                  itemCount: _tokenList!.item!.length - 2,
                   itemBuilder: (_, int index) {
-                    return coinCard(_tokenList!.item![index]);
+                    return CoinCard(widget._ctx, _tokenList!.item![index]);
                   },
                 )
               : Center(
@@ -220,6 +166,28 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
+  Widget _renderHeader(double _screenWidth) {
+    return Container(
+      width: _screenWidth,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          RightSliderWidget(widget._ctx!, icon: _renderProfileImage()),
+          Container(
+              child:
+                  Image.asset("assets/icons/logomark-wartec.png", width: 40.0)),
+          Container(
+            width: 40.0,
+            height: 40,
+            child: TextButton(
+                onPressed: () {},
+                child: SvgPicture.asset('assets/icons/bell.svg')),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final _screenWidth = MediaQuery.of(context).size.width;
@@ -233,77 +201,22 @@ class _LandingPageState extends State<LandingPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: _screenWidth,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 40.0,
-                                  height: 40.0,
-                                  decoration: BoxDecoration(
-                                      color: AppPalette.instance.accent5,
-                                      borderRadius:
-                                          BorderRadius.circular(30.0)),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "Wartec",
-                                    style: TextStyle(
-                                        fontSize: 8.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                  ),
-                                ),
-                                SizedBox(width: 8.0),
-                                Text("Wartec",
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold))
-                              ],
-                            ),
-                          ),
-                          Container(
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 40.0,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                      color: hexToColor("#FFF6EB"),
-                                      borderRadius:
-                                          BorderRadius.circular(20.0)),
-                                  child: TextButton(
-                                      onPressed: () {},
-                                      child: SvgPicture.asset(
-                                          'assets/icons/bell.svg')),
-                                ),
-                                SizedBox(width: 10.0),
-                                _renderProfileImage()
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
+                    _renderHeader(_screenWidth),
                     SizedBox(height: 10.0),
                     RichText(
                         text: TextSpan(children: [
                       TextSpan(
-                        text: "Good Afternoon,",
+                        text: "Good ${greeting()},",
                         style: TextStyle(
                             fontSize: 16.0,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w400,
                             color: Colors.black),
                       ),
                       TextSpan(
                           text: " " + getUserName,
                           style: TextStyle(
                             color: AppPalette.instance.accent5,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w400,
                             fontSize: 16.0,
                           )),
                     ])),
@@ -319,19 +232,23 @@ class _LandingPageState extends State<LandingPage> {
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
                         children: [
-                          Container(
-                              child: Image.asset("assets/images/wc2.png")),
-                          Container(
-                              child: Image.asset("assets/images/wc11.png")),
-                          Container(
-                              child: Image.asset("assets/images/wc21.png")),
+                          AssetCoin(widget._ctx, _tokenList!.item![0],
+                              index: 0),
+                          AssetCoin(widget._ctx, _tokenList!.item![1],
+                              index: 1),
+                          InkWell(
+                              onTap: () {
+                                Get.to(() => AssetIDRScreen(widget._ctx));
+                              },
+                              child: AssetFiat(widget._ctx, index: 0)),
+                          AssetFiat(widget._ctx, index: 1),
                         ],
                       ),
                     ),
                     SizedBox(height: 20.0),
                     Container(
                       width: _screenWidth,
-                      height: 400,
+                      height: 800,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,

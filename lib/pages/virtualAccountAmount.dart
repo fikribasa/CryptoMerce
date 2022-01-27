@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/primaryButton.dart';
 import 'package:wartec_app/pages/paymentConfirmation.dart';
@@ -9,8 +10,11 @@ import 'package:wartec_app/style.dart';
 
 class VirtualAccountAmountScreen extends StatefulWidget {
   final AppContext? _ctx;
-
-  VirtualAccountAmountScreen(this._ctx, {Key? key}) : super(key: key);
+  final String? bankName;
+  final String? imagePath;
+  VirtualAccountAmountScreen(this._ctx, this.bankName, this.imagePath,
+      {Key? key})
+      : super(key: key);
 
   @override
   _VirtualAccountAmountScreenState createState() =>
@@ -23,9 +27,10 @@ class _VirtualAccountAmountScreenState
   get _getAppbar {
     return new AppBar(
       title: Text("Virtual Account",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+          style: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16)),
       backgroundColor: Colors.white,
-      elevation: 0.0,
+      elevation: 1.0,
       leading: new InkWell(
         borderRadius: BorderRadius.circular(30.0),
         child: new Icon(
@@ -54,7 +59,6 @@ class _VirtualAccountAmountScreenState
 
     return Scaffold(
       appBar: _getAppbar,
-      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SafeArea(
@@ -70,39 +74,58 @@ class _VirtualAccountAmountScreenState
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                   SizedBox(height: 20),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Selected Bank",
-                          style:
-                              TextStyle(fontSize: 12, color: Colors.black54)),
-                      Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset('assets/icons/bca.png', height: 24),
-                                SizedBox(width: 12),
-                                Text("Bank Central Asia"),
-                              ],
-                            ),
-                            TextButton(
-                                onPressed: () {
-                                  Get.back();
-                                },
-                                child: Text(
-                                  "Change Bank",
-                                  style: TextStyle(
-                                      color: AppPalette.instance.primary200,
-                                      fontSize: 10),
-                                ))
-                          ],
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 12.0),
+                    margin: const EdgeInsets.only(bottom: 6.0),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8.0)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Selected Bank",
+                            style:
+                                TextStyle(fontSize: 10, color: Colors.black54)),
+                        Container(
+                          width: _screenWidth,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                flex: 7,
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(widget.imagePath!,
+                                        height: 24),
+                                    SizedBox(width: 12),
+                                    Text(
+                                      widget.bankName ?? "",
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: Container(
+                                  width: 80,
+                                  child: PrimaryOutline(
+                                    label: "Change",
+                                    onPressed: () => Get.back(),
+                                    textStyle: TextStyle(
+                                        fontSize: 11,
+                                        color: AppPalette.instance.accent5,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   SizedBox(height: 40),
                 ],
@@ -143,7 +166,9 @@ class _VirtualAccountAmountScreenState
                       child: PrimaryButton(
                         label: "Continue Transaction",
                         onPressed: () {
-                          Get.to(() => PaymentConfirmationScreen(widget._ctx!));
+                          Get.to(() => PaymentConfirmationScreen(widget._ctx!,
+                              balance: _controller.text,
+                              paymentMethod: widget.bankName));
                         },
                       ))
                 ],

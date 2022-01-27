@@ -60,8 +60,9 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
                 Text(change,
                     style: TextStyle(
                         fontSize: 12.0,
-                        color:
-                            _chgColor ? hexToColor("#BF2121") : Colors.green))
+                        color: _chgColor
+                            ? hexToColor("#BF2121")
+                            : AppPalette.instance.success400))
               ],
             ),
           ),
@@ -81,9 +82,12 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Wachlist",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                fontSize: 16)),
         backgroundColor: Colors.white,
-        elevation: 0.0,
+        elevation: 1.0,
         leading: new InkWell(
           borderRadius: BorderRadius.circular(30.0),
           child: new Icon(
