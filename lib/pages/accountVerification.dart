@@ -19,7 +19,7 @@ class AccountVerification extends StatefulWidget {
 class _AccountVerificationState extends State<AccountVerification> {
   get _getAppbar {
     return new AppBar(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       elevation: 1.0,
       leading: new InkWell(
         child: new Icon(

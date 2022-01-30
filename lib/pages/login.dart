@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
       print("_returnString: $_returnString");
       if (_returnString == "success") {
         final pin = storage.read("pin");
-        if (pin != null && pin.lengt > 0) {
+        if (pin != null && pin.length > 0) {
           Get.offAll(() => PinInputCheckerScreen(
               widget._ctx!, "login", BasicBottomNavBar(widget._ctx!)));
         } else {
