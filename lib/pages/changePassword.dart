@@ -43,7 +43,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     );
   }
 
-  void _changePassword() async {
+   _changePassword() async {
     if (_password == null ||
         _newPassword == null ||
         _confirmationNewPassword == null ||

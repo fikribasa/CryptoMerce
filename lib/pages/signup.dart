@@ -30,7 +30,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   ScrollController _scrollController = new ScrollController();
   bool isLoading = false;
   
-  void _signUpEmail() async {
+   _signUpEmail() async {
     try {
       if (_password!.trim() != _confirmationPassword!.trim()) {
         return Get.snackbar(
