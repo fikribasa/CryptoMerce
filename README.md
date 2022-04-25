@@ -1,16 +1,29 @@
-# wartec_app
+﻿<h1 align='center'>Wartec</h1>
 
-A new Flutter project.
+<p align='center'>Flutter CryptoCurrency App</p>
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Introduction
 
-A few resources to get you started if this is your first Flutter project:
+<p align='justify'>Wartec is CryptoCurrency Ecommerce Application with User Login/Register, Wishlist, News, and Dark Mode. Wartec is built using Flutter and Firebase, currently it is still on MVP phase so some feature is not implemented yet. </p>
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Download the APK
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+You can Download the APK [`here`](https://drive.google.com/file/d/13vJeDJQ1bhZsaxxDba5xkYCzuWd-dXc7/view?usp=sharing)
+
+## Screenshot from the App
+
+<p align='center'>
+  <span>
+    <image width="200" src="./ss/login.jpg" />
+    <image width="200" src="./ss/landing.jpg" />
+  </span>
+</p>
+<p align='center'>
+  <span>
+    <image width="200" src="./ss/news.jpg" />
+    <image width="200" src="./ss/ledger.jpg" />
+    <image width="200" src="./ss/market.jpg" />
+    <image width="200" src="./ss/wallet.jpg" />
+  </span>
+</p>
