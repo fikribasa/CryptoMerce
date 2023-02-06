@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/primaryButton.dart';
-import 'package:wartec_app/models/tokenList.dart';
 import 'package:wartec_app/pages/loadingVerification.dart';
-import 'package:wartec_app/pages/transaction.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/style.dart';
-import 'package:wartec_app/utils/numberFormatter.dart';
 
 class CheckoutScreen extends StatefulWidget {
   String? totalAmount;

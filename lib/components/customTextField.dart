@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:wartec_app/style.dart';
 
 class CustomTextField extends StatefulWidget {

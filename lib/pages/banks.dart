@@ -32,7 +32,7 @@ class _ListBankScreenState extends State<ListBankScreen> {
 
   numberCount(String _num) {
     var _db = "0";
-    if (_num != null && _num != "0") {
+    if (_num != "0") {
       _db = (double.tryParse(_num) ?? 0).toStringAsFixed(3);
     }
     this.setState(() {

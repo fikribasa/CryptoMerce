@@ -105,7 +105,7 @@ class _PersonalInfoInputScreenState extends State<PersonalInfoInputScreen> {
   }
 
   Future sendEmail() async {
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       emailAuth = new EmailAuth(sessionName: "Wartec");
       var res = await emailAuth!.sendOtp(recipientMail: _email, otpLength: 4);
       if (res) {
@@ -131,7 +131,7 @@ class _PersonalInfoInputScreenState extends State<PersonalInfoInputScreen> {
             (value) => print("Done: $value"),
           );
       final link = await taskSnapshot.ref.getDownloadURL();
-      final _uploaded = await DBFuture().updateUser(userid, type!, link);
+      await DBFuture().updateUser(userid, type!, link);
     } catch (e) {
       print("uploadImageToFirebase: $e");
       Get.snackbar("Terjadi Kesalahan", "$e");

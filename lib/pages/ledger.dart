@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/CoinCard.dart';
@@ -34,7 +33,7 @@ class _LedgerScreenState extends State<LedgerScreen> {
   }
 
   getTokenList() async {
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       final _tl = await widget._ctx.api.getTokenList();
       this.setState(() {
         _isLoading = false;

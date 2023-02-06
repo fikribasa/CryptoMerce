@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:wartec_app/components/bottomTab.dart';
-import 'package:wartec_app/pages/pinInputChecker.dart';
 import 'package:wartec_app/pages/pinInputConfirmation.dart';
 import 'package:wartec_app/services/appContext.dart';
-import 'package:wartec_app/services/firestoreDB.dart';
 import 'package:wartec_app/style.dart';
-import 'package:wartec_app/utils/storage.dart';
 
 class PinInputScreen extends StatefulWidget {
   final AppContext? _ctx;

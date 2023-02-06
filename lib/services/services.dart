@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:wartec_app/json/response.dart';
 import 'package:wartec_app/models/credential.dart';
 import 'package:wartec_app/models/headlines.dart';
 import 'package:wartec_app/models/tokenList.dart';

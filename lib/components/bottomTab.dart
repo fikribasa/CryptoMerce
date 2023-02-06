@@ -112,7 +112,7 @@ class _BasicBottomNavBarState extends State<BasicBottomNavBar> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (widget.index != null) {
         _onItemTapped(widget.index!);
       }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class WithdrawIDR extends StatelessWidget {
@@ -28,7 +27,6 @@ class WithdrawIDR extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: _getAppbar,
       body: Padding(

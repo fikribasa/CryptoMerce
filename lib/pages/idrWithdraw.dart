@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:wartec_app/components/customTextField.dart';
 import 'package:wartec_app/components/primaryButton.dart';
-import 'package:wartec_app/models/tokenList.dart';
 import 'package:wartec_app/pages/bankAccounts.dart';
-import 'package:wartec_app/pages/banks.dart';
 import 'package:wartec_app/pages/idrWithdrawConfirmation.dart';
-import 'package:wartec_app/pages/paymentMethod.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/style.dart';
 
@@ -43,7 +39,7 @@ class _IDRWithdrawScreenState extends State<IDRWithdrawScreen> {
 
   numberCount(String _num) {
     var _db = "0";
-    if (_num != null && _num != "0") {
+    if (_num != "0") {
       _db = (double.tryParse(_num) ?? 0).toStringAsFixed(3);
     }
     this.setState(() {
@@ -231,7 +227,7 @@ class _IDRWithdrawScreenState extends State<IDRWithdrawScreen> {
                 child: PrimaryButton(
                     label: "Continue",
                     onPressed: () {
-                      _controller != null && _controller.text.length > 0
+                      _controller.text.length > 0
                           ? Get.to(() => IDRWithdrawConfirmationScreen(
                               widget._ctx,
                               balance: int.tryParse(_controller.text),

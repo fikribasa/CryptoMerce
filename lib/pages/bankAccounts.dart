@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:wartec_app/components/customTextField.dart';
-import 'package:wartec_app/components/primaryButton.dart';
-import 'package:wartec_app/models/tokenList.dart';
 import 'package:wartec_app/pages/banks.dart';
-import 'package:wartec_app/pages/idrWithdrawConfirmation.dart';
-import 'package:wartec_app/pages/paymentMethod.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/style.dart';
 

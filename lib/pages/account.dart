@@ -2,7 +2,6 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/bottomTab.dart';
-import 'package:wartec_app/components/signout.dart';
 import 'package:wartec_app/pages/changePassword.dart';
 import 'package:wartec_app/pages/pinInput.dart';
 import 'package:wartec_app/pages/pinInputChecker.dart';
