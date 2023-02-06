@@ -1,11 +1,8 @@
-import 'package:email_auth/email_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/bottomTab.dart';
 import 'package:wartec_app/components/primaryButton.dart';
-import 'package:wartec_app/pages/otpInput.dart';
 import 'package:wartec_app/services/appContext.dart';
-import 'package:wartec_app/style.dart';
 
 class AccountVerification extends StatefulWidget {
   final String? email;

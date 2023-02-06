@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/bottomTab.dart';
 import 'package:wartec_app/components/primaryButton.dart';
-import 'package:wartec_app/pages/virtualAccount.dart';
 import 'package:wartec_app/services/appContext.dart';
 
 class LoadingVerificationScreen extends StatefulWidget {

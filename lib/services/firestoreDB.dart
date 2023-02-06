@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/services.dart';
 import 'package:wartec_app/models/userInfo.dart';
 
 class DBFuture {
@@ -36,6 +35,7 @@ class DBFuture {
 
       return UserModel.fromJson(userData!);
     }
+    return null;
   }
 
   Future<String?> updateUser(String userId, String field, String link) async {

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/primaryButton.dart';
 import 'package:wartec_app/pages/personalInfoInput.dart';
@@ -104,7 +103,7 @@ class _VerificationUploadScreenState extends State<VerificationUploadScreen> {
                       : InkWell(
                           onTap: () async {
                             final _proceed = await Get.to(() =>
-                                VerificationPhotoGuideScreen(widget._ctx!,
+                                VerificationPhotoGuideScreen(
                                     "document", "${widget.documentType}"));
                             if (_proceed) {
                               final _respondPhoto = await Get.to(
@@ -143,7 +142,7 @@ class _VerificationUploadScreenState extends State<VerificationUploadScreen> {
                       : InkWell(
                           onTap: () async {
                             final _proceed = await Get.to(() =>
-                                VerificationPhotoGuideScreen(widget._ctx!,
+                                VerificationPhotoGuideScreen(
                                     "selfie", "${widget.documentType}"));
                             if (_proceed) {
                               final _respondPhoto = await Get.to(

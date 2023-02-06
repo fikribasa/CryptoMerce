@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:wartec_app/pages/transaction.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/services/firestoreDB.dart';
 import 'package:wartec_app/style.dart';
@@ -36,7 +34,7 @@ class _PinInputCheckerScreenState extends State<PinInputCheckerScreen> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance!.addPostFrameCallback((_) {
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
     //   userPin = storage.read("userPin");
     // });
   }

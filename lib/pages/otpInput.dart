@@ -1,12 +1,6 @@
 import 'package:email_auth/email_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:wartec_app/components/bottomTab.dart';
-import 'package:wartec_app/pages/account.dart';
-import 'package:wartec_app/pages/landing.dart';
-import 'package:wartec_app/pages/pinInput.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/style.dart';
 

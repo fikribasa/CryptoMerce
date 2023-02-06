@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/bottomTab.dart';
-import 'package:wartec_app/pages/account.dart';
 import 'package:wartec_app/pages/login.dart';
 import 'package:wartec_app/pages/pinInputChecker.dart';
 import 'package:wartec_app/services/appContext.dart';
@@ -31,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void checkLoginState() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       final userID = Auth().userLoggedIn();
       print("userID: $userID");
       if (userID != null && userID.length > 0) {

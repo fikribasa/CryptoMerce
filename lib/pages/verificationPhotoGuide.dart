@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/primaryButton.dart';
-import 'package:wartec_app/pages/verificationCamera.dart';
-import 'package:wartec_app/services/appContext.dart';
-import 'package:wartec_app/style.dart';
 
 class VerificationPhotoGuideScreen extends StatefulWidget {
-  final AppContext? _ctx;
   final String? photoType;
   final String? documentType;
 
-  VerificationPhotoGuideScreen(this._ctx, this.photoType, this.documentType,
-      {Key? key})
+  VerificationPhotoGuideScreen(this.photoType, this.documentType, {Key? key})
       : super(key: key);
 
   @override

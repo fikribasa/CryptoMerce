@@ -6,7 +6,6 @@ import 'package:wartec_app/components/bottomTab.dart';
 import 'package:wartec_app/components/signout.dart';
 import 'package:wartec_app/pages/account.dart';
 import 'package:wartec_app/pages/bankAccounts.dart';
-import 'package:wartec_app/pages/ledger.dart';
 import 'package:wartec_app/pages/watchlist.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/style.dart';

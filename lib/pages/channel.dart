@@ -1,7 +1,5 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/profileWidget.dart';
 import 'package:wartec_app/components/rightSlider.dart';
@@ -32,7 +30,7 @@ class _ChannelScreenState extends State<ChannelScreen> {
 
   getNews() async {
     final news = await widget._ctx.api.getNewsHeadlines();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       this.setState(() {
         _headlines = news;
         _isLoading = false;

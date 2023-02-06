@@ -20,15 +20,12 @@ class MarketScreen extends StatefulWidget {
 
 class _MarketScreenState extends State<MarketScreen> {
   final TextEditingController _controller = new TextEditingController();
-  bool _loser = false;
   bool _isLoading = true;
-
-  bool _isRadioSelected = false;
   TokenList? _tokenList;
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       final _tl = await widget._ctx.api.getTokenList();
       this.setState(() {
         _isLoading = false;

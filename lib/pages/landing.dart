@@ -1,19 +1,14 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:wartec_app/components/CoinCard.dart';
 import 'package:wartec_app/components/assetWidget.dart';
-import 'package:wartec_app/components/bottomTab.dart';
 import 'package:wartec_app/components/rightSlider.dart';
 import 'package:wartec_app/models/tokenList.dart';
-import 'package:wartec_app/pages/account.dart';
 import 'package:wartec_app/pages/assetIDR.dart';
-import 'package:wartec_app/pages/tokenDetail.dart';
 import 'package:wartec_app/pages/watchlist.dart';
 import 'package:wartec_app/services/appContext.dart';
-import 'package:wartec_app/services/authService.dart';
 import 'package:wartec_app/services/firestoreDB.dart';
 import 'package:wartec_app/style.dart';
 import 'package:wartec_app/utils/storage.dart';
@@ -38,7 +33,7 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   getUserInfo() async {
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       // get userInfo
       if (widget._ctx!.user == null) {
         // final user = await widget._ctx!.api.getUserInfo();

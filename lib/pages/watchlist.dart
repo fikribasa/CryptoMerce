@@ -1,22 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wartec_app/services/appContext.dart';
 import 'package:wartec_app/style.dart';
 
 class WatchlistScreen extends StatefulWidget {
-  final AppContext _ctx;
-  WatchlistScreen(AppContext ctx, {Key? key})
-      : _ctx = ctx,
-        super(key: key);
+  WatchlistScreen(AppContext ctx, {Key? key}) : super(key: key);
 
   @override
   _WatchlistScreenState createState() => _WatchlistScreenState();
 }
 
 class _WatchlistScreenState extends State<WatchlistScreen> {
-  final TextEditingController _controller = new TextEditingController();
-
   Widget coinCard(
       {String? coinIcon,
       String? title,
@@ -78,7 +71,6 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text("Wachlist",

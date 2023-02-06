@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 
 import 'package:path/path.dart';
 import 'package:wartec_app/components/primaryButton.dart';
-import 'package:wartec_app/style.dart';
 
 class VerificationCameraScreen extends StatefulWidget {
   final String? type;
@@ -44,7 +43,8 @@ class _State extends State<VerificationCameraScreen>
     );
   }
 
-  Future _initCameraController(CameraDescription cameraDescription) async {
+  Future _initCameraController(CameraDescription cameraDescription,
+      [BuildContext? context]) async {
     setState(() {
       isPrecessing = true;
     });
@@ -67,7 +67,9 @@ class _State extends State<VerificationCameraScreen>
     try {
       await controller!.initialize();
     } on CameraException catch (e) {
-      _showCameraException(e);
+      if (context != null) {
+        showCameraException(context, e);
+      }
     }
 
     if (mounted) {
@@ -144,7 +146,7 @@ class _State extends State<VerificationCameraScreen>
                       setState(() {
                         isPreView = false;
                       });
-                      _onSwitchCamera();
+                      _onSwitchCamera(ctx);
                     }),
           // FlatButton.icon(
           //   onPressed: isPrecessing
@@ -156,7 +158,7 @@ class _State extends State<VerificationCameraScreen>
           //           _onSwitchCamera();
           //         },
           //   icon: Icon(
-          //     _getCameraLensIcon(lensDirection),
+          //     getCameraLensIcon(lensDirection),
           //     size: 35,
           //   ),
           //   label: Text(
@@ -187,29 +189,28 @@ class _State extends State<VerificationCameraScreen>
     );
   }
 
-  void _onSwitchCamera() async {
+  void _onSwitchCamera(BuildContext context) async {
     selectedCameraIdx =
         selectedCameraIdx! < cameras!.length - 1 ? selectedCameraIdx! + 1 : 0;
     CameraDescription selectedCamera = cameras![selectedCameraIdx!];
 
-    await _initCameraController(selectedCamera);
+    await _initCameraController(selectedCamera, context);
     setState(() {
       isPreView = false;
     });
   }
 
-  void showInSnackBar(String message) {
-    // ignore: deprecated_member_use
-
-    _scaffoldKey.currentState!.hideCurrentSnackBar();
-    _scaffoldKey.currentState!.showSnackBar(SnackBar(content: Text(message)));
+  void showInSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
-  void _showCameraException(CameraException e) {
-    showInSnackBar('Error: ${e.code}\n${e.description}');
+  void showCameraException(BuildContext context, CameraException e) {
+    showInSnackBar(context, 'Error: ${e.code}\n${e.description}');
   }
 
-  IconData _getCameraLensIcon(CameraLensDirection direction) {
+  IconData getCameraLensIcon(CameraLensDirection direction) {
     switch (direction) {
       case CameraLensDirection.back:
         return Icons.camera_rear;
@@ -300,7 +301,7 @@ class _State extends State<VerificationCameraScreen>
     );
   }
 
-  Widget _cameraPreviewWidget() {
+  Widget cameraPreviewWidget() {
     if (controller == null || !controller!.value.isInitialized) {
       return const Text(
         'Loading',
@@ -332,19 +333,19 @@ class _State extends State<VerificationCameraScreen>
   void initState() {
     super.initState();
 
-    availableCameras().then((availableCameras) {
+    availableCameras().then((availableCameras) async {
       cameras = availableCameras;
       if (cameras!.length > 0) {
         setState(() {
           selectedCameraIdx = 0;
         });
 
-        _initCameraController(cameras![selectedCameraIdx!]).then((void v) {});
+        await _initCameraController(cameras![selectedCameraIdx!]);
       } else {
         print("No camera available");
       }
     }).catchError((err) {
-      print('Error: $err.code\nError Message: $err.message');
+      print('Error: $err');
     });
   }
 
