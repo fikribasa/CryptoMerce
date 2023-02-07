@@ -6,7 +6,7 @@ final _fontSizeNormal = 16.0;
 final _fontSizeAppBar = 18.0;
 final _fontSizeSection = 20.0;
 final _primary = Color(0xffF7247A);
-final _gold = Color(0xffF5C259);
+// final _gold = Color(0xffF5C259);
 final _grey = Color(0x99000000);
 
 Color hexToColor(String code) {

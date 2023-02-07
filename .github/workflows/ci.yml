@@ -1,0 +1,28 @@
+name: CI Android App
+on: [push]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a $ event."
+      - run: echo "🐧 This job is now running on a $ server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is $ and your repository is $."
+      - uses: actions/checkout@v1
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+          cache: gradle
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.3.9"
+          channel: 'stable'
+          cache: true      
+      - name: Analyze code
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
+      
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: echo "💡 The $ repository has been cloned to the runner."
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - run: echo "🍏 This job's status is $."
