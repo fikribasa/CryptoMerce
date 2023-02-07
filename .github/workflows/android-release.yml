@@ -60,9 +60,10 @@ jobs:
       #     echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> android/key.properties
       #     echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
       #     echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v1
+      - name: Setup Java
+        uses: actions/setup-java@v1
         with:
-          distribution: 'zulu'
           java-version: "12.x"
           cache: gradle
       - uses: subosito/flutter-action@v2

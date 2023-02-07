@@ -105,8 +105,8 @@ class Auth {
     try {
       final user = await _auth.currentUser;
       String? email = user!.email;
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
+
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email!,
         password: oldPassword,
       );
